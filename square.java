@@ -1,53 +1,62 @@
-import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.ImageIcon;
-import javax.swing.JLayeredPane;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import java.awt.Dimension;
 
+public class square extends JPanel {
 
-public class square extends JPanel{
+	private static final long serialVersionUID = 2642336035089268095L;
 
-    private static final long serialVersionUID = 2642336035089268095L;
-
-    Boolean isWhite;
-    Boolean isCheck;
-    Boolean isEatable;
+	Boolean isWhite;
+	Boolean isCheck;
+	Boolean isEatable;
 	Pieces piece;
-    ImageIcon image;
 
 	JLayeredPane stack;
 
-	JButton cosa;
-
-	JLabel squarelabel;
-	JLabel modlabel;
+	JLabel squareLabel;
+	JLabel modLabel;
 	JLabel pieceLabel;
 
-    square(Boolean isWhite){
-		squarelabel = new JLabel();
-		stack = new JLayeredPane();
-		image = new ImageIcon("img/white_tile_wood.png");
-		cosa = new JButton(image);
+	square(Boolean isWhite) {
+		this.stack = new JLayeredPane();
+		stack.setPreferredSize(new Dimension(110, 110));
 
-		squarelabel.setIcon(image);
-		stack.add(cosa,new Integer(0));
-        //if(isWhite){
-        //    this.add(image,0);
-        //    this.isWhite = true;
-        //}
-        //else {
-        //    //this.image = new ImageIcon("");
-        //    this.isWhite = false;
-        //}
-//        this.setIcon(image);
-    }
-
-	void updateCheck(){
-		if(this.piece == Pieces.KING){
-
+		ImageIcon image;
+		ImageIcon imagetwo;
+		if (isWhite) {
+			this.isWhite = true;
+			image = new ImageIcon("img/white_tile_wood.png");
+		} else {
+			this.isWhite = false;
+			image = new ImageIcon("img/black_tile_wood.png");
 		}
+
+		squareLabel = new JLabel(image);
+		squareLabel.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
+
+		imagetwo = new ImageIcon("img/black_queen.png");
+
+		modLabel = new JLabel(imagetwo);
+		modLabel.setBounds(0, 0, imagetwo.getIconWidth(), imagetwo.getIconHeight());
+		// System.out.println("x");
+
+		stack.add(modLabel);
+		stack.add(squareLabel);
+		this.add(stack);
+
+		// this.setIcon(image);
 	}
-	void updateEatable(){
+
+	void updateCheck() {
+		// if(this.piece == Pieces.KING){
+
+		// }
+	}
+
+	void updateEatable() {
 
 	}
 }

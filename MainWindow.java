@@ -1,6 +1,7 @@
+import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
+import javax.swing.WindowConstants;
 
 public class MainWindow extends JFrame{
 
@@ -8,7 +9,7 @@ public class MainWindow extends JFrame{
 
     private void initUI() {
         setTitle("Chess-java");
-
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         // TODO: Fullscreen 
         setSize(1000,1000);
 

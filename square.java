@@ -2,9 +2,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
+import javax.swing.JLabel;
 
 
-public class square extends JLayeredPane{
+public class square extends JPanel{
 
     private static final long serialVersionUID = 2642336035089268095L;
 
@@ -14,21 +15,30 @@ public class square extends JLayeredPane{
 	Pieces piece;
     ImageIcon image;
 
-	JPanel squarePanel;
-	JPanel modPanel;
-	JPanel piecePanel;
+	JLayeredPane stack;
 
-    public void initUI(){
-    }
+	JButton cosa;
+
+	JLabel squarelabel;
+	JLabel modlabel;
+	JLabel pieceLabel;
+
     square(Boolean isWhite){
-        if(isWhite){
-            //squarePanel.add(new ImageIcon("img/whiteTile.jpg"));
-            this.isWhite = true;
-        }
-        else {
-            //this.image = new ImageIcon("");
-            this.isWhite = false;
-        }
+		squarelabel = new JLabel();
+		stack = new JLayeredPane();
+		image = new ImageIcon("img/white_tile_wood.png");
+		cosa = new JButton(image);
+
+		squarelabel.setIcon(image);
+		stack.add(cosa,new Integer(0));
+        //if(isWhite){
+        //    this.add(image,0);
+        //    this.isWhite = true;
+        //}
+        //else {
+        //    //this.image = new ImageIcon("");
+        //    this.isWhite = false;
+        //}
 //        this.setIcon(image);
     }
 

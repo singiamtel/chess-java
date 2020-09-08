@@ -1,12 +1,11 @@
 import javax.swing.JPanel;
 import java.awt.GridLayout;
-import javax.swing.JLayeredPane;
 
 public class board extends JPanel{
 
     private static final long serialVersionUID = 5071359096090410155L;
 
-    private JLayeredPane[][] squares = new JLayeredPane[8][8];
+    private JPanel[][] squares = new JPanel[8][8];
     private void initUI(){
     }
     board(){

@@ -17,7 +17,7 @@ public class square extends JPanel {
 	JLayeredPane stack;
 
 	JLabel squareLabel;
-	JLabel modLabel;
+	JLabel moveLabel;
 	JLabel checkLabel;
 	JLabel pieceLabel;
 
@@ -37,8 +37,10 @@ public class square extends JPanel {
 			this.isWhite = false;
 			squareImage = new ImageIcon("img/black_tile_wood.png");
 		}
+
+		squareLabel = new JLabel(squareImage);
+		squareLabel.setBounds(0, 0, squareImage.getIconWidth(), squareImage.getIconHeight());
 		
-		pieceImage = new ImageIcon("img/white_pawn.png");
 		switch (piece){
 			case BLACK_ROOK:
 				pieceImage = new ImageIcon("img/black_rook.png");
@@ -77,19 +79,39 @@ public class square extends JPanel {
 				pieceImage = new ImageIcon("img/white_pawn.png");
 				break;
 			default:
+				pieceImage = new ImageIcon("img/white_pawn.png");
 				break;
 		}
 
 		pieceLabel = new JLabel(pieceImage);
 		pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
 
-		squareLabel = new JLabel(squareImage);
-		squareLabel.setBounds(0, 0, squareImage.getIconWidth(), squareImage.getIconHeight());
+		if(canEat || canMove){
+			if(canEat){
+				moveImage= new ImageIcon("img/can_eat.png");
+			}else{
+				moveImage= new ImageIcon("img/can_move_here.png");
+			}
+			moveLabel = new JLabel(moveImage);
+			moveLabel.setBounds(0, 0, moveImage.getIconWidth(), moveImage.getIconHeight());
+			stack.add(moveLabel);
+		}
 
-		checkLabel = new JLabel(pieceImage);
-		checkLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
+		stack.add(pieceLabel);
 
+		if(isCheck){
+			if(isWhite){
+				checkImage= new ImageIcon("img/king_threatened_black.png");
+			}else{
+				checkImage= new ImageIcon("img/king_threatened_white.png");
+			}
+			checkLabel = new JLabel(checkImage);
+			checkLabel.setBounds(0, 0, checkImage.getIconWidth(), checkImage.getIconHeight());
+			stack.add(checkLabel);
+		}
+		
 		stack.add(squareLabel);
+
 		this.add(stack);
 
 		// this.setIcon(image);

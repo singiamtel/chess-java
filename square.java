@@ -101,9 +101,9 @@ public class square extends JPanel {
 
 		if(isCheck){
 			if(isWhite){
-				checkImage= new ImageIcon("img/king_threatened_black.png");
-			}else{
 				checkImage= new ImageIcon("img/king_threatened_white.png");
+			}else{
+				checkImage= new ImageIcon("img/king_threatened_black.png");
 			}
 			checkLabel = new JLabel(checkImage);
 			checkLabel.setBounds(0, 0, checkImage.getIconWidth(), checkImage.getIconHeight());

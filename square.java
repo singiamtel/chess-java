@@ -18,6 +18,7 @@ public class square extends JPanel {
 
 	JLabel squareLabel;
 	JLabel modLabel;
+	JLabel checkLabel;
 	JLabel pieceLabel;
 
 	square(Boolean isWhite,Pieces piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
@@ -25,7 +26,10 @@ public class square extends JPanel {
 		stack.setPreferredSize(new Dimension(110, 110));
 
 		ImageIcon squareImage;
-		ImageIcon imagetwo;
+		ImageIcon pieceImage;
+		ImageIcon checkImage;
+		ImageIcon moveImage;
+
 		if (isWhite) {
 			this.isWhite = true;
 			squareImage = new ImageIcon("img/white_tile_wood.png");
@@ -33,16 +37,58 @@ public class square extends JPanel {
 			this.isWhite = false;
 			squareImage = new ImageIcon("img/black_tile_wood.png");
 		}
+		
+		pieceImage = new ImageIcon("img/white_pawn.png");
+		switch (piece){
+			case BLACK_ROOK:
+				pieceImage = new ImageIcon("img/black_rook.png");
+				break;
+			case BLACK_KNIGHT:
+				pieceImage = new ImageIcon("img/black_knight.png");
+				break;
+			case BLACK_BISHOP:
+				pieceImage = new ImageIcon("img/black_bishop.png");
+				break;
+			case BLACK_QUEEN:
+				pieceImage = new ImageIcon("img/black_queen.png");
+				break;
+			case BLACK_KING:
+				pieceImage = new ImageIcon("img/black_king.png");
+				break;
+			case BLACK_PAWN:
+				pieceImage = new ImageIcon("img/black_pawn.png");
+				break;
+			case WHITE_ROOK:
+				pieceImage = new ImageIcon("img/white_rook.png");
+				break;
+			case WHITE_KNIGHT:
+				pieceImage = new ImageIcon("img/white_knight.png");
+				break;
+			case WHITE_BISHOP:
+				pieceImage = new ImageIcon("img/white_bishop.png");
+				break;
+			case WHITE_QUEEN:
+				pieceImage = new ImageIcon("img/white_queen.png");
+				break;
+			case WHITE_KING:
+				pieceImage = new ImageIcon("img/white_king.png");
+				break;
+			case WHITE_PAWN:
+				pieceImage = new ImageIcon("img/white_pawn.png");
+				break;
+			default:
+				break;
+		}
+
+		pieceLabel = new JLabel(pieceImage);
+		pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
 
 		squareLabel = new JLabel(squareImage);
 		squareLabel.setBounds(0, 0, squareImage.getIconWidth(), squareImage.getIconHeight());
 
-		imagetwo = new ImageIcon("img/black_queen.png");
+		checkLabel = new JLabel(pieceImage);
+		checkLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
 
-		modLabel = new JLabel(imagetwo);
-		modLabel.setBounds(0, 0, imagetwo.getIconWidth(), imagetwo.getIconHeight());
-
-		stack.add(modLabel);
 		stack.add(squareLabel);
 		this.add(stack);
 

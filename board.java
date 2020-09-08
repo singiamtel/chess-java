@@ -13,7 +13,7 @@ public class board extends JPanel{
         for(int i=0; i<8; ++i){
             for(int j=0; j<8; ++j){
                 // White squares are even, black squares are odd
-                squares[i][j] = new square((i+j) % 2 ==0 ? true:false,KING,true,true,true);
+                squares[i][j] = new square((i+j) % 2 ==0 ? true:false,Pieces.WHITE_KING,true,true,true);
                 this.add(squares[i][j]);
             }
         }

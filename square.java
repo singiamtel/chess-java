@@ -20,28 +20,27 @@ public class square extends JPanel {
 	JLabel modLabel;
 	JLabel pieceLabel;
 
-	square(Boolean isWhite) {
+	square(Boolean isWhite,Pieces piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
 		this.stack = new JLayeredPane();
 		stack.setPreferredSize(new Dimension(110, 110));
 
-		ImageIcon image;
+		ImageIcon squareImage;
 		ImageIcon imagetwo;
 		if (isWhite) {
 			this.isWhite = true;
-			image = new ImageIcon("img/white_tile_wood.png");
+			squareImage = new ImageIcon("img/white_tile_wood.png");
 		} else {
 			this.isWhite = false;
-			image = new ImageIcon("img/black_tile_wood.png");
+			squareImage = new ImageIcon("img/black_tile_wood.png");
 		}
 
-		squareLabel = new JLabel(image);
-		squareLabel.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
+		squareLabel = new JLabel(squareImage);
+		squareLabel.setBounds(0, 0, squareImage.getIconWidth(), squareImage.getIconHeight());
 
 		imagetwo = new ImageIcon("img/black_queen.png");
 
 		modLabel = new JLabel(imagetwo);
 		modLabel.setBounds(0, 0, imagetwo.getIconWidth(), imagetwo.getIconHeight());
-		// System.out.println("x");
 
 		stack.add(modLabel);
 		stack.add(squareLabel);

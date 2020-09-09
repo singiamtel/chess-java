@@ -2,6 +2,9 @@ public class Move {
 	private int from;
 	private int to;
 	private Pieces promotion;
+	private Boolean castle;
+	// private bool eating;
+	// private bool check;
 
 	public int getFrom() {
 		return this.from;

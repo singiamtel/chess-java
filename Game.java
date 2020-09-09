@@ -1,5 +1,6 @@
 public class Game {
-	public Pieces [][] board = new Pieces[8][8];
+	private Pieces [][] board = new Pieces[8][8];
+	// private Moves [] moveList;
 	Game(){
 		// Empty constructor starts a new game
 		board[0][0] = Pieces.WHITE_ROOK;
@@ -33,6 +34,9 @@ public class Game {
 		board[7][7] = Pieces.BLACK_ROOK;
 	}
 
+	public Pieces getPieceAtSquare(int square){
+		return board[(square/8)][square%8] ;
+	}
 	// This function is only for debug purposes and should never execute
 	public void printBoard(){
 			for(int j=7; j>=0; j--){

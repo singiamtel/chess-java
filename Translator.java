@@ -6,7 +6,7 @@ public class Translator {
 	}
 	public static String LERFtoAlgebraic(int LERF){
 		int number = LERF / 8 + 1;
-		int letterCode = LERF % 8; // 63 -> h8
+		int letterCode = LERF % 8;
 		char letter;
 		System.out.println(letterCode + " " + number);
 		switch(letterCode){
@@ -41,4 +41,5 @@ public class Translator {
 		}
 		return (Character.toString(letter) + Integer.toString(number));
 	}
+	// public static 
 }

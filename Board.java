@@ -6,8 +6,8 @@ public class Board extends JPanel{
     private static final long serialVersionUID = 5071359096090410155L;
 
     private JPanel[][] squares = new JPanel[8][8];
-    private void initUI(){
-    }
+    // private void initUI(){
+    // }
     Board(){
         this.setLayout(new GridLayout(8,8));
         for(int i=0; i<8; ++i){

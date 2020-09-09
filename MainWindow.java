@@ -14,9 +14,9 @@ public class MainWindow extends JFrame{
         setSize(1000,1000);
 
         JPanel mainpanel = new JPanel(new BorderLayout());
-        JPanel toolbar = new JPanel();
+        JPanel toolBar = new ToolBar();
         JPanel board = new Board();
-        mainpanel.add(toolbar, BorderLayout.NORTH);
+        mainpanel.add(toolBar, BorderLayout.NORTH);
         mainpanel.add(board, BorderLayout.CENTER);
 
         // toolbar.add(buttonchulo);

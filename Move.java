@@ -1,6 +1,7 @@
 public class Move {
 	private int from;
 	private int to;
+	private Pieces promotion;
 
 	public int getFrom() {
 		return this.from;

@@ -1,4 +1,5 @@
 public enum Pieces{
+	EMPTY,
 	WHITE_KING,
 	WHITE_QUEEN,
 	WHITE_BISHOP,

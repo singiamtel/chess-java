@@ -42,10 +42,10 @@ public class Translator {
 		return (Character.toString(letter) + Integer.toString(number));
 	}
 	public static String LERFtoAlgebraic(Move move, Game game){
-		String ret;
+		String ret = "";
 		if(game.getPieceAtSquare(move.getFrom()) == Pieces.BLACK_KING 
 		|| game.getPieceAtSquare(move.getFrom()) == Pieces.WHITE_KING){
-			//enroque
+			
 			if((move.getFrom()-move.getTo()) == 2){
 				ret = "O-O";
 			}
@@ -55,7 +55,31 @@ public class Translator {
 
 		}
 
+		if(move.getPromotion() != Pieces.EMPTY){
+			ret += "=";
+			switch(move.getPromotion()){
+				case WHITE_QUEEN:
+				case BLACK_QUEEN:
+					ret += "Q";
+					break;
+				case WHITE_BISHOP:
+				case BLACK_BISHOP:
+					ret += "B";
+					break;
+				case WHITE_ROOK:
+				case BLACK_ROOK:
+					ret += "R";
+					break;
+				case WHITE_KNIGHT:
+				case BLACK_KNIGHT:
+					ret += "N";
+					break;
+				default:
+					// TODO: throw exception
+					break;
 
+			}
+		}
 		if(PieceLogic.isMate(game, move)){
 			ret += "#";
 		}
@@ -72,14 +96,15 @@ public class Translator {
 20 26
 e3 c4 
 
-e3xc4
+rxc4
 
-Enroque O-O
+Enroque O-O !!
 Come x
-Jaque +
-Mate #
-Promocion =Q
+Jaque + !!
+Mate # !!
+Promocion =Q !!
 Distinción de que pieza come kexc5
+
 ka8xe6+
 exa8=Q+
 

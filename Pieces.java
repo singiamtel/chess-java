@@ -12,5 +12,5 @@ public enum Pieces{
 	BLACK_BISHOP,
 	BLACK_KNIGHT,
 	BLACK_ROOK,
-	BLACK_PAWN
+	BLACK_PAWN;
 }

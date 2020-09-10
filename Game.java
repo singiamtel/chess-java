@@ -1,6 +1,7 @@
 public class Game {
 	private Pieces [][] board = new Pieces[8][8];
-	// private Moves [] moveList;
+	private Boolean turn;
+	private Moves [] moveList;
 	Game(){
 		// Empty constructor starts a new game
 		board[0][0] = Pieces.WHITE_ROOK;

@@ -1,6 +1,11 @@
+package controller;
+
 public class PieceLogic {
 	public static Boolean isValid(Game game, Move move){
+		game.getPieceAtSquare(move.getFrom()).isValidMove();
+		/*
 		switch(game.getPieceAtSquare(move.getFrom())){
+
 			case BLACK_BISHOP:
 			case WHITE_BISHOP:
 				return (isValidBishopMove(game, move));
@@ -23,6 +28,7 @@ public class PieceLogic {
 				// TODO: Exception?
 				return false;
 		}
+		*/
 		return false;
 	}
 	private static Boolean isValidKnightMove(Game game, Move move){

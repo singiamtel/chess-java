@@ -1,3 +1,8 @@
+package controller;
+
+import pieces.King;
+import pieces.Piece;
+
 public class Translator {
 	public static int coordinateToLERF(String algebraic){
 		// a = 0, h = 7, each rank += 8
@@ -43,8 +48,8 @@ public class Translator {
 	}
 	public static String LERFtoAlgebraic(Move move, Game game){
 		String ret = "";
-		if(game.getPieceAtSquare(move.getFrom()) == Pieces.BLACK_KING 
-		|| game.getPieceAtSquare(move.getFrom()) == Pieces.WHITE_KING){
+		if(game.getPieceAtSquare(move.getFrom()) instanceof King //check color
+		|| game.getPieceAtSquare(move.getFrom()) instanceof King ){
 			
 			if((move.getFrom()-move.getTo()) == 2){
 				ret = "O-O";
@@ -55,23 +60,24 @@ public class Translator {
 
 		}
 
-		if(move.getPromotion() != Pieces.EMPTY){
+		if(move.getPromotion() != null){
 			ret += "=";
-			switch(move.getPromotion()){
-				case WHITE_QUEEN:
-				case BLACK_QUEEN:
+			
+			switch(move.getPromotion().toString()){
+				case "WHITE_QUEEN":
+				case "BLACK_QUEEN":
 					ret += "Q";
 					break;
-				case WHITE_BISHOP:
-				case BLACK_BISHOP:
+				case "WHITE_BISHOP":
+				case "BLACK_BISHOP":
 					ret += "B";
 					break;
-				case WHITE_ROOK:
-				case BLACK_ROOK:
+				case "WHITE_ROOK":
+				case "BLACK_ROOK":
 					ret += "R";
 					break;
-				case WHITE_KNIGHT:
-				case BLACK_KNIGHT:
+				case "WHITE_KNIGHT":
+				case "BLACK_KNIGHT":
 					ret += "N";
 					break;
 				default:

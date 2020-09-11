@@ -1,12 +1,16 @@
+package controller;
+
+import pieces.Piece;
+
 public class Move {
 	private int from;
 	private int to;
 
-	public Pieces getPromotion() {
+	public Piece getPromotion() {
 		return this.promotion;
 	}
 
-	public void setPromotion(Pieces promotion) {
+	public void setPromotion(Piece promotion) {
 		this.promotion = promotion;
 	}
 
@@ -21,7 +25,7 @@ public class Move {
 	public void setCastle(Boolean castle) {
 		this.castle = castle;
 	}
-	private Pieces promotion;
+	private Piece promotion;
 	private Boolean castle;
 	// private bool eating;
 	// private bool check;

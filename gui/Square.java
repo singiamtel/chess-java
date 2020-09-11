@@ -1,8 +1,14 @@
+package gui;
+
+import pieces.*;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import java.awt.Dimension;
+
+import pieces.*;
 
 public class Square extends JPanel {
 
@@ -11,8 +17,9 @@ public class Square extends JPanel {
 	Boolean isWhite;
 	Boolean isCheck;
 	Boolean isEatable;
-	Pieces piece;
 
+	Piece piece;
+	
 	JLayeredPane stack;
 
 	JLabel squareLabel;
@@ -20,7 +27,7 @@ public class Square extends JPanel {
 	JLabel checkLabel;
 	JLabel pieceLabel;
 
-	Square(Boolean isWhite,Pieces piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
+	Square(Boolean isWhite,Piece piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
 		this.stack = new JLayeredPane();
 		stack.setPreferredSize(new Dimension(110, 110));
 
@@ -39,48 +46,8 @@ public class Square extends JPanel {
 
 		squareLabel = new JLabel(squareImage);
 		squareLabel.setBounds(0, 0, squareImage.getIconWidth(), squareImage.getIconHeight());
-		
-		switch (piece){
-			case BLACK_ROOK:
-				pieceImage = new ImageIcon("img/black_rook.png");
-				break;
-			case BLACK_KNIGHT:
-				pieceImage = new ImageIcon("img/black_knight.png");
-				break;
-			case BLACK_BISHOP:
-				pieceImage = new ImageIcon("img/black_bishop.png");
-				break;
-			case BLACK_QUEEN:
-				pieceImage = new ImageIcon("img/black_queen.png");
-				break;
-			case BLACK_KING:
-				pieceImage = new ImageIcon("img/black_king.png");
-				break;
-			case BLACK_PAWN:
-				pieceImage = new ImageIcon("img/black_pawn.png");
-				break;
-			case WHITE_ROOK:
-				pieceImage = new ImageIcon("img/white_rook.png");
-				break;
-			case WHITE_KNIGHT:
-				pieceImage = new ImageIcon("img/white_knight.png");
-				break;
-			case WHITE_BISHOP:
-				pieceImage = new ImageIcon("img/white_bishop.png");
-				break;
-			case WHITE_QUEEN:
-				pieceImage = new ImageIcon("img/white_queen.png");
-				break;
-			case WHITE_KING:
-				pieceImage = new ImageIcon("img/white_king.png");
-				break;
-			case WHITE_PAWN:
-				pieceImage = new ImageIcon("img/white_pawn.png");
-				break;
-			default:
-				pieceImage = new ImageIcon("img/white_pawn.png");
-				break;
-		}
+
+		pieceImage = piece.getImage();
 
 		pieceLabel = new JLabel(pieceImage);
 		pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());

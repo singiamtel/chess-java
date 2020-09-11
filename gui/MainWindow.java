@@ -1,7 +1,10 @@
+package gui;
+
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+
 
 public class MainWindow extends JFrame{
 
@@ -25,7 +28,7 @@ public class MainWindow extends JFrame{
         setVisible(true);
     }
 
-    MainWindow(){
+    public MainWindow(){
         this.initUI();
     }
 }

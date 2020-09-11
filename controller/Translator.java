@@ -89,9 +89,10 @@ public class Translator {
 		if(PieceLogic.isMate(game, move)){
 			ret += "#";
 		}
-		else if(PieceLogic.isCheck(game, move)){
-			ret += "+";
-		}
+		// TODO: fix when king check function is done
+		// else if(PieceLogic.isCheck(game, move)){
+		// 	ret += "+";
+		// }
 
 		return "return";
 	}

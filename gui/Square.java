@@ -3,6 +3,7 @@ package gui;
 import pieces.*;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ public class Square extends JPanel {
 	JLabel squareLabel;
 	JLabel moveLabel;
 	JLabel checkLabel;
-	JLabel pieceLabel;
+	JButton pieceLabel;
 
 	Square(Boolean isWhite,Piece piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
 		this.stack = new JLayeredPane();
@@ -47,11 +48,6 @@ public class Square extends JPanel {
 		squareLabel = new JLabel(squareImage);
 		squareLabel.setBounds(0, 0, squareImage.getIconWidth(), squareImage.getIconHeight());
 
-		pieceImage = piece.getImage();
-
-		pieceLabel = new JLabel(pieceImage);
-		pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
-
 		if(canEat || canMove){
 			if(canEat){
 				moveImage= new ImageIcon("img/can_eat.png");
@@ -63,7 +59,21 @@ public class Square extends JPanel {
 			stack.add(moveLabel);
 		}
 
-		stack.add(pieceLabel);
+		if (piece != null) {
+			pieceImage = piece.getImage();
+			pieceLabel = new JButton(pieceImage);
+			pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
+			stack.add(pieceLabel);
+
+			pieceLabel.setBorderPainted(false);
+			pieceLabel.setFocusPainted(false);
+			pieceLabel.setContentAreaFilled(false);
+
+			// pieceLabel.setDragEnabled(true);
+		}
+
+
+
 
 		if(isCheck){
 			if(isWhite){

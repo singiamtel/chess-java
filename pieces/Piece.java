@@ -2,20 +2,40 @@ package pieces;
 
 import javax.swing.ImageIcon;
 
-public class Piece{
+public class Piece {
 	protected boolean isWhite;
-	private int positionLERF;
-	private ImageIcon image;
+	protected int positionLERF;
+	protected ImageIcon image;
 
+	public boolean isWhite() {
+		return this.isWhite;
+	}
 
-	public void generateMoves(){
+	public void setWhite(boolean isWhite) {
+		this.isWhite = isWhite;
+	}
+
+	public int getPositionLERF() {
+		return this.positionLERF;
+	}
+
+	public void setPositionLERF(int positionLERF) {
+		this.positionLERF = positionLERF;
+	}
+	public void setImage(ImageIcon image) {
+		this.image = image;
+	}
+
+	public void generateMoves() {
 
 	}
-	public ImageIcon getImage(){
+
+	public ImageIcon getImage() {
 		return null;
 	}
+
 	public void isValidMove() {
 
 	}
-	
+
 }

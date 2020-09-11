@@ -1,9 +1,12 @@
 package gui;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+
+import controller.Game;
 
 
 public class MainWindow extends JFrame{
@@ -18,7 +21,7 @@ public class MainWindow extends JFrame{
 
         JPanel mainpanel = new JPanel(new BorderLayout());
         JPanel toolBar = new ToolBar();
-        JPanel board = new Board();
+        JPanel board = new Board(new Game());
         mainpanel.add(toolBar, BorderLayout.NORTH);
         mainpanel.add(board, BorderLayout.CENTER);
 

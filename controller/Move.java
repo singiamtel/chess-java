@@ -5,6 +5,10 @@ import pieces.Piece;
 public class Move {
 	private int from;
 	private int to;
+	private Piece promotion;
+	private Boolean castle;
+	// private bool eating;
+	// private bool check;
 
 	public Piece getPromotion() {
 		return this.promotion;
@@ -25,10 +29,6 @@ public class Move {
 	public void setCastle(Boolean castle) {
 		this.castle = castle;
 	}
-	private Piece promotion;
-	private Boolean castle;
-	// private bool eating;
-	// private bool check;
 
 	public int getFrom() {
 		return this.from;
@@ -46,8 +46,10 @@ public class Move {
 		this.to = to;
 	}
 
-	Move(int from, int to){
+	public Move(int from, int to, Piece promotion, Boolean castle){
 		this.setFrom(from);
 		this.setTo(to);
+		this.promotion = promotion;
+		this.castle = castle;
 	}
 }

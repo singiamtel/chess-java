@@ -33,9 +33,4 @@ public class Piece {
 	public ImageIcon getImage() {
 		return null;
 	}
-
-	public void isValidMove() {
-
-	}
-
 }

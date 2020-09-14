@@ -7,7 +7,7 @@ public class Move {
 	private int to;
 	private Piece promotion;
 	private Boolean castle;
-	// private bool eating;
+	private boolean isEating;
 	// private bool check;
 
 	public Piece getPromotion() {
@@ -46,10 +46,19 @@ public class Move {
 		this.to = to;
 	}
 
-	public Move(int from, int to, Piece promotion, Boolean castle){
+	public Move(int from, int to, Piece promotion, Boolean castle, Boolean isEating){
 		this.setFrom(from);
 		this.setTo(to);
 		this.promotion = promotion;
 		this.castle = castle;
+		this.isEating = isEating;
+	}
+
+	public boolean isEating() {
+		return this.isEating;
+	}
+
+	public void setIsEating(boolean isEating) {
+		this.isEating = isEating;
 	}
 }

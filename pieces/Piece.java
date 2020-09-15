@@ -1,10 +1,16 @@
 package pieces;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public class Piece {
+import controller.Game;
+import controller.Move;
+import utilities.Pair;
+
+public abstract class Piece {
 	protected boolean isWhite;
-	protected int positionLERF;
+	protected Pair<Integer, Integer> position;
 	protected ImageIcon image;
 
 	public boolean isWhite() {
@@ -15,20 +21,18 @@ public class Piece {
 		this.isWhite = isWhite;
 	}
 
-	public int getPositionLERF() {
-		return this.positionLERF;
+	public Pair<Integer, Integer> getPosition() {
+		return this.position;
 	}
 
-	public void setPositionLERF(int positionLERF) {
-		this.positionLERF = positionLERF;
+	public void setPosition(Pair<Integer, Integer> position) {
+		this.position= position;
 	}
 	public void setImage(ImageIcon image) {
 		this.image = image;
 	}
 
-	public void generateMoves() {
-
-	}
+	public abstract ArrayList<Move> generateMoves(Game game);
 
 	public ImageIcon getImage() {
 		return null;

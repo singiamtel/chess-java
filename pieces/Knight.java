@@ -1,12 +1,30 @@
 package pieces;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ImageIcon;
+
+import controller.Game;
+import controller.Move;
+import utilities.Pair;
 
 public class Knight extends Piece {
 
-	public Knight(Boolean isWhite, int LERF) {
+	public static final ArrayList<Pair<Integer, Integer>> moves = new ArrayList<Pair<Integer, Integer>>(List.of(
+		new Pair<Integer, Integer>(2,1),
+		new Pair<Integer, Integer>(2,-1),
+		new Pair<Integer, Integer>(1,2),
+		new Pair<Integer, Integer>(1,-2),
+		new Pair<Integer, Integer>(-2,1),
+		new Pair<Integer, Integer>(-2,-1),
+		new Pair<Integer, Integer>(1,-2),
+		new Pair<Integer, Integer>(-1,-2)
+		));
+
+	public Knight(Boolean isWhite, Pair<Integer, Integer> position) {
 		this.isWhite = isWhite;
-		this.positionLERF = LERF;
+		this.position= position;
 	}
 
 	public ImageIcon getImage() {
@@ -16,4 +34,22 @@ public class Knight extends Piece {
 			return new ImageIcon("img/black_knight.png");
 		}
 	}
+	public ArrayList<Move> generateMoves(Game game){
+		ArrayList<Move> generatedMoves = new ArrayList<Move>();
+		for (Pair<Integer, Integer> move : moves) {
+			
+		}
+		return generatedMoves;
+	}
 }
+/*
+-17 -15
+-10 -6
++6 +10
++15 +17
+
+(2,1)(2,-1)
+(1,2)(-1,2)
+(-2,1)(-2,-1)
+(1,-2)(-1,-2)
+*/

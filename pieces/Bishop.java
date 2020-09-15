@@ -1,12 +1,20 @@
 package pieces;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
+
+import controller.Game;
+import controller.Move;
+import utilities.Direction;
+import utilities.Pair;
+import utilities.Raycast;
 
 public class Bishop extends Piece {
 
-	public Bishop(Boolean isWhite, int LERF) {
+	public Bishop(Boolean isWhite, Pair<Integer, Integer> position) {
 		this.isWhite = isWhite;
-		this.positionLERF = LERF;
+		this.position= position;
 	}
 
 	public ImageIcon getImage() {
@@ -16,5 +24,14 @@ public class Bishop extends Piece {
 		} else {
 			return new ImageIcon("img/black_bishop.png");
 		}
+	}
+
+	public ArrayList<Move> generateMoves(Game game){
+		ArrayList<Move> moves = new ArrayList<Move>();
+		moves.addAll(Raycast.raycast(game, this, Direction.NORTHEAST));
+		moves.addAll(Raycast.raycast(game, this, Direction.NORTHWEST));
+		moves.addAll(Raycast.raycast(game, this, Direction.SOUTHEAST));
+		moves.addAll(Raycast.raycast(game, this, Direction.SOUTHWEST));
+		return moves;
 	}
 }

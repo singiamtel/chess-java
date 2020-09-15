@@ -2,11 +2,13 @@ package pieces;
 
 import javax.swing.ImageIcon;
 
+import utilities.Pair;
+
 public class Pawn extends Piece {
 
-	public Pawn(Boolean isWhite, int LERF){
+	public Pawn(Boolean isWhite, Pair<Integer, Integer> position){
 		this.isWhite = isWhite;
-		this.positionLERF = LERF;
+		this.position= position;
 	}
 
 	public ImageIcon getImage() {

@@ -2,10 +2,12 @@ package pieces;
 
 import javax.swing.ImageIcon;
 
+import utilities.Pair;
+
 public class King extends Piece {
-	public King(Boolean isWhite, int LERF) {
+	public King(Boolean isWhite, Pair<Integer, Integer> position) {
 		this.isWhite = isWhite;
-		this.positionLERF = LERF;
+		this.position= position;
 	}
 
 	public ImageIcon getImage() {

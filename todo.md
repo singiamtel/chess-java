@@ -9,3 +9,4 @@
 - [ ] Keep board squared on app resize
 - [ ] Clean up code
 - [ ] Asynchronous calls
+- [ ] Check for discovery checks

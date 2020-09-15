@@ -9,9 +9,9 @@ import pieces.Piece;
 public class Raycast {
 	public static ArrayList<Move> raycast(Game game, Piece piece, Direction dir){
 		ArrayList<Move> moveArray = new ArrayList<Move>();
-		int LERF = piece.getPositionLERF();
-		int x = LERF / 8;
-		int y = LERF % 8;
+		Pair<Integer, Integer> position = piece.getPosition();
+		int x = position.getFirst();
+		int y = position.getSecond();
 
 		switch(dir){
 			case EAST:

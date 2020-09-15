@@ -14,6 +14,22 @@ public class Pair<p, q> {
 		this.second = second;
 	}
 
+	public Pair<Integer, Integer> addPair(Pair<Integer, Integer>pairToAdd){
+		if(! (first instanceof Integer) || ! (second instanceof Integer)){
+			// TODO: exception?
+			return null;
+		}
+		return new Pair<Integer, Integer>((Integer)this.getFirst() + pairToAdd.getFirst(), (Integer)this.getSecond() + pairToAdd.getSecond());
+	}
+
+	public Pair<Integer, Integer> substractPair(Pair<Integer, Integer>pairToAdd){
+		if(! (first instanceof Integer) || ! (second instanceof Integer)){
+			// TODO: exception?
+			return null;
+		}
+		return new Pair<Integer, Integer>((Integer)this.getFirst() - pairToAdd.getFirst(), (Integer)this.getSecond() - pairToAdd.getSecond());
+	}
+
 	public p getFirst() {
 		return this.first;
 	}

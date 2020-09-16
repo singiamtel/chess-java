@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import pieces.Bishop;
 import pieces.King;
 import pieces.Knight;
@@ -12,7 +14,7 @@ import utilities.Pair;
 public class Game {
 	private Piece [][] board = new Piece[8][8];
 	private Boolean turn;
-	private Move [] moveList;
+	private Pawn enPassant;
 
 	public Game(boolean empty){
 		board[3][3] = new Knight(true,new Pair<Integer, Integer>(3,3));
@@ -68,5 +70,21 @@ public class Game {
 				System.out.println("");
 			}
 	
+	}
+	public boolean isKingOnCheck(boolean isWhite){
+
+		return false;
+	}
+	public ArrayList<Move> generateAllColourMoves(boolean isWhite){
+		ArrayList<Move> list = new ArrayList<Move>();
+		for(int i = 0; i<8; ++i){
+			for(int j = 0; j<8; ++j){
+				Piece attempt = this.getPieceAtSquare(new Pair<Integer, Integer>(i,j));
+				if(attempt != null && attempt.isWhite() == isWhite){
+					list.addAll(attempt.generateMoves(this));
+				}
+			}
+		}
+		return list;
 	}
 }

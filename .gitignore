@@ -3,3 +3,5 @@
 *.swo
 .classpath
 .project
+bin/
+.settings/

@@ -18,7 +18,7 @@ public class Knight extends Piece {
 		new Pair<Integer, Integer>(1,-2),
 		new Pair<Integer, Integer>(-2,1),
 		new Pair<Integer, Integer>(-2,-1),
-		new Pair<Integer, Integer>(1,-2),
+		new Pair<Integer, Integer>(-1,-2),
 		new Pair<Integer, Integer>(-1,-2)
 		));
 
@@ -38,12 +38,16 @@ public class Knight extends Piece {
 		ArrayList<Move> generatedMoves = new ArrayList<Move>();
 		for (Pair<Integer, Integer> move : moves) {
 			Pair<Integer, Integer> attempt = this.position.substractPair(move);
+			if(attempt.getFirst() < 0 || attempt.getFirst() >=8) continue;
+			if(attempt.getSecond() < 0 || attempt.getSecond() >=8) continue;
 			if(! this.validateMove(game, new Move(attempt))){
 				continue;
 			} else {
 				if (this.isMoveEating(game, new Move(attempt))) {
+				System.out.println("adding: eating " + attempt.getFirst() + " " + attempt.getSecond());
 					generatedMoves.add(new Move(attempt, null, false, true));
 				} else
+				System.out.println("adding: not eating " + attempt.getFirst() + " " + attempt.getSecond());
 					generatedMoves.add(new Move(attempt, null, false, false));
 			}
 

@@ -15,8 +15,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import pieces.*;
-
 public class Square extends JPanel {
 
 	private static final long serialVersionUID = 2642336035089268095L;

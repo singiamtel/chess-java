@@ -1,7 +1,9 @@
-package controller;
+package utilities;
 
+import controller.Game;
+import controller.Move;
+import controller.PieceLogic;
 import pieces.King;
-import pieces.Piece;
 
 public class Translator {
 	public static int coordinateToLERF(String algebraic){

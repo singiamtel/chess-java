@@ -12,9 +12,14 @@ import utilities.Pair;
 public class Knight extends Piece {
 
 	public static final ArrayList<Pair<Integer, Integer>> moves = new ArrayList<Pair<Integer, Integer>>(List.of(
-			new Pair<Integer, Integer>(2, 1), new Pair<Integer, Integer>(2, -1), new Pair<Integer, Integer>(1, 2),
-			new Pair<Integer, Integer>(1, -2), new Pair<Integer, Integer>(-2, 1), new Pair<Integer, Integer>(-2, -1),
-			new Pair<Integer, Integer>(-1, -2), new Pair<Integer, Integer>(-1, -2)));
+			new Pair<Integer, Integer>(1, 2),
+			new Pair<Integer, Integer>(1, -2), 
+			new Pair<Integer, Integer>(2, 1), 
+			new Pair<Integer, Integer>(2, -1), 
+			new Pair<Integer, Integer>(-1, 2), 
+			new Pair<Integer, Integer>(-1, -2),
+			new Pair<Integer, Integer>(-2, 1), 
+			new Pair<Integer, Integer>(-2, -1)));
 
 	public Knight(Boolean isWhite, Pair<Integer, Integer> position) {
 		this.isWhite = isWhite;
@@ -31,24 +36,27 @@ public class Knight extends Piece {
 
 	public ArrayList<Move> generateMoves(Game game) {
 		ArrayList<Move> generatedMoves = new ArrayList<Move>();
+
 		for (Pair<Integer, Integer> move : moves) {
-			Pair<Integer, Integer> attempt = this.position.substractPair(move);
+			Pair<Integer, Integer> attempt = this.position.addPair(move);
 			if (attempt.getFirst() < 0 || attempt.getFirst() >= 8)
 				continue;
 			if (attempt.getSecond() < 0 || attempt.getSecond() >= 8)
 				continue;
-			if (!this.validateMove(game, new Move(attempt))) {
+			if (!this.validateMove(game, new Move(new Pair<Integer, Integer>(this.position.getFirst(), this.position.getSecond()), new Pair<Integer, Integer>(attempt.getFirst(), attempt.getSecond())))) {
 				continue;
 			} else {
-				if (this.isMoveEating(game, new Move(attempt))) {
-					System.out.println("adding: eating " + attempt.getFirst() + " " + attempt.getSecond());
-					generatedMoves.add(new Move(attempt, null, false, true));
-				} else
-					System.out.println("adding: not eating " + attempt.getFirst() + " " + attempt.getSecond());
-				generatedMoves.add(new Move(attempt, null, false, false));
+				if (this.isMoveEating(game, new Move(this.position, attempt))) {
+					// System.out.println("adding: eating " + attempt.getFirst() + " " + attempt.getSecond());
+					generatedMoves.add(new Move(this.position, attempt, null, false, true));
+				} else {
+					// System.out.println("adding: not eating " + attempt.getFirst() + " " + attempt.getSecond());
+					generatedMoves.add(new Move(this.position, attempt, null, false, false));
+				}
 			}
 
 		}
+
 		return generatedMoves;
 	}
 }

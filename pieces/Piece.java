@@ -40,11 +40,16 @@ public abstract class Piece {
 	}
 
 	public boolean validateMove(Game game, Move move) {
-		if (move.getFrom() < 0 || move.getFrom() >= 8 || move.getTo() < 0 || move.getTo() >= 8) {
+		if (move.getTo().getFirst() < 0 || move.getTo().getFirst() >= 8 || move.getTo().getSecond() < 0 || move.getTo().getSecond() >= 8) {
 			return false;
-		} else if (game.getPieceAtSquare(move.getTo()) == null) {
+		} 
+		if (game.getPieceAtSquare(move.getTo()) == null) {
 			return true;
-		} else if (game.getPieceAtSquare(move.getTo()).isWhite() != this.isWhite()) {
+		}
+		// System.out.println("awd " + game.getPieceAtSquare(move.getTo()).toString());
+		// System.out.println("awd " + game.getPieceAtSquare(new Pair<Integer, Integer>(6,4)).toString());
+		// System.out.println("awd " + this.isWhite());
+		if (game.getPieceAtSquare(move.getTo()).isWhite() != this.isWhite()) {
 			return true;
 		} else {
 			return false;

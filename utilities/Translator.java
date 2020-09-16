@@ -53,12 +53,12 @@ public class Translator {
 		if(game.getPieceAtSquare(move.getFrom()) instanceof King //check color
 		|| game.getPieceAtSquare(move.getFrom()) instanceof King ){
 			
-			if((move.getFrom()-move.getTo()) == 2){
-				ret = "O-O";
-			}
-			else{
-				ret = "O-O-O";
-			}
+			// if((move.getFrom()-move.getTo()) == 2){
+			// 	ret = "O-O";
+			// }
+			// else{
+			// 	ret = "O-O-O";
+			// }
 
 		}
 

@@ -4,30 +4,39 @@ import pieces.Piece;
 import utilities.Pair;
 
 public class Move {
-	private Pair<Integer, Integer> fromTo;
+	private Pair<Integer, Integer> from;
+	private Pair<Integer, Integer> to;
 	private Piece promotion;
 
 	private Boolean castle;
 	private boolean isEating;
 	// private bool check;
 
-	public Move(int from, int to) {
-		this.fromTo = new Pair<Integer, Integer>(from, to);
+	public Move(Pair<Integer, Integer> from, Pair<Integer, Integer> to){
+		this.from = from;
+		this.to = to;
+	}
+	public Pair<Integer,Integer> getFrom() {
+		return this.from;
 	}
 
-	public Move(Pair<Integer, Integer> fromTo) {
-		this.fromTo = fromTo;
-	}
-
-	public Move(Pair<Integer,Integer> fromTo, Piece promotion, Boolean castle, boolean isEating) {
-		this.fromTo = fromTo;
+	public Move(Pair<Integer,Integer> from, Pair<Integer,Integer> to, Piece promotion, Boolean castle, boolean isEating) {
+		this.from = from;
+		this.to = to;
 		this.promotion = promotion;
 		this.castle = castle;
 		this.isEating = isEating;
 	}
+	public void setFrom(Pair<Integer,Integer> from) {
+		this.from = from;
+	}
 
-	public Pair<Integer,Integer> getFromTo() {
-		return this.fromTo;
+	public Pair<Integer,Integer> getTo() {
+		return this.to;
+	}
+
+	public void setTo(Pair<Integer,Integer> to) {
+		this.to = to;
 	}
 
 	public Piece getPromotion() {
@@ -37,31 +46,7 @@ public class Move {
 	public void setPromotion(Piece promotion) {
 		this.promotion = promotion;
 	}
-	public int getFrom(){
-		return this.fromTo.getFirst();
-	}
-	public int getTo(){
-		return this.fromTo.getSecond();
 
-	}
-
-	public void setFromTo(Pair<Integer,Integer> fromTo) {
-		this.fromTo = fromTo;
-	}
-
-	public boolean isEating() {
-		return this.isEating;
-	}
-
-	public boolean getIsEating() {
-		return this.isEating;
-	}
-
-
-	public Move fromTo(Pair<Integer,Integer> fromTo) {
-		this.fromTo = fromTo;
-		return this;
-	}
 	public Boolean isCastle() {
 		return this.castle;
 	}
@@ -72,6 +57,10 @@ public class Move {
 
 	public void setCastle(Boolean castle) {
 		this.castle = castle;
+	}
+
+	public boolean isEating() {
+		return this.isEating;
 	}
 
 	public void setIsEating(boolean isEating) {

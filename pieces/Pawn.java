@@ -23,7 +23,7 @@ public class Pawn extends Piece {
 			// attempt to move one square
 			piece = game.getPieceAtSquare(new Pair<Integer, Integer>(position.getFirst(), position.getSecond() + 1));
 			if(piece != null){
-				moves.add(new Move(position.getFirst()*8 + position.getSecond(), piece.getPosition().getFirst()*8 + piece.getPosition().getSecond()));
+				// moves.add(new Move(position.getFirst()*8 + position.getSecond(), piece.getPosition().getFirst()*8 + piece.getPosition().getSecond()));
 
 				if(position.getFirst() == 1){
 				}

@@ -1,6 +1,7 @@
 package controller.command;
 
-import controller.Game;
+import java.util.ArrayList;
+
 import controller.Move;
 import utilities.Pair;
 
@@ -12,7 +13,11 @@ public class SelectPiece extends Command{
 
 	public void execute() {
 		
-		System.out.println(context.getPieceAtSquare(coor).generateMoves(context).toString());
+		ArrayList<Move> awd = context.getPieceAtSquare(coor).generateMoves(context);
+
+		for (Move move : awd) {
+			System.out.println("Move " + move.toString() + ": " +  move.getFrom() + " " + move.getTo());
+		}
 	}
 
 }

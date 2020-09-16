@@ -50,11 +50,11 @@ public class Raycast {
 			return;
 		if (x >= 8 || y >= 8)
 			return;
-		if (piece.validateMove(game, new Move(x, y))) {
-			if (piece.isMoveEating(game, new Move(x, y))) {
-				moveArray.add( new Move(new Pair<Integer, Integer>(8 * originalX + originalY, 8 * x + y), null, false, true));
+		if (piece.validateMove(game, new Move(piece.getPosition(), new Pair<Integer, Integer>(x, y)))) {
+			if (piece.isMoveEating(game, new Move(piece.getPosition(), new Pair<Integer, Integer>(x, y)))) {
+				moveArray.add(new Move(new Pair<Integer, Integer>(originalX,originalY),new Pair<Integer, Integer>(x, y), null, false, true));
 			} else {
-				moveArray.add( new Move(new Pair<Integer, Integer>(8 * originalX + originalY, 8 * x + y), null, false, false));
+				moveArray.add(new Move(new Pair<Integer, Integer>(originalX,originalY),new Pair<Integer, Integer>(x, y), null, false, false));
 				recursiveRaycast(moveArray, game, piece, x, y, addX, addY, originalX, originalY);
 			}
 		}

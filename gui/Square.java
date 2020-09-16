@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import pieces.*;
 
@@ -23,10 +25,10 @@ public class Square extends JPanel {
 	
 	JLayeredPane stack;
 
-	JLabel squareLabel;
+	JButton squareLabel;
 	JLabel moveLabel;
 	JLabel checkLabel;
-	JButton pieceLabel;
+	JLabel pieceLabel;
 
 	Square(Boolean isWhite,Piece piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
 		this.stack = new JLayeredPane();
@@ -45,9 +47,20 @@ public class Square extends JPanel {
 			squareImage = new ImageIcon("img/black_tile_wood.png");
 		}
 
-		squareLabel = new JLabel(squareImage);
+		squareLabel = new JButton(squareImage);
 		squareLabel.setBounds(0, 0, squareImage.getIconWidth(), squareImage.getIconHeight());
-
+		squareLabel.setBorderPainted(false);
+		squareLabel.setFocusPainted(false);
+		squareLabel.setContentAreaFilled(false);
+		
+		squareLabel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("TEST");
+			}
+		});
+		
 		if(canEat || canMove){
 			if(canEat){
 				moveImage= new ImageIcon("img/can_eat.png");
@@ -61,13 +74,9 @@ public class Square extends JPanel {
 
 		if (piece != null) {
 			pieceImage = piece.getImage();
-			pieceLabel = new JButton(pieceImage);
+			pieceLabel = new JLabel(pieceImage);
 			pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
 			stack.add(pieceLabel);
-
-			pieceLabel.setBorderPainted(false);
-			pieceLabel.setFocusPainted(false);
-			pieceLabel.setContentAreaFilled(false);
 
 			// pieceLabel.setDragEnabled(true);
 		}

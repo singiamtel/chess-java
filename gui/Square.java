@@ -7,6 +7,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+
+import controller.Controller;
+import controller.command.SelectPiece;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,7 +61,7 @@ public class Square extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("TEST");
+				Controller.handleRequest(new SelectPiece(piece.getPosition()));
 			}
 		});
 		

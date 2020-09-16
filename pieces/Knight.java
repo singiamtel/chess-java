@@ -18,7 +18,7 @@ public class Knight extends Piece {
 		new Pair<Integer, Integer>(1,-2),
 		new Pair<Integer, Integer>(-2,1),
 		new Pair<Integer, Integer>(-2,-1),
-		new Pair<Integer, Integer>(1,-2),
+		new Pair<Integer, Integer>(-1,-2),
 		new Pair<Integer, Integer>(-1,-2)
 		));
 
@@ -42,8 +42,10 @@ public class Knight extends Piece {
 				continue;
 			} else {
 				if (this.isMoveEating(game, new Move(attempt))) {
+				System.out.println("adding: eating " + attempt.getFirst() + " " + attempt.getSecond());
 					generatedMoves.add(new Move(attempt, null, false, true));
 				} else
+				System.out.println("adding: not eating " + attempt.getFirst() + " " + attempt.getSecond());
 					generatedMoves.add(new Move(attempt, null, false, false));
 			}
 

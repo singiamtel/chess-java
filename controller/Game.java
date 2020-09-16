@@ -15,6 +15,7 @@ public class Game {
 	private Move [] moveList;
 
 	public Game(boolean empty){
+		board[3][3] = new Knight(true,new Pair<Integer, Integer>(3,3));
 	}
 	public Game(){
 		// Empty constructor starts a new game 

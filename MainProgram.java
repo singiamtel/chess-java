@@ -13,6 +13,5 @@ public class MainProgram {
         for(int i=0;i<awd.size();++i){
             System.out.println("move " + awd.get(i) + ": " + awd.get(i).getFrom() + " " + awd.get(i).getTo());
         }
-        System.out.println("dummy");
     }
 }

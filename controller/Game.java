@@ -76,8 +76,22 @@ public class Game {
 	
 	}
 	public boolean isKingOnCheck(boolean isWhite){
-		ArrayList<Move> enemyMoves = new ArrayList<Move>();
+		ArrayList<Move> enemyMoves = new ArrayList<Move>(this.generateAllColourMoves(!isWhite));
 		return false;
+	}
+	private Piece findKing(boolean isWhite){
+		for(int i=0; i<8; ++i){
+			for (int j = 0; j < 8; j++) {
+				Piece tmp = this.getPieceAtSquare(new Pair<Integer, Integer>(i, j));
+				if(tmp != null){
+					if(tmp instanceof King && tmp.isWhite() == isWhite){
+						return tmp;
+					}
+				}
+			}
+		}
+		// TODO: no king exception
+		return null;
 	}
 	public ArrayList<Move> generateAllColourMoves(boolean isWhite){
 		ArrayList<Move> list = new ArrayList<Move>();

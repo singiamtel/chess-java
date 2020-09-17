@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import controller.Game;
@@ -11,8 +12,6 @@ public class Board extends JPanel {
 
     private Square[][] squares = new Square[8][8];
 
-    // private void initUI(){
-    // }
     public Board(Game game) {
         this.setLayout(new GridLayout(8, 8));
         for (int i = 7; i >= 0; --i) {
@@ -24,26 +23,20 @@ public class Board extends JPanel {
             }
         }
     }
-    public Square getSquareAt( Pair<Integer, Integer> square){
-    	return squares[square.getFirst()][square.getSecond()];
+    public void repaint() {
+    	this.removeAll();
+    	 for (int i = 7; i >= 0; --i) {
+             for (int j = 0; j < 8; ++j) {
+				Square aa = squares[i][j];
+				aa.toString();
+                 this.add(squares[i][j]);
+             }
+         }
     }
-	public void setSquareAt(Pair<Integer, Integer> to, Square square) {
-		System.out.println("old " + squares[to.getFirst()][to.getSecond()].isMoveable());
-
-		//squares[to.getFirst()][to.getSecond()].invalidate();
-		//squares[to.getFirst()][to.getSecond()] = square;
-		//squares[to.getFirst()][to.getSecond()].revalidate();
-		squares[to.getFirst()][to.getSecond()].updateMoveable();
-		
-		System.out.println("new " + squares[to.getFirst()][to.getSecond()].isMoveable());
-	}
-         
-        // for(int i=7; i>=0; --i){
-        // for(int j=0; j<8; ++j){
-        // // White squares are odd, black squares are even // TODO: sure?
-        // squares[i][j] = new Square((i+j) % 2 ==0 ? false:true,new
-        // King(),true,false,false);
-        // this.add(squares[i][j]);
-        // }
-        // }
+    public Square getSquareAt( Pair<Integer, Integer> at){
+    	return squares[at.getFirst()][at.getSecond()];
+    }
+	public void setSquareAt(Pair<Integer, Integer> at, Square square) {
+		squares[at.getFirst()][at.getSecond()] = square;
+	}     
 }

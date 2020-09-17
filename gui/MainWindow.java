@@ -24,7 +24,7 @@ public class MainWindow extends JFrame{
 
         JPanel mainpanel = new JPanel(new BorderLayout());
         JPanel toolBar = new ToolBar();
-        JPanel board = new Board(controller.getGame());
+        board = new Board(controller.getGame());
         mainpanel.add(toolBar, BorderLayout.NORTH);
         mainpanel.add(board, BorderLayout.CENTER);
 

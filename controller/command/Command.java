@@ -7,7 +7,7 @@ public abstract class Command {
 	private Object data;
 	protected Controller context;
 	public Command() {
-		
+		context = Controller.getController();
 	}
 	public Command(Object object) {
 		data = object;

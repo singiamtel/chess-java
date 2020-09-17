@@ -13,7 +13,8 @@ public class Controller {
 	}
 	public static Controller getController() {
 		if(controller != null) return controller;
-		return new Controller();
+		controller = new Controller();
+		return controller;
 	}
 	
 	public void handleRequest(Command command) {

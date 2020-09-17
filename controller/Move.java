@@ -8,9 +8,13 @@ public class Move {
 	private Pair<Integer, Integer> to;
 	private Piece promotion;
 
-	private Boolean castle;
+	private boolean castle;
 	private boolean isEating;
-	// private bool check;
+	private boolean check;
+
+	public boolean isCheck() {
+		return this.check;
+	}
 
 	public Move(Pair<Integer, Integer> from, Pair<Integer, Integer> to){
 		this.from = from;
@@ -26,6 +30,14 @@ public class Move {
 		this.promotion = promotion;
 		this.castle = castle;
 		this.isEating = isEating;
+	}
+
+	public boolean getCheck() {
+		return this.check;
+	}
+
+	public void setCheck(boolean check) {
+		this.check = check;
 	}
 	public void setFrom(Pair<Integer,Integer> from) {
 		this.from = from;

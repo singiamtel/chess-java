@@ -1,18 +1,19 @@
 package controller.command;
 
+import controller.Controller;
 import controller.Game;
 
 public abstract class Command {
 	private Object data;
-	protected Game context;
+	protected Controller context;
 	public Command() {
 		
 	}
 	public Command(Object object) {
 		data = object;
 	}
-	public void setContext(Game game) {
-		context = game;
+	public void setContext(Controller controller) {
+		context = controller;
 	}
 
 	public abstract void execute();

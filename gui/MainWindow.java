@@ -10,6 +10,9 @@ import controller.Controller;
 
 
 public class MainWindow extends JFrame{
+    JPanel mainpanel;
+    JPanel toolBar;
+    Board board;
 
     private static final long serialVersionUID = -1049840817772719800L;
 
@@ -34,4 +37,9 @@ public class MainWindow extends JFrame{
     public MainWindow(Controller controller){
         this.initUI(controller);
     }
+
+	public Board getBoard() {
+		return board;
+		
+	}
 }

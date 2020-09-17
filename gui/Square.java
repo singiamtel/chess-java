@@ -19,9 +19,12 @@ public class Square extends JPanel {
 
 	private static final long serialVersionUID = 2642336035089268095L;
 
+
+
 	Boolean isWhite;
 	Boolean isCheck;
 	Boolean isEatable;
+	Boolean isMoveable;
 
 	Piece piece;
 	
@@ -34,6 +37,11 @@ public class Square extends JPanel {
 	public Square() {}
 
 	Square(Boolean isWhite,Piece piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
+		this.isWhite = isWhite;
+		this.isMoveable= canMove;
+		this.isCheck = isCheck;
+		this.isEatable = canEat;
+		
 		this.stack = new JLayeredPane();
 		stack.setPreferredSize(new Dimension(110, 110));
 
@@ -60,7 +68,7 @@ public class Square extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Controller.handleRequest(new SelectPiece(piece.getPosition()));
+				Controller.getController().handleRequest(new SelectPiece(piece.getPosition()));
 			}
 		});
 		
@@ -104,14 +112,11 @@ public class Square extends JPanel {
 
 		// this.setIcon(image);
 	}
-
-	void updateCheck() {
-		// if(this.piece == Pieces.KING){
-
-		// }
+	public Boolean isWhite() {
+		return isWhite;
 	}
 
-	void updateEatable() {
-
+	public Piece getPiece() {
+		return piece;
 	}
 }

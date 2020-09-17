@@ -27,6 +27,9 @@ public class Board extends JPanel {
     public Square getSquareAt( Pair<Integer, Integer> square){
     	return squares[square.getFirst()][square.getSecond()];
     }
+	public void setSquareAt(Pair<Integer, Integer> to, Square square) {
+		squares[to.getFirst()][to.getSecond()] = square;
+	}
          
         // for(int i=7; i>=0; --i){
         // for(int j=0; j<8; ++j){

@@ -119,4 +119,24 @@ public class Square extends JPanel {
 	public Piece getPiece() {
 		return piece;
 	}
+
+	public boolean isMoveable() {
+		return isMoveable;
+	}
+	public void updateMoveable() {
+		moveLabel = new JLabel(new ImageIcon("img/can_move_here.png"));
+		moveLabel.updateUI();
+		this.updateInside();
+	}
+	public void updateInside() {
+		this.removeAll();
+		stack.removeAll();
+		stack.add(squareLabel);
+		stack.add(moveLabel);
+		if(isCheck) stack.add(checkLabel);
+		if(piece != null) stack.add(pieceLabel);
+
+		this.add(stack);
+
+	}
 }

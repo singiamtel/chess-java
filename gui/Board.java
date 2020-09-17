@@ -28,10 +28,14 @@ public class Board extends JPanel {
     	return squares[square.getFirst()][square.getSecond()];
     }
 	public void setSquareAt(Pair<Integer, Integer> to, Square square) {
-		squares[to.getFirst()][to.getSecond()].setVisible(false);
+		System.out.println("old " + squares[to.getFirst()][to.getSecond()].isMoveable());
 
-		squares[to.getFirst()][to.getSecond()] = square;
-		squares[to.getFirst()][to.getSecond()].setVisible(true);
+		//squares[to.getFirst()][to.getSecond()].invalidate();
+		//squares[to.getFirst()][to.getSecond()] = square;
+		//squares[to.getFirst()][to.getSecond()].revalidate();
+		squares[to.getFirst()][to.getSecond()].updateMoveable();
+		
+		System.out.println("new " + squares[to.getFirst()][to.getSecond()].isMoveable());
 	}
          
         // for(int i=7; i>=0; --i){

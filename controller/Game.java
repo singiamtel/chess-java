@@ -18,6 +18,8 @@ public class Game {
 
 	public Game(boolean empty){
 		board[3][3] = new Knight(true,new Pair<Integer, Integer>(3,3));
+		board[0][0] = new King(true,new Pair<Integer, Integer>(1,2));
+		board[1][2] = new King(false,new Pair<Integer, Integer>(0,0));
 		board[4][2] = new Pawn(false,new Pair<Integer, Integer>(4,2));
 	}
 	public Game(){
@@ -77,6 +79,12 @@ public class Game {
 	}
 	public boolean isKingOnCheck(boolean isWhite){
 		ArrayList<Move> enemyMoves = new ArrayList<Move>(this.generateAllColourMoves(!isWhite));
+		Piece king = findKing(isWhite);
+		for (int i = 0; i < enemyMoves.size(); i++) {
+			if(enemyMoves.get(i).getTo() == king.getPosition()){
+				return true;
+			}
+		}
 		return false;
 	}
 	private Piece findKing(boolean isWhite){

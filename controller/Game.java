@@ -13,11 +13,12 @@ import utilities.Pair;
 
 public class Game {
 	private Piece [][] board = new Piece[8][8];
-	private Boolean turn;
+	private Boolean whitePlays;
 	private Pawn enPassant;
 
 	public Game(boolean empty){
 		board[3][3] = new Knight(true,new Pair<Integer, Integer>(3,3));
+		board[4][2] = new Pawn(false,new Pair<Integer, Integer>(4,2));
 	}
 	public Game(){
 		// Empty constructor starts a new game 
@@ -53,10 +54,13 @@ public class Game {
 				board[i][j] = null;
 			}
 		}
+		this.whitePlays = true;
 	}
 
 	public Piece getPieceAtSquare(int square){
-		return board[(square/8)][square%8] ;
+		int x = square/8;
+		int y = square%8;
+		return board[x][y];
 	}
 	public Piece getPieceAtSquare(Pair<Integer, Integer> square){
 		return board[square.getFirst()][square.getSecond()];
@@ -72,7 +76,7 @@ public class Game {
 	
 	}
 	public boolean isKingOnCheck(boolean isWhite){
-
+		ArrayList<Move> enemyMoves = new ArrayList<Move>();
 		return false;
 	}
 	public ArrayList<Move> generateAllColourMoves(boolean isWhite){

@@ -10,38 +10,94 @@ import utilities.Pair;
 
 public class Pawn extends Piece {
 
-	public Pawn(Boolean isWhite, Pair<Integer, Integer> position){
+	public Pawn(Boolean isWhite, Pair<Integer, Integer> position) {
 		this.isWhite = isWhite;
-		this.position= position;
+		this.position = position;
 	}
 
-	public ArrayList<Move> generateMoves(Game game){
+	public ArrayList<Move> generateMoves(Game game) {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		Piece piece;
-		if(isWhite()){
-			//movimiento de uno
-			// attempt to move one square
-			piece = game.getPieceAtSquare(new Pair<Integer, Integer>(position.getFirst(), position.getSecond() + 1));
-			if(piece != null){
-				// moves.add(new Move(position.getFirst()*8 + position.getSecond(), piece.getPosition().getFirst()*8 + piece.getPosition().getSecond()));
+		if (isWhite()) {
+			// Attempt to move one square
+			piece = game.getPieceAtSquare(new Pair<Integer, Integer>(position.getFirst() + 1, position.getSecond()));
+			if (piece == null) {
+				moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+						new Pair<Integer, Integer>(position.getFirst() + 1, position.getSecond())));
 
-				if(position.getFirst() == 1){
+				if (position.getFirst() == 1) {
+					// Attempt to move two squares
+					piece = game.getPieceAtSquare(
+							new Pair<Integer, Integer>(position.getFirst() + 2, position.getSecond()));
+					if (piece == null) {
+						moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+								new Pair<Integer, Integer>(position.getFirst() + 2, position.getSecond())));
+
+					}
 				}
 			}
-			if(position.getSecond() == 1){
-				//movimiento de dos
-
+			// Right
+			if (position.getSecond() + 1 < 8) {
+				piece = game.getPieceAtSquare(
+						new Pair<Integer, Integer>(position.getFirst() + 1, position.getSecond() + 1));
+				if (piece != null && piece.isWhite() != this.isWhite()) {
+					moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+							new Pair<Integer, Integer>(position.getFirst() + 1, position.getSecond() + 1)));
+				}
 			}
-				//comprobar si come
 
-		}
-		else {
-			if(position.getSecond() == 6){
-				
+			// Left
+			if (position.getSecond() - 1 >= 0) {
+				piece = game.getPieceAtSquare(
+						new Pair<Integer, Integer>(position.getFirst() + 1, position.getSecond() - 1));
+				if (piece != null && piece.isWhite() != this.isWhite()) {
+					moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+							new Pair<Integer, Integer>(position.getFirst() + 1, position.getSecond() - 1)));
+				}
+			}
+
+		} else {
+			// Attempt to move one square
+			piece = game.getPieceAtSquare(new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond()));
+			if (piece == null) {
+				moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+						new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond())));
+
+				if (position.getFirst() == 6) {
+					// Attempt to move two squares
+					piece = game.getPieceAtSquare(
+							new Pair<Integer, Integer>(position.getFirst() - 2, position.getSecond()));
+					if (piece == null) {
+						moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+								new Pair<Integer, Integer>(position.getFirst() - 2, position.getSecond())));
+
+					}
+				}
+			}
+			// Right
+			if(position.getSecond() + 1 < 8){
+				piece = game.getPieceAtSquare(
+						new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond() + 1));
+				System.out.println(piece);
+				if (piece != null && piece.isWhite() != this.isWhite()) {
+					moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+							new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond() + 1)));
+				}
+			}
+
+			// Left
+			if(position.getSecond() - 1 >= 0){
+				piece = game.getPieceAtSquare(
+						new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond() - 1));
+				if (piece != null && piece.isWhite() != this.isWhite()) {
+					moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+							new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond() - 1)));
+				}
 			}
 		}
-		return null;
+		return moves;
 	}
+
 	public ImageIcon getImage() {
 		if (isWhite) {
 			return new ImageIcon("img/white_pawn.png");

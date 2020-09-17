@@ -36,7 +36,7 @@ public class Square extends JPanel {
 	JLabel pieceLabel;
 	public Square() {}
 
-	Square(Boolean isWhite,Piece piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
+	public Square(Boolean isWhite,Piece piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
 		this.isWhite = isWhite;
 		this.isMoveable= canMove;
 		this.isCheck = isCheck;

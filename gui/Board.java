@@ -27,8 +27,6 @@ public class Board extends JPanel {
     	this.removeAll();
     	 for (int i = 7; i >= 0; --i) {
              for (int j = 0; j < 8; ++j) {
-				Square aa = squares[i][j];
-				aa.toString();
                  this.add(squares[i][j]);
              }
          }

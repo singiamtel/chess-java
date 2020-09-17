@@ -31,6 +31,7 @@ public class Square extends JPanel {
 	JLabel moveLabel;
 	JLabel checkLabel;
 	JLabel pieceLabel;
+	public Square() {}
 
 	Square(Boolean isWhite,Piece piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
 		this.stack = new JLayeredPane();

@@ -6,14 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import controller.Game;
+import controller.Controller;
 
 
 public class MainWindow extends JFrame{
 
     private static final long serialVersionUID = -1049840817772719800L;
 
-    private void initUI() {
+    private void initUI(Controller controller) {
         setTitle("Chess-java");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         // TODO: Fullscreen 
@@ -21,7 +21,7 @@ public class MainWindow extends JFrame{
 
         JPanel mainpanel = new JPanel(new BorderLayout());
         JPanel toolBar = new ToolBar();
-        JPanel board = new Board(new Game());
+        JPanel board = new Board(controller.getGame());
         mainpanel.add(toolBar, BorderLayout.NORTH);
         mainpanel.add(board, BorderLayout.CENTER);
 
@@ -31,7 +31,7 @@ public class MainWindow extends JFrame{
         setVisible(true);
     }
 
-    public MainWindow(){
-        this.initUI();
+    public MainWindow(Controller controller){
+        this.initUI(controller);
     }
 }

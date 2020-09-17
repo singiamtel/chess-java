@@ -12,4 +12,8 @@ public class Controller {
 		command.setContext(game);
 		command.execute();
 	}
+
+	public Game getGame() {
+		return game;
+	}
 }

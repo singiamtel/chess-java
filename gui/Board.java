@@ -3,17 +3,17 @@ package gui;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import controller.Game;
-import pieces.King;
+import utilities.Pair;
 
 public class Board extends JPanel {
 
     private static final long serialVersionUID = 5071359096090410155L;
 
-    private JPanel[][] squares = new JPanel[8][8];
+    private Square[][] squares = new Square[8][8];
 
     // private void initUI(){
     // }
-    Board(Game game) {
+    public Board(Game game) {
         this.setLayout(new GridLayout(8, 8));
         for (int i = 7; i >= 0; --i) {
             for (int j = 0; j < 8; ++j) {
@@ -23,6 +23,11 @@ public class Board extends JPanel {
                 this.add(squares[i][j]);
             }
         }
+    }
+    public Square getSquareAt( Pair<Integer, Integer> square){
+    	return squares[square.getFirst()][square.getSecond()];
+    }
+         
         // for(int i=7; i>=0; --i){
         // for(int j=0; j<8; ++j){
         // // White squares are odd, black squares are even // TODO: sure?
@@ -31,5 +36,4 @@ public class Board extends JPanel {
         // this.add(squares[i][j]);
         // }
         // }
-    }
 }

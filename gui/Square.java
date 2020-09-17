@@ -92,9 +92,6 @@ public class Square extends JPanel {
 			// pieceLabel.setDragEnabled(true);
 		}
 
-
-
-
 		if(isCheck){
 			if(isWhite){
 				checkImage= new ImageIcon("img/king_threatened_white.png");

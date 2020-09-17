@@ -1,8 +1,9 @@
 package gui;
 
-import java.awt.Component;
 import java.awt.GridLayout;
+
 import javax.swing.JPanel;
+
 import controller.Game;
 import utilities.Pair;
 
@@ -23,18 +24,21 @@ public class Board extends JPanel {
             }
         }
     }
-    public void repaint() {
-    	this.removeAll();
+    public void repaintBoard() {
+        this.removeAll();
     	 for (int i = 7; i >= 0; --i) {
              for (int j = 0; j < 8; ++j) {
                  this.add(squares[i][j]);
              }
          }
+         this.revalidate();
+         this.repaint();
     }
-    public Square getSquareAt( Pair<Integer, Integer> at){
+    public Square getSquareAt(Pair<Integer, Integer> at){
     	return squares[at.getFirst()][at.getSecond()];
     }
 	public void setSquareAt(Pair<Integer, Integer> at, Square square) {
-		squares[at.getFirst()][at.getSecond()] = square;
+        squares[at.getFirst()][at.getSecond()] = square;
+        repaintBoard();
 	}     
 }

@@ -1,7 +1,6 @@
 package controller.command;
 
 import controller.Controller;
-import controller.Game;
 
 public abstract class Command {
 	private Object data;

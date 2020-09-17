@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import controller.Controller;
 import controller.Game;
 import controller.Move;
-import gui.Board;
 import gui.Square;
 import utilities.Pair;
 
@@ -22,7 +21,8 @@ public class SelectPiece extends Command{
 		for (Move move : moves) {
 			//System.out.println(Controller.getController().getMainWindow().getBoard());
 			Square oldSquare = Controller.getController().getMainWindow().getBoard().getSquareAt(move.getTo());
-			context.getMainWindow().getBoard().setSquareAt(move.getTo(),new Square(oldSquare.isWhite(), oldSquare.getPiece(), true, move.isCheck(),move.isEating()));
+			Square newSquare = new Square(oldSquare.isWhite(), oldSquare.getPiece(), true, move.isCheck(),move.isEating());
+			context.getMainWindow().getBoard().setSquareAt(move.getTo(), newSquare);
 			// context.getMainWindow().getBoard().getSquareAt(move.getTo());
 			
 		}

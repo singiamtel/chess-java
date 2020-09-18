@@ -14,6 +14,7 @@ import utilities.Pair;
 public class Game {
 	private Piece [][] board = new Piece[8][8];
 	private Boolean whitePlays;
+	// TODO: implement enPassant
 	private Pawn enPassant;
 
 	public Game(boolean empty){
@@ -114,5 +115,46 @@ public class Game {
 		}
 		return list;
 	}
+	public void makeMove(Move move){
+		this.whitePlays = !this.whitePlays;
+	}
+	private void undoMove(Move move){
+		this.whitePlays = !this.whitePlays;
 
+	}
+	public boolean validateMove(Move move){
+		this.makeMove(move);
+		if(this.isKingOnCheck(!whitePlays)){
+			this.undoMove(move);
+			return false;
+		}
+		return true;
+
+	}
+	public boolean isStaleMate(){
+		if(isKingOnCheck(this.whitePlays)) return false;
+		ArrayList<Move> legalMoves = new ArrayList<Move>(this.generateAllColourMoves(this.whitePlays));
+		for (int i = 0; i < legalMoves.size(); i++) {
+			if(!validateMove(legalMoves.get(i))){
+				legalMoves.remove(i);
+			}
+		}
+		if(legalMoves.isEmpty()) return true;
+		return false;
+	}
+	public boolean isMate(){
+		if(! isKingOnCheck(this.whitePlays)) return false;
+		ArrayList<Move> legalMoves = new ArrayList<Move>(this.generateAllColourMoves(this.whitePlays));
+		for (int i = 0; i < legalMoves.size(); i++) {
+			if(!validateMove(legalMoves.get(i))){
+				legalMoves.remove(i);
+			}
+		}
+		if(legalMoves.isEmpty()) return true;
+		return false;
+	}
+	public void update(){
+		// checks if game is over
+		// this function should run every ply
+	}
 }

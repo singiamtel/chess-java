@@ -39,18 +39,15 @@ public class Knight extends Piece {
 
 		for (Pair<Integer, Integer> move : moves) {
 			Pair<Integer, Integer> attempt = this.position.addPair(move);
-			if (attempt.getFirst() < 0 || attempt.getFirst() >= 8)
+			if(Move.isOutOfBounds(attempt)){
 				continue;
-			if (attempt.getSecond() < 0 || attempt.getSecond() >= 8)
-				continue;
+			}
 			if (!this.validateMove(game, new Move(new Pair<Integer, Integer>(this.position.getFirst(), this.position.getSecond()), new Pair<Integer, Integer>(attempt.getFirst(), attempt.getSecond())))) {
 				continue;
 			} else {
 				if (this.isMoveEating(game, new Move(this.position, attempt))) {
-					// System.out.println("adding: eating " + attempt.getFirst() + " " + attempt.getSecond());
 					generatedMoves.add(new Move(this.position, attempt, null, false, true));
 				} else {
-					// System.out.println("adding: not eating " + attempt.getFirst() + " " + attempt.getSecond());
 					generatedMoves.add(new Move(this.position, attempt, null, false, false));
 				}
 			}

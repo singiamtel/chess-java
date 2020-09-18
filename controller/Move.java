@@ -32,6 +32,35 @@ public class Move {
 		this.isEating = isEating;
 	}
 
+	public boolean isOutOfBounds(){
+		if (this.to.getFirst() < 0 || this.to.getFirst() >= 8){
+		return true;
+		}
+		if (this.to.getSecond() < 0 || this.to.getSecond() >= 8){
+		return true;
+		}
+		return false;
+	}
+	public static boolean isOutOfBounds(Move move){
+		if (move.getTo().getFirst() < 0 || move.getTo().getFirst() >= 8){
+		return true;
+		}
+		if (move.getTo().getSecond() < 0 || move.getTo().getSecond() >= 8){
+		return true;
+		}
+		return false;
+	}
+
+	public static boolean isOutOfBounds(Pair<Integer, Integer> pair){
+		if (pair.getFirst() < 0 || pair.getFirst() >= 8){
+		return true;
+		}
+		if (pair.getSecond() < 0 || pair.getSecond() >= 8){
+		return true;
+		}
+		return false;
+	}
+
 	public boolean getCheck() {
 		return this.check;
 	}

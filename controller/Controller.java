@@ -2,7 +2,6 @@ package controller;
 
 import controller.command.Command;
 import gui.MainWindow;
-import gui.Square;
 import utilities.Pair;
 
 public class Controller {

@@ -19,6 +19,7 @@ public class SelectPiece extends Command{
 
 		if(!context.isPieceSelected()) {
 			Game game = context.getGame();
+			if(game.getPieceAtSquare(coor) == null) return;
 			ArrayList<Move> moves = game.getPieceAtSquare(coor).generateMoves(game);
 			for (Move move : moves) {
 				Square oldSquare = Controller.getController().getMainWindow().getBoard().getSquareAt(move.getTo());
@@ -27,8 +28,7 @@ public class SelectPiece extends Command{
 			}
 			context.setLastPieceSelected(coor);
 			context.setPieceSelected(true);
-
-
+			context.getGame().makeMove(new Move(context.getLastPieceSelected(),coor));
 		}else {
 			if(context.getMainWindow().getBoard().getSquareAt(coor).canMoveHere()) {
 				context.getGame().makeMove(new Move(context.getLastPieceSelected(),coor));

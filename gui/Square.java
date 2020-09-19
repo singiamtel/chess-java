@@ -46,6 +46,7 @@ public class Square extends JPanel {
 		this.isMoveable = canMove;
 		this.isCheck = isCheck;
 		this.isEatable = canEat;
+		this.piece = piece;
 
 		this.stack = new JLayeredPane();
 		stack.setPreferredSize(new Dimension(110, 110));
@@ -139,7 +140,7 @@ public class Square extends JPanel {
 	}
 
 	public void updateInside() {
-		this.removeAll();
+		// this.removeAll();
 		stack.removeAll();
 		stack.add(squareLabel);
 		stack.add(moveLabel);
@@ -148,7 +149,8 @@ public class Square extends JPanel {
 		if (piece != null)
 			stack.add(pieceLabel);
 		this.add(stack);
-
+		this.revalidate();
+		this.repaint();
 	}
 
 	public Pair<Integer, Integer> getPosition() {
@@ -159,16 +161,19 @@ public class Square extends JPanel {
 		this.position = position;
 	}
 
-	public void setPiece(Piece piece) {
-		this.piece = piece;
-		if (piece != null) {
-			ImageIcon pieceImage = piece.getImage();
+	public void setPiece(Piece newPiece) {
+		if (newPiece != null) {
+			ImageIcon pieceImage = newPiece.getImage();
+			System.out.println("changing image to: " + newPiece.getImage());
 			pieceLabel = new JLabel(pieceImage);
+			pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
 		}
+		this.piece = newPiece;
 	}
 
 	public void repaintSquare() {
 		this.removeAll();
+		stack.removeAll();
 		if(isCheck || isEatable) {
 			stack.add(moveLabel);
 		}
@@ -178,6 +183,7 @@ public class Square extends JPanel {
 		if(isCheck) {
 			stack.add(checkLabel);
 		}
+		// pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
 		stack.add(squareLabel);
 		this.add(stack);
 	}

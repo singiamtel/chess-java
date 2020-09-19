@@ -161,5 +161,4 @@ public class Game {
 		// checks if game is over
 		// this function should run every ply
 	}
-
 }

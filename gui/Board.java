@@ -31,7 +31,6 @@ public class Board extends JPanel {
 		this.removeAll();
 		for (int i = 7; i >= 0; --i) {
 			for (int j = 0; j < 8; ++j) {
-				System.out.println(i * 8 + j);
 				this.add(squares[i][j]);
 			}
 		}
@@ -53,7 +52,9 @@ public class Board extends JPanel {
 		// Square from = new Square(to.isWhite(), null, false, false, false,to.getPosition());
 		// squares[move.getTo().getFirst()][move.getTo().getSecond()] = to;
 		// squares[move.getFrom().getFirst()][move.getFrom().getSecond()] = from;
+
 		Piece piece = squares[move.getFrom().getFirst()][move.getFrom().getSecond()].getPiece();
+		if(piece != null) System.out.println("piece: " + piece.toString());
 		squares[move.getFrom().getFirst()][move.getFrom().getSecond()].setPiece(null);
 		squares[move.getTo().getFirst()][move.getTo().getSecond()].setPiece(piece);
 		

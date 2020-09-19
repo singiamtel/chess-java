@@ -117,10 +117,14 @@ public class Game {
 	}
 	public void makeMove(Move move){
 		this.whitePlays = !this.whitePlays;
+		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move.getFrom().getSecond()];
+		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
+		//TODO update material
 	}
 	private void undoMove(Move move){
 		this.whitePlays = !this.whitePlays;
-
+		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = this.board[move.getTo().getFirst()][move.getTo().getSecond()];
+		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = null;
 	}
 	public boolean validateMove(Move move){
 		this.makeMove(move);
@@ -157,4 +161,5 @@ public class Game {
 		// checks if game is over
 		// this function should run every ply
 	}
+
 }

@@ -16,15 +16,26 @@ public class SelectPiece extends Command{
 	}
 
 	public void execute() {
-		Game game = context.getGame();
-		ArrayList<Move> moves = game.getPieceAtSquare(coor).generateMoves(game);
-		for (Move move : moves) {
-			//System.out.println(Controller.getController().getMainWindow().getBoard());
-			Square oldSquare = Controller.getController().getMainWindow().getBoard().getSquareAt(move.getTo());
-			Square newSquare = new Square(oldSquare.isWhite(), oldSquare.getPiece(), true, move.isCheck(),move.isEating());
-			context.getMainWindow().getBoard().setSquareAt(move.getTo(), newSquare);
-			// context.getMainWindow().getBoard().getSquareAt(move.getTo());
-			
+
+		if(!context.isPieceSelected()) {
+			Game game = context.getGame();
+			ArrayList<Move> moves = game.getPieceAtSquare(coor).generateMoves(game);
+			for (Move move : moves) {
+				Square oldSquare = Controller.getController().getMainWindow().getBoard().getSquareAt(move.getTo());
+				Square newSquare = new Square(oldSquare.isWhite(), oldSquare.getPiece(), true, move.isCheck(),move.isEating(), new Pair<Integer,Integer>(move.getTo().getFirst(),move.getTo().getSecond()));
+				context.getMainWindow().getBoard().setSquareAt(move.getTo(), newSquare);
+			}
+			context.setLastPieceSelected(coor);
+			context.setPieceSelected(true);
+
+
+		}else {
+			if(context.getMainWindow().getBoard().getSquareAt(coor).canMoveHere()) {
+				context.getGame().makeMove(new Move(context.getLastPieceSelected(),coor));
+				context.getMainWindow().getBoard().makeMove(new Move(context.getLastPieceSelected(),coor));
+				context.setPieceSelected(false);
+				
+			}
 		}
 	}
 

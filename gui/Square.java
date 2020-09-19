@@ -1,6 +1,7 @@
 package gui;
 
 import pieces.*;
+import utilities.Pair;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,29 +20,33 @@ public class Square extends JPanel {
 
 	private static final long serialVersionUID = 2642336035089268095L;
 
-
-
 	Boolean isWhite;
 	Boolean isCheck;
 	Boolean isEatable;
 	Boolean isMoveable;
 
 	Piece piece;
-	
+	Pair<Integer, Integer> position;
+
 	JLayeredPane stack;
 
 	JButton squareLabel;
 	JLabel moveLabel;
 	JLabel checkLabel;
 	JLabel pieceLabel;
-	public Square() {}
 
-	public Square(Boolean isWhite,Piece piece,Boolean canMove,Boolean isCheck, Boolean canEat) {
+	public Square() {
+	}
+
+	public Square(Boolean isWhite, Piece piece, Boolean canMove, Boolean isCheck, Boolean canEat,
+			Pair<Integer, Integer> position) {
+		this.position = position;
+
 		this.isWhite = isWhite;
-		this.isMoveable= canMove;
+		this.isMoveable = canMove;
 		this.isCheck = isCheck;
 		this.isEatable = canEat;
-		
+
 		this.stack = new JLayeredPane();
 		stack.setPreferredSize(new Dimension(110, 110));
 
@@ -63,20 +68,20 @@ public class Square extends JPanel {
 		squareLabel.setBorderPainted(false);
 		squareLabel.setFocusPainted(false);
 		squareLabel.setContentAreaFilled(false);
-		
+
 		squareLabel.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Controller.getController().handleRequest(new SelectPiece(piece.getPosition()));
+				Controller.getController().handleRequest(new SelectPiece(position));
 			}
 		});
-		
-		if(canEat || canMove){
-			if(canEat){
-				moveImage= new ImageIcon("img/can_eat.png");
-			}else{
-				moveImage= new ImageIcon("img/can_move_here.png");
+
+		if (canEat || canMove) {
+			if (canEat) {
+				moveImage = new ImageIcon("img/can_eat.png");
+			} else {
+				moveImage = new ImageIcon("img/can_move_here.png");
 			}
 			moveLabel = new JLabel(moveImage);
 			moveLabel.setBounds(0, 0, moveImage.getIconWidth(), moveImage.getIconHeight());
@@ -92,23 +97,24 @@ public class Square extends JPanel {
 			// pieceLabel.setDragEnabled(true);
 		}
 
-		if(isCheck){
-			if(isWhite){
-				checkImage= new ImageIcon("img/king_threatened_white.png");
-			}else{
-				checkImage= new ImageIcon("img/king_threatened_black.png");
+		if (isCheck) {
+			if (isWhite) {
+				checkImage = new ImageIcon("img/king_threatened_white.png");
+			} else {
+				checkImage = new ImageIcon("img/king_threatened_black.png");
 			}
 			checkLabel = new JLabel(checkImage);
 			checkLabel.setBounds(0, 0, checkImage.getIconWidth(), checkImage.getIconHeight());
 			stack.add(checkLabel);
 		}
-		
+
 		stack.add(squareLabel);
 
 		this.add(stack);
 
 		// this.setIcon(image);
 	}
+
 	public Boolean isWhite() {
 		return isWhite;
 	}
@@ -120,20 +126,66 @@ public class Square extends JPanel {
 	public boolean isMoveable() {
 		return isMoveable;
 	}
+
+	public boolean canMoveHere() {
+		return this.isEatable || this.isMoveable();
+	}
+
 	public void updateMoveable() {
 		this.setVisible(false);
 		moveLabel = new JLabel(new ImageIcon("img/can_move_here.png"));
 		this.revalidate();
 		this.repaint();
 	}
+
 	public void updateInside() {
 		this.removeAll();
 		stack.removeAll();
 		stack.add(squareLabel);
 		stack.add(moveLabel);
-		if(isCheck) stack.add(checkLabel);
-		if(piece != null) stack.add(pieceLabel);
+		if (isCheck)
+			stack.add(checkLabel);
+		if (piece != null)
+			stack.add(pieceLabel);
 		this.add(stack);
 
 	}
+
+	public Pair<Integer, Integer> getPosition() {
+		return position;
+	}
+
+	public void setPosition(Pair<Integer, Integer> position) {
+		this.position = position;
+	}
+
+	public void setPiece(Piece piece) {
+		this.piece = piece;
+		if (piece != null) {
+			ImageIcon pieceImage = piece.getImage();
+			pieceLabel = new JLabel(pieceImage);
+		}
+	}
+
+	public void repaintSquare() {
+		this.removeAll();
+		if(isCheck || isEatable) {
+			stack.add(moveLabel);
+		}
+		if(piece != null) {
+			stack.add(pieceLabel);
+		}
+		if(isCheck) {
+			stack.add(checkLabel);
+		}
+		stack.add(squareLabel);
+		this.add(stack);
+	}
+
+	public void clear() {
+		isEatable = false;
+		isMoveable = false;
+
+	}
+
 }

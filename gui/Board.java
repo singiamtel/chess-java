@@ -27,6 +27,16 @@ public class Board extends JPanel {
 		}
 	}
 
+	public void clearMoveMarks(){
+		boolean flag = false;
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if(squares[i][j].clear()) flag=true;
+			}
+		}
+		if (flag) this.repaintBoard();
+	}
+
 	public void repaintBoard() {
 		this.removeAll();
 		for (int i = 7; i >= 0; --i) {
@@ -48,18 +58,17 @@ public class Board extends JPanel {
 	}
 
 	public void makeMove(Move move) {
-		// Square to = squares[move.getFrom().getFirst()][move.getFrom().getSecond()];
-		// Square from = new Square(to.isWhite(), null, false, false, false,to.getPosition());
-		// squares[move.getTo().getFirst()][move.getTo().getSecond()] = to;
-		// squares[move.getFrom().getFirst()][move.getFrom().getSecond()] = from;
-
 		Piece piece = squares[move.getFrom().getFirst()][move.getFrom().getSecond()].getPiece();
+
 		if(piece != null) System.out.println("piece: " + piece.toString());
-		squares[move.getFrom().getFirst()][move.getFrom().getSecond()].setPiece(null);
-		squares[move.getTo().getFirst()][move.getTo().getSecond()].setPiece(piece);
+
+		Square squareFrom = squares[move.getFrom().getFirst()][move.getFrom().getSecond()];
+		Square squareTo = squares[move.getTo().getFirst()][move.getTo().getSecond()];
+		squareFrom.setPiece(null);
+		squareTo.setPiece(piece);
 		
-		squares[move.getFrom().getFirst()][move.getFrom().getSecond()].repaintSquare();
-		squares[move.getTo().getFirst()][move.getTo().getSecond()].repaintSquare();
+		squareFrom.repaintSquare();
+		squareTo.repaintSquare();
 		
 		repaintBoard();
 

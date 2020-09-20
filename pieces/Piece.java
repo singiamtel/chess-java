@@ -46,6 +46,9 @@ public abstract class Piece {
 		if (game.getPieceAtSquare(move.getTo()) == null) {
 			return true;
 		}
+		// System.out.println("awd " + game.getPieceAtSquare(move.getTo()).toString());
+		// System.out.println("awd " + game.getPieceAtSquare(new Pair<Integer, Integer>(6,4)).toString());
+		// System.out.println("awd " + this.isWhite());
 		if (game.getPieceAtSquare(move.getTo()).isWhite() != this.isWhite()) {
 			return true;
 		} else {

@@ -1,10 +1,14 @@
+import java.util.ArrayList;
 
+import controller.Controller;
 import controller.Game;
-import gui.GameController;
+import controller.Move;
 import gui.MainWindow;
+import utilities.Pair;
 public class MainProgram {
     public static void main(String[] args) {
-    	GameController controller = new GameController();
-        MainWindow mainwindow = new MainWindow(controller.getGame());
+        Controller controller = Controller.getController();
+        Game game = new Game(true);
+        System.out.println(game.isKingOnCheck(true));
     }
 }

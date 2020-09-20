@@ -17,6 +17,7 @@ public class Game {
 	// TODO: implement enPassant
 	private Pawn enPassant;
 
+	// Test game
 	public Game(boolean empty){
 		board[3][3] = new Knight(true,new Pair<Integer, Integer>(3,3));
 		board[0][0] = new King(true,new Pair<Integer, Integer>(0,0));

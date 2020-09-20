@@ -109,16 +109,12 @@ public class Square extends JPanel {
 			stack.add(checkLabel);
 		}
 
-<<<<<<< HEAD
-
 		squareLabel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				//GameController.getController().clickOnSquare(position);
 			}
 		});
-=======
->>>>>>> parent of c099b9b... started controller refactor
 		stack.add(squareLabel);
 
 		this.add(stack);

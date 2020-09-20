@@ -78,6 +78,7 @@ public class Pawn extends Piece {
 			if(position.getSecond() + 1 < 8){
 				piece = game.getPieceAtSquare(
 						new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond() + 1));
+				System.out.println(piece);
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
 							new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond() + 1)));

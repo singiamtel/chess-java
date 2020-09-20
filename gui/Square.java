@@ -102,6 +102,7 @@ public class Square extends JPanel {
 		squareLabel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				//GameController.getController().clickOnSquare(position);
 			}
 		});
 		stack.add(squareLabel);

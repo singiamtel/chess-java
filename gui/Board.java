@@ -34,7 +34,9 @@ public class Board extends JPanel {
 				if(squares[i][j].clear()) flag=true;
 			}
 		}
-		if (flag) this.repaintBoard();
+		if (flag) {
+			this.repaintBoard();
+		}
 	}
 
 	public void repaintBoard() {
@@ -59,8 +61,6 @@ public class Board extends JPanel {
 
 	public void makeMove(Move move) {
 		Piece piece = squares[move.getFrom().getFirst()][move.getFrom().getSecond()].getPiece();
-
-		if(piece != null) System.out.println("piece: " + piece.toString());
 
 		Square squareFrom = squares[move.getFrom().getFirst()][move.getFrom().getSecond()];
 		Square squareTo = squares[move.getTo().getFirst()][move.getTo().getSecond()];

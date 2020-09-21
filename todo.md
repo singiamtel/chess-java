@@ -13,3 +13,4 @@
 - [ ] Asynchronous calls
 - [ ] Check for discovery checks
 - [ ] Make test units
+- [ ] Clicking on a piece twice deletes canMove dots

@@ -17,6 +17,8 @@ public class Game {
 	// TODO: implement enPassant
 	private Pawn enPassant;
 
+
+	// Test game
 	public Game(boolean empty){
 		board[3][3] = new Knight(true,new Pair<Integer, Integer>(3,3));
 		board[0][0] = new King(true,new Pair<Integer, Integer>(0,0));
@@ -60,14 +62,24 @@ public class Game {
 		this.whitePlays = true;
 	}
 
+	public Pawn getEnPassant() {
+		return this.enPassant;
+	}
+
+	public void setEnPassant(Pawn enPassant) {
+		this.enPassant = enPassant;
+	}
+
 	public Piece getPieceAtSquare(int square){
 		int x = square/8;
 		int y = square%8;
 		return board[x][y];
 	}
+
 	public Piece getPieceAtSquare(Pair<Integer, Integer> square){
 		return board[square.getFirst()][square.getSecond()];
 	}
+
 	// This function is only for debug purposes and should never execute
 	public void printBoard(){
 			for(int j=7; j>=0; j--){
@@ -78,6 +90,7 @@ public class Game {
 			}
 	
 	}
+
 	public boolean isKingOnCheck(boolean isWhite){
 		ArrayList<Move> enemyMoves = new ArrayList<Move>(this.generateAllColourMoves(!isWhite));
 		Piece king = findKing(isWhite);
@@ -88,6 +101,7 @@ public class Game {
 		}
 		return false;
 	}
+
 	private Piece findKing(boolean isWhite){
 		for(int i=0; i<8; ++i){
 			for (int j = 0; j < 8; j++) {
@@ -102,6 +116,7 @@ public class Game {
 		// TODO: no king exception
 		return null;
 	}
+
 	public ArrayList<Move> generateAllColourMoves(boolean isWhite){
 		ArrayList<Move> list = new ArrayList<Move>();
 		for(int i = 0; i<8; ++i){
@@ -115,26 +130,38 @@ public class Game {
 		}
 		return list;
 	}
-	public void makeMove(Move move){
+
+	public void makeMove(Move move) {
 		this.whitePlays = !this.whitePlays;
-		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move.getFrom().getSecond()];
+
+		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
+				.getFrom().getSecond()];
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
-		//TODO update material
+
+		this.board[move.getTo().getFirst()][move.getTo().getSecond()]
+				.setPosition(new Pair<Integer, Integer>(move.getTo().getFirst(), move.getTo().getSecond()));
+		// TODO update material
 	}
-	private void undoMove(Move move){
+
+	private void undoMove(Move move) {
 		this.whitePlays = !this.whitePlays;
-		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = this.board[move.getTo().getFirst()][move.getTo().getSecond()];
+		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = this.board[move.getTo().getFirst()][move
+				.getTo().getSecond()];
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = null;
+
+		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()]
+				.setPosition(new Pair<Integer, Integer>(move.getTo().getFirst(), move.getTo().getSecond()));
 	}
-	public boolean validateMove(Move move){
+
+	public boolean validateMove(Move move) {
 		this.makeMove(move);
-		if(this.isKingOnCheck(!whitePlays)){
+		if (this.isKingOnCheck(!whitePlays)) {
 			this.undoMove(move);
 			return false;
 		}
 		return true;
-
 	}
+
 	public boolean isStaleMate(){
 		if(isKingOnCheck(this.whitePlays)) return false;
 		ArrayList<Move> legalMoves = new ArrayList<Move>(this.generateAllColourMoves(this.whitePlays));
@@ -146,6 +173,7 @@ public class Game {
 		if(legalMoves.isEmpty()) return true;
 		return false;
 	}
+
 	public boolean isMate(){
 		if(! isKingOnCheck(this.whitePlays)) return false;
 		ArrayList<Move> legalMoves = new ArrayList<Move>(this.generateAllColourMoves(this.whitePlays));
@@ -157,6 +185,7 @@ public class Game {
 		if(legalMoves.isEmpty()) return true;
 		return false;
 	}
+
 	public void update(){
 		// checks if game is over
 		// this function should run every ply

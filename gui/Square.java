@@ -1,7 +1,8 @@
 package gui;
 
-import pieces.*;
-import utilities.Pair;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -9,31 +10,27 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import controller.Controller;
-import controller.command.SelectPiece;
-
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import pieces.Piece;
+import utilities.Pair;
 
 public class Square extends JPanel {
 
 	private static final long serialVersionUID = 2642336035089268095L;
 
-	Boolean isWhite;
-	Boolean isCheck;
-	Boolean isEatable;
-	Boolean isMoveable;
+	private Boolean isWhite;
+	private Boolean isCheck;
+	private Boolean isEatable;
+	private Boolean isMovable;
 
-	Piece piece;
-	Pair<Integer, Integer> position;
+	private Piece piece;
+	private Pair<Integer, Integer> position;
 
-	JLayeredPane stack;
+	private JLayeredPane stack;
 
-	JButton squareLabel;
-	JLabel moveLabel;
-	JLabel checkLabel;
-	JLabel pieceLabel;
+	private JButton squareLabel;
+	private JLabel moveLabel;
+	private JLabel checkLabel;
+	private JLabel pieceLabel;
 
 	public Square() {
 	}
@@ -43,7 +40,7 @@ public class Square extends JPanel {
 		this.position = position;
 
 		this.isWhite = isWhite;
-		this.isMoveable = canMove;
+		this.isMovable = canMove;
 		this.isCheck = isCheck;
 		this.isEatable = canEat;
 		this.piece = piece;
@@ -69,14 +66,6 @@ public class Square extends JPanel {
 		squareLabel.setBorderPainted(false);
 		squareLabel.setFocusPainted(false);
 		squareLabel.setContentAreaFilled(false);
-
-		squareLabel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Controller.getController().handleRequest(new SelectPiece(position));
-			}
-		});
 
 		if (canEat || canMove) {
 			if (canEat) {
@@ -109,6 +98,13 @@ public class Square extends JPanel {
 			stack.add(checkLabel);
 		}
 
+
+		squareLabel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				GameController.getCurrent().handleClick(getPosition());
+			}
+		});
 		stack.add(squareLabel);
 
 		this.add(stack);
@@ -125,7 +121,7 @@ public class Square extends JPanel {
 	}
 
 	public boolean isMoveable() {
-		return isMoveable;
+		return isMovable;
 	}
 
 	public boolean canMoveHere() {
@@ -135,20 +131,6 @@ public class Square extends JPanel {
 	public void updateMoveable() {
 		this.setVisible(false);
 		moveLabel = new JLabel(new ImageIcon("img/can_move_here.png"));
-		this.revalidate();
-		this.repaint();
-	}
-
-	public void updateInside() {
-		// this.removeAll();
-		stack.removeAll();
-		stack.add(squareLabel);
-		stack.add(moveLabel);
-		if (isCheck)
-			stack.add(checkLabel);
-		if (piece != null)
-			stack.add(pieceLabel);
-		this.add(stack);
 		this.revalidate();
 		this.repaint();
 	}
@@ -164,7 +146,6 @@ public class Square extends JPanel {
 	public void setPiece(Piece newPiece) {
 		if (newPiece != null) {
 			ImageIcon pieceImage = newPiece.getImage();
-			System.out.println("changing image to: " + newPiece.getImage());
 			pieceLabel = new JLabel(pieceImage);
 			pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
 		}
@@ -174,24 +155,29 @@ public class Square extends JPanel {
 	public void repaintSquare() {
 		this.removeAll();
 		stack.removeAll();
-		if(isCheck || isEatable) {
+		if (isCheck || isEatable) {
 			stack.add(moveLabel);
 		}
-		if(piece != null) {
+		if (piece != null) {
 			stack.add(pieceLabel);
 		}
-		if(isCheck) {
+		if (isCheck) {
 			stack.add(checkLabel);
 		}
-		// pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
+		// pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(),
+		// pieceImage.getIconHeight());
 		stack.add(squareLabel);
 		this.add(stack);
 	}
 
-	public void clear() {
-		isEatable = false;
-		isMoveable = false;
-
+	public boolean clear() {
+		if(isEatable || isMovable){
+			isEatable = false;
+			isMovable = false;
+			this.repaintSquare();
+			return true;
+		}
+		return false;
 	}
 
 }

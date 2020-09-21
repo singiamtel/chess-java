@@ -8,7 +8,6 @@ import javax.swing.WindowConstants;
 
 import controller.Game;
 
-
 public class MainWindow extends JFrame{
     private JPanel mainpanel;
     private JPanel toolBar;
@@ -22,8 +21,8 @@ public class MainWindow extends JFrame{
         // TODO: Fullscreen 
         setSize(1000,1000);
 
-        JPanel mainpanel = new JPanel(new BorderLayout());
-        JPanel toolBar = new ToolBar();
+        mainpanel = new JPanel(new BorderLayout());
+        toolBar = new ToolBar();
         board = new Board(game);
 
         mainpanel.add(toolBar, BorderLayout.NORTH);

@@ -1,7 +1,8 @@
 package gui;
 
-import pieces.*;
-import utilities.Pair;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -9,28 +10,27 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import pieces.Piece;
+import utilities.Pair;
 
 public class Square extends JPanel {
 
 	private static final long serialVersionUID = 2642336035089268095L;
 
-	Boolean isWhite;
-	Boolean isCheck;
-	Boolean isEatable;
-	Boolean isMovable;
+	private Boolean isWhite;
+	private Boolean isCheck;
+	private Boolean isEatable;
+	private Boolean isMovable;
 
-	Piece piece;
-	Pair<Integer, Integer> position;
+	private Piece piece;
+	private Pair<Integer, Integer> position;
 
-	JLayeredPane stack;
+	private JLayeredPane stack;
 
-	JButton squareLabel;
-	JLabel moveLabel;
-	JLabel checkLabel;
-	JLabel pieceLabel;
+	private JButton squareLabel;
+	private JLabel moveLabel;
+	private JLabel checkLabel;
+	private JLabel pieceLabel;
 
 	public Square() {
 	}
@@ -102,6 +102,7 @@ public class Square extends JPanel {
 		squareLabel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				GameController.getCurrent().handleClick(getPosition());
 			}
 		});
 		stack.add(squareLabel);

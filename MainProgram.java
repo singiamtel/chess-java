@@ -1,8 +1,6 @@
-import controller.Game;
-import gui.MainWindow;
+import gui.GameController;
 public class MainProgram {
     public static void main(String[] args) {
-        Game game = new Game();
-        MainWindow mainwindow = new MainWindow(game);
+        GameController current = GameController.createGame();
     }
 }

@@ -21,4 +21,9 @@ public class GameController {
 		}
 		return false;
 	}
+
+	public void update(){
+		board.clearMoveMarks();
+		game.update();
+	}
 }

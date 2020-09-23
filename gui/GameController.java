@@ -63,6 +63,7 @@ public class GameController {
 		this.isPieceSelected = true;
 		this.pieceSelected = on;
 		ArrayList<Move> moves = game.getPieceAtSquare(on).generateMoves(game);
+		moves = game.purgeMoves(moves);
 		for (Move move : moves) {
 			Square oldSquare = mainWindow.getBoard().getSquareAt(move.getFrom());
 			Square newSquare = new Square(mainWindow.getBoard().getSquareAt(move.getTo()).isWhite(),
@@ -73,23 +74,19 @@ public class GameController {
 	}
 
 	public void handleClick(Pair<Integer, Integer> on) {
+		game.printBoard();
+		// FIXME: some pieces disappear, probably related to make/undo move
 		Square squareAt = mainWindow.getBoard().getSquareAt(on);
-		if (game.getPieceAtSquare(on) != null) {
-			System.out.println("game piece: " + game.getPieceAtSquare(on).getPosition());
-		}
-		if(squareAt.getPiece() != null){
-			System.out.println("board piece: " + squareAt.getPiece().getPosition());
-		}
 		if (isPieceSelected) {
 			if (!squareAt.canMoveHere()) {
 				clearMoveMarks();
 			} else {
 				// MAKEMOVE
-				System.out.println(new Move(pieceSelected, on).getFrom().toString() + " "
-						+ new Move(pieceSelected, on).getTo().toString());
+				// System.out.println(new Move(pieceSelected, on).getFrom().toString() + " "
+						// + new Move(pieceSelected, on).getTo().toString());
 				game.makeMove(new Move(pieceSelected, on));
 				mainWindow.getBoard().makeMove(new Move(pieceSelected, on));
-				this.clearMoveMarks();
+				this.update();
 				return;
 			}
 		}

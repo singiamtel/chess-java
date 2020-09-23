@@ -2,13 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
-import pieces.Bishop;
-import pieces.King;
-import pieces.Knight;
-import pieces.Pawn;
-import pieces.Piece;
-import pieces.Queen;
-import pieces.Rook;
+import pieces.*;
 import utilities.Pair;
 
 public class Game {
@@ -16,6 +10,7 @@ public class Game {
 	private Boolean whitePlays;
 	// TODO: implement enPassant
 	private Pawn enPassant;
+	private Pawn lastEnPassant;
 
 
 	// Test game
@@ -84,7 +79,8 @@ public class Game {
 	public void printBoard(){
 			for(int j=7; j>=0; j--){
 				for(int k=0; k<8; ++k){
-					System.out.print(this.board[j][k] + " ");
+					if(this.board[j][k] != null) System.out.print(this.board[j][k].getClass().getName() + " ");
+					else System.out.print("null ");
 				}
 				System.out.println("");
 			}
@@ -116,6 +112,7 @@ public class Game {
 		// TODO: no king exception
 		return null;
 	}
+	// public ArrayList
 
 	public ArrayList<Move> generateAllColourMoves(boolean isWhite){
 		ArrayList<Move> list = new ArrayList<Move>();
@@ -150,18 +147,27 @@ public class Game {
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = null;
 
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()]
-				.setPosition(new Pair<Integer, Integer>(move.getTo().getFirst(), move.getTo().getSecond()));
+				.setPosition(new Pair<Integer, Integer>(move.getFrom().getFirst(), move.getFrom().getSecond()));
 	}
 
 	public boolean validateMove(Move move) {
 		this.makeMove(move);
-		if (this.isKingOnCheck(!whitePlays)) {
+		if (this.isKingOnCheck(whitePlays)) {
 			this.undoMove(move);
 			return false;
 		}
+		this.undoMove(move);
 		return true;
 	}
 
+	public ArrayList<Move> purgeMoves(ArrayList<Move> moves){
+		for (int i = 0; i < moves.size(); i++) {
+			if(!validateMove(moves.get(i))){
+				moves.remove(i);
+			}
+		}
+		return moves;
+	}
 	public boolean isStaleMate(){
 		if(isKingOnCheck(this.whitePlays)) return false;
 		ArrayList<Move> legalMoves = new ArrayList<Move>(this.generateAllColourMoves(this.whitePlays));
@@ -185,8 +191,24 @@ public class Game {
 		if(legalMoves.isEmpty()) return true;
 		return false;
 	}
+	private void updateEnPassant(){
+		if(enPassant != null && lastEnPassant == enPassant){
+			// If current en passant is the same as the last turn's one,
+			// we assume no new pawn is on en passant, and reset it.
+			enPassant = null;
+			lastEnPassant = null;
+		}
+		else{
+			// Otherwise, just update variable
+			lastEnPassant = enPassant;
+		}
+	}
 
 	public void update(){
+		this.updateEnPassant();
+		if(isMate()){
+			System.out.println("GAME OVER");
+		}
 		// checks if game is over
 		// this function should run every ply
 	}

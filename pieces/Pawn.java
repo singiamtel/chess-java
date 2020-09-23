@@ -3,6 +3,7 @@ package pieces;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.text.Position;
 
 import controller.Game;
 import controller.Move;

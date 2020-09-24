@@ -7,6 +7,7 @@ import javax.swing.text.Position;
 
 import controller.Game;
 import controller.Move;
+import gui.GameController;
 import utilities.Pair;
 
 public class Pawn extends Piece {
@@ -19,6 +20,9 @@ public class Pawn extends Piece {
 	public ArrayList<Move> generateMoves(Game game) {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		Piece piece;
+		if(GameController.getCurrent().getEnPassant() != null) {
+			
+		}
 		if (isWhite()) {
 			// Attempt to move one square
 			piece = game.getPieceAtSquare(new Pair<Integer, Integer>(position.getFirst() + 1, position.getSecond()));
@@ -33,7 +37,6 @@ public class Pawn extends Piece {
 					if (piece == null) {
 						moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
 								new Pair<Integer, Integer>(position.getFirst() + 2, position.getSecond())));
-
 					}
 				}
 			}
@@ -44,6 +47,12 @@ public class Pawn extends Piece {
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
 							new Pair<Integer, Integer>(position.getFirst() + 1, position.getSecond() + 1)));
+				}else if(GameController.getCurrent().getEnPassant() != null) {
+					if(GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst() &&
+							GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
+						moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+								GameController.getCurrent().getEnPassant()));
+					}
 				}
 			}
 
@@ -54,7 +63,14 @@ public class Pawn extends Piece {
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
 							new Pair<Integer, Integer>(position.getFirst() + 1, position.getSecond() - 1)));
+				}else if(GameController.getCurrent().getEnPassant() != null) {
+					if(GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst() &&
+							GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
+						moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+								GameController.getCurrent().getEnPassant()));
+					}
 				}
+				
 			}
 
 		} else {
@@ -71,7 +87,6 @@ public class Pawn extends Piece {
 					if (piece == null) {
 						moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
 								new Pair<Integer, Integer>(position.getFirst() - 2, position.getSecond())));
-
 					}
 				}
 			}
@@ -82,6 +97,12 @@ public class Pawn extends Piece {
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
 							new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond() + 1)));
+				}else if(GameController.getCurrent().getEnPassant() != null) {
+					if(GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst() &&
+							GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
+						moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+								GameController.getCurrent().getEnPassant()));
+					}
 				}
 			}
 
@@ -92,6 +113,12 @@ public class Pawn extends Piece {
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
 							new Pair<Integer, Integer>(position.getFirst() - 1, position.getSecond() - 1)));
+				}else if(GameController.getCurrent().getEnPassant() != null) {
+					if(GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst() &&
+							GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
+						moves.add(new Move(new Pair<Integer, Integer>(position.getFirst(), position.getSecond()),
+								GameController.getCurrent().getEnPassant()));
+					}
 				}
 			}
 		}

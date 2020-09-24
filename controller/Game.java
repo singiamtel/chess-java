@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import gui.GameController;
 import pieces.*;
 import utilities.Pair;
 
@@ -131,6 +132,11 @@ public class Game {
 	public void makeMove(Move move) {
 		this.whitePlays = !this.whitePlays;
 
+		if(GameController.getCurrent().getEnPassant() != null && GameController.getCurrent().getEnPassant() == move.getTo()) {
+			makeMoveEnPassant(move);
+			return;
+		}
+
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
 				.getFrom().getSecond()];
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
@@ -140,6 +146,13 @@ public class Game {
 		// TODO update material
 	}
 
+	public void makeMoveEnPassant(Move move) {
+		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move.getFrom().getSecond()];
+		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
+		this.board[move.getTo().getFirst()][move.getTo().getSecond()].setPosition(new Pair<Integer, Integer>(move.getTo().getFirst(), move.getTo().getSecond()));
+		
+	}
+		
 	private void undoMove(Move move) {
 		this.whitePlays = !this.whitePlays;
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = this.board[move.getTo().getFirst()][move

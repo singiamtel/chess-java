@@ -11,6 +11,7 @@ public class GameController {
 	private MainWindow mainWindow;
 	private boolean isPieceSelected;
 	private Pair<Integer, Integer> pieceSelected;
+	private Pair<Integer, Integer> enPassant;
 
 
 	private static GameController gc;
@@ -74,7 +75,7 @@ public class GameController {
 	}
 
 	public void handleClick(Pair<Integer, Integer> on) {
-		game.printBoard();
+		//game.printBoard();
 		// FIXME: some pieces disappear, probably related to make/undo move
 		Square squareAt = mainWindow.getBoard().getSquareAt(on);
 		if (isPieceSelected) {
@@ -93,6 +94,14 @@ public class GameController {
 		if (!isPieceSelected && squareAt.getPiece() != null) {
 			generateMoveMarks(on);
 		}
+	}
+
+	public Pair<Integer, Integer> getEnPassant() {
+		return enPassant;
+	}
+
+	public void setEnPassant(Pair<Integer, Integer> enPassant) {
+		this.enPassant = enPassant;
 	}
 }
 

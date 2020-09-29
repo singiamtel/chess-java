@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import pieces.*;
 import utilities.Pair;
@@ -30,7 +29,8 @@ public class Game {
 		Piece [][] newBoard = new Piece[8][8];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board.length; j++) {
-				newBoard[i][j] = board[i][j].clonePiece();
+				if(board[i][j] != null) newBoard[i][j] = board[i][j].clonePiece();
+				else newBoard[i][j] = board[i][j];
 			}
 		}
 		return newBoard;
@@ -40,8 +40,12 @@ public class Game {
 		this.board = cloneBoard();
 
 		this.whitePlays = game.whitePlays;
-		this.enPassant = (Pawn)game.enPassant.clonePiece();
-		this.lastEnPassant = (Pawn)game.lastEnPassant.clonePiece();
+		if(game.enPassant != null){
+			this.enPassant = (Pawn)game.enPassant.clonePiece();
+		}
+		if(game.lastEnPassant != null){
+			this.lastEnPassant = (Pawn)game.lastEnPassant.clonePiece();
+		}
 	}
 	public Game(){
 		// Empty constructor starts a new game 
@@ -159,8 +163,9 @@ public class Game {
 		// 	return;
 		// }
 
+		System.out.println("making move " + move.getFrom() + " " + move.getTo());
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
-				.getFrom().getSecond()];
+				.getFrom().getSecond()].clonePiece();
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
 
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()]
@@ -188,23 +193,18 @@ public class Game {
 	public boolean validateMove(Move move) {
 		// this.makeMove(move);
 
-		try{
-			Game check = (Game)this.clone();
-			System.out.println("CHECK BOARD BEFORE CHANGING");
-			check.printBoard();
-			check.makeMove(move);
-			System.out.println("CHECK BOARD AFTER CHANGING");
-			check.printBoard();
-			System.out.println("THIS BOARD");
-			this.printBoard();
-			if (check.isKingOnCheck(whitePlays)) {
-				return false;
-			}
-			return true;
-		} catch (Exception e) {
-
+		Game check = new Game(this);
+		System.out.println("CHECK BOARD BEFORE CHANGING");
+		check.printBoard();
+		check.makeMove(move);
+		System.out.println("CHECK BOARD AFTER CHANGING");
+		check.printBoard();
+		System.out.println("THIS BOARD");
+		this.printBoard();
+		if (check.isKingOnCheck(whitePlays)) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	public ArrayList<Move> purgeMoves(ArrayList<Move> moves){

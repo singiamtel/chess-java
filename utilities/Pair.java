@@ -2,56 +2,48 @@ package utilities;
 
 import java.util.Objects;
 
-public class Pair<p, q> {
-	private p first;
-	private q second;
+public class Pair {
+	private int first;
+	private int second;
+
+	public Pair(Pair pair){
+		this.first = pair.first;
+		this.second = pair.second;
+	}
 
 	public Pair() {
 	}
+	public Pair addPair(Pair pair){
+		return new Pair(this.getFirst() + pair.getFirst(), this.getSecond() + pair.getSecond());
+	}
 
-	public Pair(p first, q second) {
+	public Pair(int first, int second) {
 		this.first = first;
 		this.second = second;
 	}
 
-	public Pair<Integer, Integer> addPair(Pair<Integer, Integer>pairToAdd){
-		if(! (first instanceof Integer) || ! (second instanceof Integer)){
-			// TODO: exception?
-			return null;
-		}
-		return new Pair<Integer, Integer>((Integer)this.getFirst() + pairToAdd.getFirst(), (Integer)this.getSecond() + pairToAdd.getSecond());
-	}
-
-	public Pair<Integer, Integer> substractPair(Pair<Integer, Integer>pairToAdd){
-		if(! (first instanceof Integer) || ! (second instanceof Integer)){
-			// TODO: exception?
-			return null;
-		}
-		return new Pair<Integer, Integer>((Integer)this.getFirst() - pairToAdd.getFirst(), (Integer)this.getSecond() - pairToAdd.getSecond());
-	}
-
-	public p getFirst() {
+	public int getFirst() {
 		return this.first;
 	}
 
-	public void setFirst(p first) {
+	public void setFirst(int first) {
 		this.first = first;
 	}
 
-	public q getSecond() {
+	public int getSecond() {
 		return this.second;
 	}
 
-	public void setSecond(q second) {
+	public void setSecond(int second) {
 		this.second = second;
 	}
 
-	public Pair<p,q> first(p first) {
+	public Pair first(int first) {
 		this.first = first;
 		return this;
 	}
 
-	public Pair<p,q> second(q second) {
+	public Pair second(int second) {
 		this.second = second;
 		return this;
 	}
@@ -63,8 +55,8 @@ public class Pair<p, q> {
 		if (!(o instanceof Pair)) {
 			return false;
 		}
-		Pair<p,q> pair = (Pair<p,q>) o;
-		return Objects.equals(first, pair.first) && Objects.equals(second, pair.second);
+		Pair pair = (Pair) o;
+		return first == pair.first && second == pair.second;
 	}
 
 	@Override
@@ -79,5 +71,4 @@ public class Pair<p, q> {
 			", second='" + getSecond() + "'" +
 			"}";
 	}
-
 }

@@ -23,7 +23,7 @@ public class Square extends JPanel {
 	private Boolean isMovable;
 
 	private Piece piece;
-	private Pair<Integer, Integer> position;
+	private Pair position;
 
 	private JLayeredPane stack;
 
@@ -36,7 +36,7 @@ public class Square extends JPanel {
 	}
 
 	public Square(Boolean isWhite, Piece piece, Boolean canMove, Boolean isCheck, Boolean canEat,
-			Pair<Integer, Integer> position) {
+			Pair position) {
 		this.position = position;
 
 		this.isWhite = isWhite;
@@ -135,11 +135,11 @@ public class Square extends JPanel {
 		this.repaint();
 	}
 
-	public Pair<Integer, Integer> getPosition() {
+	public Pair getPosition() {
 		return position;
 	}
 
-	public void setPosition(Pair<Integer, Integer> position) {
+	public void setPosition(Pair position) {
 		this.position = position;
 	}
 

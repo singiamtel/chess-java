@@ -21,7 +21,7 @@ public class Board extends JPanel {
 			for (int j = 0; j < 8; ++j) {
 				// White squares are odd, black squares are even // TODO: sure?
 				squares[i][j] = new Square((i + j) % 2 == 0 ? false : true, game.getPieceAtSquare(8 * i + j), false,
-						false, false, new Pair<Integer, Integer>(i, j));
+						false, false, new Pair(i, j));
 				this.add(squares[i][j]);
 			}
 		}
@@ -50,11 +50,11 @@ public class Board extends JPanel {
 		this.repaint();
 	}
 
-	public Square getSquareAt(Pair<Integer, Integer> at) {
+	public Square getSquareAt(Pair at) {
 		return squares[at.getFirst()][at.getSecond()];
 	}
 
-	public void setSquareAt(Pair<Integer, Integer> at, Square square) {
+	public void setSquareAt(Pair at, Square square) {
 		squares[at.getFirst()][at.getSecond()] = square;
 		repaintBoard();
 	}

@@ -12,9 +12,14 @@ import utilities.Raycast;
 
 public class Queen extends Piece {
 
-	public Queen(Boolean isWhite, Pair<Integer, Integer> position) {
+	public Queen(Boolean isWhite, Pair position) {
 		this.isWhite = isWhite;
 		this.position= position;
+	}
+
+	public Piece clonePiece() {
+		Piece ret = new Queen(this.isWhite, new Pair(this.position));
+		return ret;
 	}
 
 	public ImageIcon getImage() {

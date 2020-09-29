@@ -10,8 +10,8 @@ public class GameController {
 	private Game game;
 	private MainWindow mainWindow;
 	private boolean isPieceSelected;
-	private Pair<Integer, Integer> pieceSelected;
-	private Pair<Integer, Integer> enPassant;
+	private Pair pieceSelected;
+	private Pair enPassant;
 
 
 	private static GameController gc;
@@ -39,7 +39,7 @@ public class GameController {
 	public void checkIfSync(){
 		//TODO: exception
 	}
-	public boolean makeMove(Pair<Integer, Integer> from, Pair<Integer, Integer> to){
+	public boolean makeMove(Pair from, Pair to){
 		Move move = new Move(from, to);
 		if(game.validateMove(move)){
 			game.makeMove(move);
@@ -60,7 +60,7 @@ public class GameController {
 		this.isPieceSelected = false;
 	}
 
-	private void generateMoveMarks(Pair<Integer, Integer> on){
+	private void generateMoveMarks(Pair on){
 		this.isPieceSelected = true;
 		this.pieceSelected = on;
 		ArrayList<Move> moves = game.getPieceAtSquare(on).generateMoves(game);
@@ -69,12 +69,12 @@ public class GameController {
 			Square oldSquare = mainWindow.getBoard().getSquareAt(move.getFrom());
 			Square newSquare = new Square(mainWindow.getBoard().getSquareAt(move.getTo()).isWhite(),
 					mainWindow.getBoard().getSquareAt(move.getTo()).getPiece(), true, move.isCheck(),
-					move.isEating(), new Pair<Integer, Integer>(move.getTo().getFirst(), move.getTo().getSecond()));
+					move.isEating(), new Pair(move.getTo().getFirst(), move.getTo().getSecond()));
 			mainWindow.getBoard().setSquareAt(move.getTo(), newSquare);
 		}
 	}
 
-	public void handleClick(Pair<Integer, Integer> on) {
+	public void handleClick(Pair on) {
 		//game.printBoard();
 		// FIXME: some pieces disappear, probably related to make/undo move
 		Square squareAt = mainWindow.getBoard().getSquareAt(on);
@@ -96,11 +96,11 @@ public class GameController {
 		}
 	}
 
-	public Pair<Integer, Integer> getEnPassant() {
+	public Pair getEnPassant() {
 		return enPassant;
 	}
 
-	public void setEnPassant(Pair<Integer, Integer> enPassant) {
+	public void setEnPassant(Pair enPassant) {
 		this.enPassant = enPassant;
 	}
 }

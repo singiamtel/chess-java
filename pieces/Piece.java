@@ -10,9 +10,11 @@ import utilities.Pair;
 
 public abstract class Piece {
 	protected boolean isWhite;
-	protected Pair<Integer, Integer> position;
+	protected Pair position;
 	protected ImageIcon image;
 
+	public abstract Piece clonePiece();
+		
 	public boolean isWhite() {
 		return this.isWhite;
 	}
@@ -21,11 +23,11 @@ public abstract class Piece {
 		this.isWhite = isWhite;
 	}
 
-	public Pair<Integer, Integer> getPosition() {
+	public Pair getPosition() {
 		return this.position;
 	}
 
-	public void setPosition(Pair<Integer, Integer> position) {
+	public void setPosition(Pair position) {
 		this.position = position;
 	}
 

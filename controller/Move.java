@@ -4,8 +4,8 @@ import pieces.Piece;
 import utilities.Pair;
 
 public class Move {
-	private Pair<Integer, Integer> from;
-	private Pair<Integer, Integer> to;
+	private Pair from;
+	private Pair to;
 	private Piece promotion;
 
 	private boolean castle;
@@ -16,15 +16,15 @@ public class Move {
 		return this.check;
 	}
 
-	public Move(Pair<Integer, Integer> from, Pair<Integer, Integer> to){
+	public Move(Pair from, Pair to){
 		this.from = from;
 		this.to = to;
 	}
-	public Pair<Integer,Integer> getFrom() {
+	public Pair getFrom() {
 		return this.from;
 	}
 
-	public Move(Pair<Integer,Integer> from, Pair<Integer,Integer> to, Piece promotion, Boolean castle, boolean isEating) {
+	public Move(Pair from, Pair to, Piece promotion, Boolean castle, boolean isEating) {
 		this.from = from;
 		this.to = to;
 		this.promotion = promotion;
@@ -51,7 +51,7 @@ public class Move {
 		return false;
 	}
 
-	public static boolean isOutOfBounds(Pair<Integer, Integer> pair){
+	public static boolean isOutOfBounds(Pair pair){
 		if (pair.getFirst() < 0 || pair.getFirst() >= 8){
 		return true;
 		}
@@ -68,15 +68,15 @@ public class Move {
 	public void setCheck(boolean check) {
 		this.check = check;
 	}
-	public void setFrom(Pair<Integer,Integer> from) {
+	public void setFrom(Pair from) {
 		this.from = from;
 	}
 
-	public Pair<Integer,Integer> getTo() {
+	public Pair getTo() {
 		return this.to;
 	}
 
-	public void setTo(Pair<Integer,Integer> to) {
+	public void setTo(Pair to) {
 		this.to = to;
 	}
 

@@ -9,7 +9,7 @@ import pieces.Piece;
 public class Raycast {
 	public static ArrayList<Move> raycast(Game game, Piece piece, Direction dir) {
 		ArrayList<Move> moveArray = new ArrayList<Move>();
-		Pair<Integer, Integer> position = piece.getPosition();
+		Pair position = piece.getPosition();
 		int x = position.getFirst();
 		int y = position.getSecond();
 
@@ -50,11 +50,11 @@ public class Raycast {
 			return;
 		if (x >= 8 || y >= 8)
 			return;
-		if (piece.validateMove(game, new Move(piece.getPosition(), new Pair<Integer, Integer>(x, y)))) {
-			if (piece.isMoveEating(game, new Move(piece.getPosition(), new Pair<Integer, Integer>(x, y)))) {
-				moveArray.add(new Move(new Pair<Integer, Integer>(originalX,originalY),new Pair<Integer, Integer>(x, y), null, false, true));
+		if (piece.validateMove(game, new Move(piece.getPosition(), new Pair(x, y)))) {
+			if (piece.isMoveEating(game, new Move(piece.getPosition(), new Pair(x, y)))) {
+				moveArray.add(new Move(new Pair(originalX,originalY),new Pair(x, y), null, false, true));
 			} else {
-				moveArray.add(new Move(new Pair<Integer, Integer>(originalX,originalY),new Pair<Integer, Integer>(x, y), null, false, false));
+				moveArray.add(new Move(new Pair(originalX,originalY),new Pair(x, y), null, false, false));
 				recursiveRaycast(moveArray, game, piece, x, y, addX, addY, originalX, originalY);
 			}
 		}

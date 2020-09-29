@@ -12,9 +12,14 @@ import utilities.Raycast;
 
 public class Rook extends Piece {
 
-	public Rook(Boolean isWhite, Pair<Integer, Integer> position) {
+	public Rook(Boolean isWhite, Pair position) {
 		this.isWhite = isWhite;
 		this.position= position;
+	}
+
+	public Piece clonePiece() {
+		Piece ret = new Rook(this.isWhite, new Pair(this.position));
+		return ret;
 	}
 
 	public ImageIcon getImage() {

@@ -11,20 +11,26 @@ import utilities.Pair;
 
 public class Knight extends Piece {
 
-	public static final ArrayList<Pair<Integer, Integer>> moves = new ArrayList<Pair<Integer, Integer>>(List.of(
-			new Pair<Integer, Integer>(1, 2),
-			new Pair<Integer, Integer>(1, -2), 
-			new Pair<Integer, Integer>(2, 1), 
-			new Pair<Integer, Integer>(2, -1), 
-			new Pair<Integer, Integer>(-1, 2), 
-			new Pair<Integer, Integer>(-1, -2),
-			new Pair<Integer, Integer>(-2, 1), 
-			new Pair<Integer, Integer>(-2, -1)));
+	public static final ArrayList<Pair> moves = new ArrayList<Pair>(List.of(
+			new Pair(1, 2),
+			new Pair(1, -2), 
+			new Pair(2, 1), 
+			new Pair(2, -1), 
+			new Pair(-1, 2), 
+			new Pair(-1, -2),
+			new Pair(-2, 1), 
+			new Pair(-2, -1)));
 
-	public Knight(Boolean isWhite, Pair<Integer, Integer> position) {
+	public Knight(Boolean isWhite, Pair position) {
 		this.isWhite = isWhite;
 		this.position = position;
 	}
+
+	public Piece clonePiece(){
+		Piece ret = new Knight(this.isWhite, new Pair(this.position));
+		return ret;
+	}
+
 
 	public ImageIcon getImage() {
 		if (isWhite) {
@@ -37,12 +43,12 @@ public class Knight extends Piece {
 	public ArrayList<Move> generateMoves(Game game) {
 		ArrayList<Move> generatedMoves = new ArrayList<Move>();
 
-		for (Pair<Integer, Integer> move : moves) {
-			Pair<Integer, Integer> attempt = this.position.addPair(move);
+		for (Pair move : moves) {
+			Pair attempt = this.position.addPair(move);
 			if(Move.isOutOfBounds(attempt)){
 				continue;
 			}
-			if (!this.validateMove(game, new Move(new Pair<Integer, Integer>(this.position.getFirst(), this.position.getSecond()), new Pair<Integer, Integer>(attempt.getFirst(), attempt.getSecond())))) {
+			if (!this.validateMove(game, new Move(new Pair(this.position.getFirst(), this.position.getSecond()), new Pair(attempt.getFirst(), attempt.getSecond())))) {
 				continue;
 			} else {
 				if (this.isMoveEating(game, new Move(this.position, attempt))) {

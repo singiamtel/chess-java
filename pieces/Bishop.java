@@ -12,9 +12,13 @@ import utilities.Raycast;
 
 public class Bishop extends Piece {
 
-	public Bishop(Boolean isWhite, Pair<Integer, Integer> position) {
+	public Bishop(Boolean isWhite, Pair position) {
 		this.isWhite = isWhite;
 		this.position= position;
+	}
+	public Piece clonePiece(){
+		Piece ret = new Bishop(this.isWhite, new Pair(this.position));
+		return ret;
 	}
 
 	public ImageIcon getImage() {

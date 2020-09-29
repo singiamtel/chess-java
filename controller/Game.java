@@ -29,7 +29,9 @@ public class Game {
 		Piece [][] newBoard = new Piece[8][8];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board.length; j++) {
-				if(board[i][j] != null) newBoard[i][j] = board[i][j].clonePiece();
+				if(board[i][j] != null) {
+					newBoard[i][j] = board[i][j].clonePiece();
+				}
 				else newBoard[i][j] = board[i][j];
 			}
 		}
@@ -37,7 +39,7 @@ public class Game {
 	}
 	public Game(Game game){
 
-		this.board = cloneBoard();
+		this.board = game.cloneBoard();
 
 		this.whitePlays = game.whitePlays;
 		if(game.enPassant != null){
@@ -163,7 +165,6 @@ public class Game {
 		// 	return;
 		// }
 
-		System.out.println("making move " + move.getFrom() + " " + move.getTo());
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
 				.getFrom().getSecond()].clonePiece();
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
@@ -194,13 +195,13 @@ public class Game {
 		// this.makeMove(move);
 
 		Game check = new Game(this);
-		System.out.println("CHECK BOARD BEFORE CHANGING");
-		check.printBoard();
-		check.makeMove(move);
-		System.out.println("CHECK BOARD AFTER CHANGING");
-		check.printBoard();
-		System.out.println("THIS BOARD");
-		this.printBoard();
+		// System.out.println("CHECK BOARD BEFORE CHANGING");
+		// check.printBoard();
+		// check.makeMove(move);
+		// System.out.println("CHECK BOARD AFTER CHANGING");
+		// check.printBoard();
+		// System.out.println("THIS BOARD");
+		// this.printBoard();
 		if (check.isKingOnCheck(whitePlays)) {
 			return false;
 		}
@@ -210,6 +211,7 @@ public class Game {
 	public ArrayList<Move> purgeMoves(ArrayList<Move> moves){
 		for (int i = 0; i < moves.size(); i++) {
 			if(!validateMove(moves.get(i))){
+				System.out.println("purging " + moves.get(i).getFrom() + " " + moves.get(i).getTo());
 				moves.remove(i);
 			}
 		}

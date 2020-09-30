@@ -107,4 +107,9 @@ public class Move {
 	public void setIsEating(boolean isEating) {
 		this.isEating = isEating;
 	}
+	@Override
+	public String toString(){
+		return "move@" + this.hashCode() + ": {(" + from.getFirst() + "," + from.getSecond() + "), (" + to.getFirst()
+				+ "," + to.getSecond() + ")}";
+	}
 }

@@ -123,12 +123,15 @@ public class Game {
 	public boolean isKingOnCheck(boolean isWhite){
 		ArrayList<Move> enemyMoves = new ArrayList<Move>(this.generateAllColourMoves(!isWhite));
 		Piece king = findKing(isWhite);
+		System.out.println("king: " + king.getPosition().getFirst() + " " + king.getPosition().getSecond());
 		for (int i = 0; i < enemyMoves.size(); i++) {
+			System.out.println("checking move " + enemyMoves.get(i));
 			if(enemyMoves.get(i).getTo().equals(king.getPosition())){
 				return true;
 			}
 		}
 		return false;
+		// Piece king = findKing(isWhite);
 	}
 
 	private Piece findKing(boolean isWhite){

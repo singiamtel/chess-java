@@ -7,6 +7,14 @@ import controller.Move;
 import pieces.Piece;
 
 public class Raycast {
+	// public static boolean kingRaycast(Game game, Piece piece){
+	// 	// Checks if there's any raycasting piece(rook, bishop, queen) giving check to the king
+	// 	ArrayList<Move> moves = new ArrayList<Move>;
+	// 	for(Direction direction : Direction.values()){
+			
+	// 	}
+	// 	return false;
+	// }
 	public static ArrayList<Move> raycast(Game game, Piece piece, Direction dir) {
 		ArrayList<Move> moveArray = new ArrayList<Move>();
 		Pair position = piece.getPosition();

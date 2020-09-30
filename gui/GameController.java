@@ -66,7 +66,7 @@ public class GameController {
 		ArrayList<Move> moves = game.getPieceAtSquare(on).generateMoves(game);
 		moves = game.purgeMoves(moves);
 		for (Move move : moves) {
-			Square oldSquare = mainWindow.getBoard().getSquareAt(move.getFrom());
+			// Square oldSquare = mainWindow.getBoard().getSquareAt(move.getFrom());
 			Square newSquare = new Square(mainWindow.getBoard().getSquareAt(move.getTo()).isWhite(),
 					mainWindow.getBoard().getSquareAt(move.getTo()).getPiece(), true, move.isCheck(),
 					move.isEating(), new Pair(move.getTo().getFirst(), move.getTo().getSecond()));
@@ -75,8 +75,6 @@ public class GameController {
 	}
 
 	public void handleClick(Pair on) {
-		//game.printBoard();
-		// FIXME: some pieces disappear, probably related to make/undo move
 		Square squareAt = mainWindow.getBoard().getSquareAt(on);
 		if (isPieceSelected) {
 			if (!squareAt.canMoveHere()) {
@@ -91,7 +89,7 @@ public class GameController {
 				return;
 			}
 		}
-		if (!isPieceSelected && squareAt.getPiece() != null) {
+		if (!isPieceSelected && squareAt.getPiece() != null && squareAt.getPiece().isWhite() == game.whitePlays()) {
 			generateMoveMarks(on);
 		}
 	}

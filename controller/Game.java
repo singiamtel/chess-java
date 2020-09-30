@@ -20,11 +20,7 @@ public class Game {
 		board[1][2] = new King(false,new Pair(1,2));
 		board[4][2] = new Pawn(false,new Pair(4,2));
 	}
-	// public Game copyGame(){
-	// 	Game ret = new Game();
-	// 	ret.
-	// 	return ret;
-	// }
+
 	private Piece[][] cloneBoard(){
 		Piece [][] newBoard = new Piece[8][8];
 		for (int i = 0; i < board.length; i++) {
@@ -84,6 +80,14 @@ public class Game {
 			}
 		}
 		this.whitePlays = true;
+	}
+
+	public boolean whitePlays() {
+		return this.whitePlays;
+	}
+
+	public void setWhitePlays(boolean whitePlays) {
+		this.whitePlays = whitePlays;
 	}
 
 	public Pawn getEnPassant() {

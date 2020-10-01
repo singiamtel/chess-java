@@ -2,6 +2,8 @@ package controller;
 
 import java.util.ArrayList;
 
+import controller.Move.promotions;
+import gui.PromotionPopUp;
 import pieces.*;
 import utilities.Pair;
 import utilities.Raycast;
@@ -12,6 +14,7 @@ public class Game {
 	// TODO: implement enPassant
 	private Pawn enPassant;
 	private Pawn lastEnPassant;
+	private Move.promotions promotion;
 
 
 	// Test game
@@ -167,17 +170,44 @@ public class Game {
 		}
 		return list;
 	}
+	public void setPromotion(Move.promotions promotion) {
+		this.promotion = promotion;
+	}
 
-	public void makeMove(Move move) {
+	public void makeMove(Move move, boolean fake) {
 		this.whitePlays = !this.whitePlays;
-
-		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
-				.getFrom().getSecond()].clonePiece();
+		if(move.getPromotion() != null) {
+			if(!fake) {
+				PromotionPopUp promotionPopUp = new PromotionPopUp();
+				promotionPopUp.setPromotion();
+			}
+			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = makePromotion(promotion.QUEEN);
+			promotion = null;
+		}else {
+			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
+                    .getFrom().getSecond()].clonePiece();
+		}
+	
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
 
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()]
 				.setPosition(new Pair(move.getTo().getFirst(), move.getTo().getSecond()));
 		// TODO update material
+	}
+	private Piece makePromotion(promotions promotion) {
+		switch (promotion) {
+		case QUEEN:
+			return new Queen(true, new Pair(4,4));
+		case KNIGHT:
+			return new Knight(true, new Pair(4,4));
+		case ROOK:
+			return new Rook(true, new Pair(4,4));
+		case BISHOP:
+			return new Bishop(true, new Pair(4,4));
+		default:
+			return new Queen(true, new Pair(4,4));
+		}
+		//TODO dummy piece
 	}
 
 	public void makeMoveEnPassant(Move move) {
@@ -189,7 +219,7 @@ public class Game {
 		
 	public boolean validateMove(Move move) {
 		Game check = new Game(this);
-		check.makeMove(move);
+		check.makeMove(move,true);
 		if (check.isKingOnCheck(whitePlays)) {
 			return false;
 		}
@@ -229,6 +259,10 @@ public class Game {
 		if(legalMoves.isEmpty()) return true;
 		return false;
 	}
+	
+	public Move.promotions getPromotion() {
+		return this.promotion;
+	}
 
 	public boolean isMoveEating(Move move) {
 		if(getPieceAtSquare(move.getTo()) == null){
@@ -254,6 +288,8 @@ public class Game {
 			lastEnPassant = enPassant;
 		}
 	}
+	
+
 
 	public void update(){
 		this.updateEnPassant();

@@ -6,7 +6,11 @@ import javax.swing.JPanel;
 
 import controller.Game;
 import controller.Move;
+import pieces.Bishop;
+import pieces.Knight;
 import pieces.Piece;
+import pieces.Queen;
+import pieces.Rook;
 import utilities.Pair;
 
 public class Board extends JPanel {
@@ -64,7 +68,7 @@ public class Board extends JPanel {
 
 		Square squareFrom = squares[move.getFrom().getFirst()][move.getFrom().getSecond()];
 		Square squareTo = squares[move.getTo().getFirst()][move.getTo().getSecond()];
-		squareFrom.setPiece(null);
+		squareFrom.setPiece(null);			
 		squareTo.setPiece(piece);
 		
 		squareFrom.repaintSquare();

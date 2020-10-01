@@ -32,7 +32,7 @@ public class Pawn extends Piece {
 			// Attempt to move one square
 			piece = game.getPieceAtSquare(new Pair(position.getFirst() + 1, position.getSecond()));
 			if (piece == null) {
-				if(this.position.getFirst() == 7) {
+				if(this.position.getFirst() == 6) {
 					addPromotionMoves(game, moves);
 				}else {
 				moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),

@@ -12,6 +12,8 @@ public class GameController {
 	private boolean isPieceSelected;
 	private Pair pieceSelected;
 	private Pair enPassant;
+	PromotionPopUp promotionPopUp;
+
 
 
 	private static GameController gc;
@@ -35,6 +37,7 @@ public class GameController {
 		this.mainWindow = new MainWindow(this.game);
 		this.isPieceSelected = false;
 		this.pieceSelected = null;
+		this.promotionPopUp = new PromotionPopUp();
 	}
 	public void checkIfSync(){
 		//TODO: exception
@@ -42,7 +45,7 @@ public class GameController {
 	public boolean makeMove(Pair from, Pair to){
 		Move move = new Move(from, to);
 		if(game.validateMove(move)){
-			game.makeMove(move);
+			game.makeMove(move,false);
 			mainWindow.getBoard().makeMove(move);
 			// change turn
 			return true;
@@ -83,7 +86,7 @@ public class GameController {
 				// MAKEMOVE
 				// System.out.println(new Move(pieceSelected, on).getFrom().toString() + " "
 						// + new Move(pieceSelected, on).getTo().toString());
-				game.makeMove(new Move(pieceSelected, on));
+				game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
 				mainWindow.getBoard().makeMove(new Move(pieceSelected, on));
 				this.update();
 				return;
@@ -100,6 +103,10 @@ public class GameController {
 
 	public void setEnPassant(Pair enPassant) {
 		this.enPassant = enPassant;
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 }
 

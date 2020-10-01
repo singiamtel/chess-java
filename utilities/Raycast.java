@@ -4,20 +4,42 @@ import java.util.ArrayList;
 
 import controller.Game;
 import controller.Move;
-import pieces.Piece;
+import pieces.*;
 
 public class Raycast {
-	public static boolean kingRaycast(Game game, Piece piece){
-		// Checks if there's any raycasting piece(rook, bishop, queen) giving check to the king
+	public static boolean kingRaycast(Game game, Piece king) {
+		// Checks if there's any raycasting piece(rook, bishop, queen) giving check to
+		// the king
 		ArrayList<Move> moves = new ArrayList<Move>();
-		for(Direction dir: Direction.values()){
-			moves = raycast(game, piece, dir);
-			if(moves.size()>0 && moves.get(moves.size()-1).isEating()){
-				return true;
+		for (Direction dir : Direction.values()) {
+			moves = raycast(game, king, dir);
+			if (moves.size() > 0) {
+				Piece tmp = game.getPieceAtSquare(moves.get(moves.size() - 1).getTo());
+				if (tmp != null && tmp.isWhite() != king.isWhite()) {
+					switch (dir) {
+						case NORTHEAST:
+						case NORTHWEST:
+						case SOUTHEAST:
+						case SOUTHWEST:
+							if (tmp instanceof Queen || tmp instanceof Bishop) {
+								return true;
+							}
+							break;
+						case EAST:
+						case NORTH:
+						case SOUTH:
+						case WEST:
+							if (tmp instanceof Queen || tmp instanceof Rook) {
+								return true;
+							}
+							break;
+					}
+				}
 			}
 		}
 		return false;
 	}
+
 	public static ArrayList<Move> raycast(Game game, Piece piece, Direction dir) {
 		ArrayList<Move> moveArray = new ArrayList<Move>();
 		Pair position = piece.getPosition();

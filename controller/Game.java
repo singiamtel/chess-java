@@ -122,16 +122,6 @@ public class Game {
 	}
 
 	public boolean isKingOnCheck(boolean isWhite){
-		// ArrayList<Move> enemyMoves = new ArrayList<Move>(this.generateAllColourMoves(!isWhite));
-		// Piece king = findKing(isWhite);
-		// System.out.println("king: " + king.getPosition().getFirst() + " " + king.getPosition().getSecond());
-		// for (int i = 0; i < enemyMoves.size(); i++) {
-		// 	System.out.println("checking move " + enemyMoves.get(i));
-		// 	if(enemyMoves.get(i).getTo().equals(king.getPosition())){
-		// 		return true;
-		// 	}
-		// }
-		// return false;
 		Piece king = findKing(isWhite);
 		if(Raycast.kingRaycast(this, king)){
 			return true;
@@ -153,7 +143,6 @@ public class Game {
 		// TODO: no king exception
 		return null;
 	}
-	// public ArrayList
 
 	public ArrayList<Move> generateAllColourMoves(boolean isWhite){
 		ArrayList<Move> list = new ArrayList<Move>();
@@ -172,11 +161,6 @@ public class Game {
 	public void makeMove(Move move) {
 		this.whitePlays = !this.whitePlays;
 
-		// if(GameController.getCurrent().getEnPassant() != null && GameController.getCurrent().getEnPassant() == move.getTo()) {
-		// 	makeMoveEnPassant(move);
-		// 	return;
-		// }
-
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
 				.getFrom().getSecond()].clonePiece();
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
@@ -193,40 +177,19 @@ public class Game {
 		
 	}
 		
-	// private void undoMove(Move move) {
-	// 	this.whitePlays = !this.whitePlays;
-	// 	this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = this.board[move.getTo().getFirst()][move
-	// 			.getTo().getSecond()];
-	// 	this.board[move.getTo().getFirst()][move.getTo().getSecond()] = null;
-
-	// 	this.board[move.getFrom().getFirst()][move.getFrom().getSecond()]
-	// 			.setPosition(new Pair(move.getFrom().getFirst(), move.getFrom().getSecond()));
-	// }
-
 	public boolean validateMove(Move move) {
-		// this.makeMove(move);
-
 		Game check = new Game(this);
-		// System.out.println("CHECK BOARD BEFORE CHANGING");
-		// check.printBoard();
 		check.makeMove(move);
-		// System.out.println("CHECK BOARD AFTER CHANGING");
-		// check.printBoard();
-		// System.out.println("THIS BOARD");
-		// this.printBoard();
+		check.printBoard();
 		if (check.isKingOnCheck(whitePlays)) {
-			System.out.println("move " + move + " left king on check");
 			return false;
 		}
-		System.out.println("move " + move + " didnt leave king on check");
 		return true;
 	}
 
 	public ArrayList<Move> purgeMoves(ArrayList<Move> moves){
 		for (int i = 0; i < moves.size(); i++) {
-			System.out.println("trying to purge move " + moves.get(i));
 			if(!validateMove(moves.get(i))){
-				System.out.println("purging " + moves.get(i).getFrom() + " " + moves.get(i).getTo());
 				moves.remove(i);
 				i--;
 			}
@@ -247,13 +210,13 @@ public class Game {
 	}
 
 	public boolean isMate(){
-		if(! isKingOnCheck(this.whitePlays)) return false;
-		ArrayList<Move> legalMoves = new ArrayList<Move>(this.generateAllColourMoves(this.whitePlays));
-		for (int i = 0; i < legalMoves.size(); i++) {
-			if(!validateMove(legalMoves.get(i))){
-				legalMoves.remove(i);
-			}
+		if(!isKingOnCheck(this.whitePlays)) {
+			return false;
 		}
+		ArrayList<Move> legalMoves = new ArrayList<Move>(this.generateAllColourMoves(this.whitePlays));
+
+		purgeMoves(legalMoves);
+
 		if(legalMoves.isEmpty()) return true;
 		return false;
 	}
@@ -274,7 +237,12 @@ public class Game {
 		this.updateEnPassant();
 		if(isMate()){
 			System.out.println("GAME OVER");
+			// TODO: handle checkmate
 		}
+		else if(isStaleMate()){
+			System.out.println("STALEMATE");
+		}
+		// stalemate
 		// checks if game is over
 		// this function should run every ply
 	}

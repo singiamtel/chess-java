@@ -51,7 +51,7 @@ public class Knight extends Piece {
 			if (!this.validateMove(game, new Move(new Pair(this.position.getFirst(), this.position.getSecond()), new Pair(attempt.getFirst(), attempt.getSecond())))) {
 				continue;
 			} else {
-				if (this.isMoveEating(game, new Move(this.position, attempt))) {
+				if (game.isMoveEating(new Move(this.position, attempt))) {
 					generatedMoves.add(new Move(this.position, attempt, null, false, true));
 				} else {
 					generatedMoves.add(new Move(this.position, attempt, null, false, false));

@@ -84,7 +84,7 @@ public class Raycast {
 		if (x >= 8 || y >= 8)
 			return;
 		if (piece.validateMove(game, new Move(piece.getPosition(), new Pair(x, y)))) {
-			if (piece.isMoveEating(game, new Move(piece.getPosition(), new Pair(x, y)))) {
+			if (game.isMoveEating(new Move(piece.getPosition(), new Pair(x, y)))) {
 				moveArray.add(new Move(new Pair(originalX,originalY),new Pair(x, y), null, false, true));
 			} else {
 				moveArray.add(new Move(new Pair(originalX,originalY),new Pair(x, y), null, false, false));

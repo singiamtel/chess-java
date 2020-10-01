@@ -54,16 +54,4 @@ public abstract class Piece {
 			return false;
 		}
 	}
-
-	public boolean isMoveEating(Game game, Move move) {
-		if(game.getPieceAtSquare(move.getTo()) == null){
-			return false;
-		}
-		if (game.getPieceAtSquare(move.getTo()).isWhite() != this.isWhite()) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 }

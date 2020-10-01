@@ -123,7 +123,7 @@ public class Move {
 	}
 	@Override
 	public String toString(){
-		return "move@" + this.hashCode() + ": {(" + from.getFirst() + "," + from.getSecond() + "), (" + to.getFirst()
+		return "Move@" + this.hashCode() + ": {(" + from.getFirst() + "," + from.getSecond() + "), (" + to.getFirst()
 				+ "," + to.getSecond() + ")}";
 	}
 }

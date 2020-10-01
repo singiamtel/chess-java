@@ -126,9 +126,11 @@ public class Game {
 
 	public boolean isKingOnCheck(boolean isWhite){
 		Piece king = findKing(isWhite);
+		// Rooks, bishops and queens
 		if(Raycast.kingRaycast(this, king)){
 			return true;
 		}
+		// Knights
 		for (Pair move : Knight.moves) {
 			Pair attempt = king.getPosition().addPair(move);
 			if(Move.isOutOfBounds(attempt)){
@@ -139,11 +141,32 @@ public class Game {
 			}
 
 		}
+		if(isWhite){
+			
+		}
+		else{
+
+		}
+		// Pawns
+		// if (position.getSecond() - 1 >= 0) {
+		// 	piece = game.getPieceAtSquare(new Pair(position.getFirst() + 1, position.getSecond() - 1));
+		// 	if (piece != null && piece.isWhite() != this.isWhite()) {
+		// 		moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
+		// 				new Pair(position.getFirst() + 1, position.getSecond() - 1)));
+		// 	} else if (GameController.getCurrent().getEnPassant() != null) {
+		// 		if (GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst()
+		// 				&& GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
+		// 			moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
+		// 					GameController.getCurrent().getEnPassant()));
+		// 		}
+		// 	}
+
+		// }
 		return false;
 	}
 
-	private Piece findKing(boolean isWhite){
-		for(int i=0; i<8; ++i){
+	private Piece findKing(boolean isWhite) {
+		for (int i = 0; i < 8; ++i) {
 			for (int j = 0; j < 8; j++) {
 				Piece tmp = this.getPieceAtSquare(new Pair(i, j));
 				if(tmp != null){

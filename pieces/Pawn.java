@@ -3,10 +3,10 @@ package pieces;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.text.Position;
 
 import controller.Game;
 import controller.Move;
+import controller.Move.promotions;
 import gui.GameController;
 import utilities.Pair;
 
@@ -32,8 +32,12 @@ public class Pawn extends Piece {
 			// Attempt to move one square
 			piece = game.getPieceAtSquare(new Pair(position.getFirst() + 1, position.getSecond()));
 			if (piece == null) {
+				if(this.position.getFirst() == 7) {
+					addPromotionMoves(game, moves);
+				}else {
 				moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
 						new Pair(position.getFirst() + 1, position.getSecond())));
+				}
 
 				if (position.getFirst() == 1) {
 					// Attempt to move two squares
@@ -82,9 +86,12 @@ public class Pawn extends Piece {
 			// Attempt to move one square
 			piece = game.getPieceAtSquare(new Pair(position.getFirst() - 1, position.getSecond()));
 			if (piece == null) {
+				if(this.position.getFirst() == 1) {
+					addPromotionMoves(game, moves);
+				}else {
 				moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
 						new Pair(position.getFirst() - 1, position.getSecond())));
-
+				}
 				if (position.getFirst() == 6) {
 					// Attempt to move two squares
 					piece = game.getPieceAtSquare(
@@ -128,6 +135,11 @@ public class Pawn extends Piece {
 			}
 		}
 		return moves;
+	}
+	public void addPromotionMoves(Game game, ArrayList<Move> moves) {
+		for (Move.promotions promotion : Move.promotions.values()) {
+			moves.add(new Move(this.getPosition(), new Pair(this.getPosition().getFirst()+1,this.getPosition().getSecond()),promotion));
+		}
 	}
 
 	public ImageIcon getImage() {

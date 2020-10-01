@@ -6,7 +6,14 @@ import utilities.Pair;
 public class Move {
 	private Pair from;
 	private Pair to;
-	private Piece promotion;
+	private promotions promotion;
+	
+	public static enum promotions{
+		BISHOP,
+		KNIGHT,
+		ROOK,
+		QUEEN
+	}
 
 	private boolean castle;
 	private boolean isEating;
@@ -20,11 +27,18 @@ public class Move {
 		this.from = from;
 		this.to = to;
 	}
+	
+	public Move(Pair from, Pair to, promotions promotion){
+		this.from = from;
+		this.to = to;
+		this.promotion = promotion;
+	}
+	
 	public Pair getFrom() {
 		return this.from;
 	}
 
-	public Move(Pair from, Pair to, Piece promotion, Boolean castle, boolean isEating) {
+	public Move(Pair from, Pair to, promotions promotion, Boolean castle, boolean isEating) {
 		this.from = from;
 		this.to = to;
 		this.promotion = promotion;
@@ -80,11 +94,11 @@ public class Move {
 		this.to = to;
 	}
 
-	public Piece getPromotion() {
+	public promotions getPromotion() {
 		return this.promotion;
 	}
 
-	public void setPromotion(Piece promotion) {
+	public void setPromotion(promotions promotion) {
 		this.promotion = promotion;
 	}
 

@@ -64,6 +64,11 @@ public class GameController {
 		this.isPieceSelected = true;
 		this.pieceSelected = on;
 		ArrayList<Move> moves = game.getPieceAtSquare(on).generateMoves(game);
+		System.out.println("GENERATED MOVES");
+		for (Move move : moves) {
+			System.out.println(move);
+		}
+		System.out.println("---------------");
 		moves = game.purgeMoves(moves);
 		for (Move move : moves) {
 			// Square oldSquare = mainWindow.getBoard().getSquareAt(move.getFrom());

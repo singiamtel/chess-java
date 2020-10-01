@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pieces.*;
 import utilities.Pair;
+import utilities.Raycast;
 
 public class Game {
 	private Piece [][] board = new Piece[8][8];
@@ -121,17 +122,21 @@ public class Game {
 	}
 
 	public boolean isKingOnCheck(boolean isWhite){
-		ArrayList<Move> enemyMoves = new ArrayList<Move>(this.generateAllColourMoves(!isWhite));
+		// ArrayList<Move> enemyMoves = new ArrayList<Move>(this.generateAllColourMoves(!isWhite));
+		// Piece king = findKing(isWhite);
+		// System.out.println("king: " + king.getPosition().getFirst() + " " + king.getPosition().getSecond());
+		// for (int i = 0; i < enemyMoves.size(); i++) {
+		// 	System.out.println("checking move " + enemyMoves.get(i));
+		// 	if(enemyMoves.get(i).getTo().equals(king.getPosition())){
+		// 		return true;
+		// 	}
+		// }
+		// return false;
 		Piece king = findKing(isWhite);
-		System.out.println("king: " + king.getPosition().getFirst() + " " + king.getPosition().getSecond());
-		for (int i = 0; i < enemyMoves.size(); i++) {
-			System.out.println("checking move " + enemyMoves.get(i));
-			if(enemyMoves.get(i).getTo().equals(king.getPosition())){
-				return true;
-			}
+		if(Raycast.kingRaycast(this, king)){
+			return true;
 		}
 		return false;
-		// Piece king = findKing(isWhite);
 	}
 
 	private Piece findKing(boolean isWhite){
@@ -204,22 +209,26 @@ public class Game {
 		Game check = new Game(this);
 		// System.out.println("CHECK BOARD BEFORE CHANGING");
 		// check.printBoard();
-		// check.makeMove(move);
+		check.makeMove(move);
 		// System.out.println("CHECK BOARD AFTER CHANGING");
 		// check.printBoard();
 		// System.out.println("THIS BOARD");
 		// this.printBoard();
 		if (check.isKingOnCheck(whitePlays)) {
+			System.out.println("move " + move + " left king on check");
 			return false;
 		}
+		System.out.println("move " + move + " didnt leave king on check");
 		return true;
 	}
 
 	public ArrayList<Move> purgeMoves(ArrayList<Move> moves){
 		for (int i = 0; i < moves.size(); i++) {
+			System.out.println("trying to purge move " + moves.get(i));
 			if(!validateMove(moves.get(i))){
 				System.out.println("purging " + moves.get(i).getFrom() + " " + moves.get(i).getTo());
 				moves.remove(i);
+				i--;
 			}
 		}
 		return moves;

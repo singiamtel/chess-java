@@ -126,6 +126,16 @@ public class Game {
 		if(Raycast.kingRaycast(this, king)){
 			return true;
 		}
+		for (Pair move : Knight.moves) {
+			Pair attempt = king.getPosition().addPair(move);
+			if(Move.isOutOfBounds(attempt)){
+				continue;
+			}
+			if(getPieceAtSquare(attempt) instanceof Knight && getPieceAtSquare(attempt).isWhite() != isWhite){
+				return true;
+			}
+
+		}
 		return false;
 	}
 
@@ -180,7 +190,6 @@ public class Game {
 	public boolean validateMove(Move move) {
 		Game check = new Game(this);
 		check.makeMove(move);
-		check.printBoard();
 		if (check.isKingOnCheck(whitePlays)) {
 			return false;
 		}
@@ -220,6 +229,19 @@ public class Game {
 		if(legalMoves.isEmpty()) return true;
 		return false;
 	}
+
+	public boolean isMoveEating(Move move) {
+		if(getPieceAtSquare(move.getTo()) == null){
+			return false;
+		}
+		if (getPieceAtSquare(move.getFrom()).isWhite() != getPieceAtSquare(move.getTo()).isWhite()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private void updateEnPassant(){
 		if(enPassant != null && lastEnPassant == enPassant){
 			// If current en passant is the same as the last turn's one,

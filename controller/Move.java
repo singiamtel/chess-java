@@ -1,6 +1,5 @@
 package controller;
 
-import pieces.Piece;
 import utilities.Pair;
 
 public class Move {

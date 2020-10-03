@@ -6,7 +6,6 @@ import javax.swing.ImageIcon;
 
 import controller.Game;
 import controller.Move;
-import controller.Move.promotions;
 import gui.GameController;
 import utilities.Pair;
 

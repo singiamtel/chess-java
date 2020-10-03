@@ -300,15 +300,15 @@ public class Game {
 		    options[2]);
 		switch (n) {
 		case 0:
-			return promotion.QUEEN;
+			return Move.promotions.QUEEN;
 		case 1:
-			return promotion.ROOK;
+			return Move.promotions.ROOK;
 		case 2:
-			return promotion.KNIGHT;
+			return Move.promotions.KNIGHT;
 		case 3:
-			return promotion.BISHOP;
+			return Move.promotions.BISHOP;
 		default:
-			return promotion.QUEEN;
+			return Move.promotions.QUEEN;
 		}
 	}
 

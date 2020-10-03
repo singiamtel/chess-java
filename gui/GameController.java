@@ -12,7 +12,6 @@ public class GameController {
 	private boolean isPieceSelected;
 	private Pair pieceSelected;
 	private Pair enPassant;
-	PromotionPopUp promotionPopUp;
 
 
 
@@ -37,7 +36,6 @@ public class GameController {
 		this.mainWindow = new MainWindow(this.game);
 		this.isPieceSelected = false;
 		this.pieceSelected = null;
-		this.promotionPopUp = new PromotionPopUp();
 	}
 	public void checkIfSync(){
 		//TODO: exception

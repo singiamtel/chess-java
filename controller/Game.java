@@ -2,8 +2,10 @@ package controller;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import controller.Move.promotions;
-import gui.PromotionPopUp;
 import pieces.*;
 import utilities.Pair;
 import utilities.Raycast;
@@ -199,12 +201,12 @@ public class Game {
 
 	public void makeMove(Move move, boolean fake) {
 		this.whitePlays = !this.whitePlays;
+		if(!fake && move.getPromotion() != null) {
+			Move.promotions chosenPromotion = choosePromotion();
+			promotion = chosenPromotion;
+		}
 		if(move.getPromotion() != null) {
-			if(!fake) {
-				PromotionPopUp promotionPopUp = new PromotionPopUp();
-				promotionPopUp.setPromotion();
-			}
-			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = makePromotion(promotion.QUEEN);
+			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = makePromotion(move.getPromotion());
 			promotion = null;
 		}else {
 			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
@@ -233,6 +235,9 @@ public class Game {
 		//TODO dummy piece
 	}
 
+	public promotions getPromotion() {
+		return this.promotion;
+	}
 	public void makeMoveEnPassant(Move move) {
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move.getFrom().getSecond()];
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
@@ -283,8 +288,28 @@ public class Game {
 		return false;
 	}
 	
-	public Move.promotions getPromotion() {
-		return this.promotion;
+	public Move.promotions choosePromotion() {
+		Object[] options = {"Queen","Rook","Knight","Bishop"};
+		int n = JOptionPane.showOptionDialog(new JPanel(),
+		    "Choose promotion recipient",
+		    "Promotion",
+		    JOptionPane.YES_NO_CANCEL_OPTION,
+		    JOptionPane.QUESTION_MESSAGE,
+		    null,
+		    options,
+		    options[2]);
+		switch (n) {
+		case 0:
+			return promotion.QUEEN;
+		case 1:
+			return promotion.ROOK;
+		case 2:
+			return promotion.KNIGHT;
+		case 3:
+			return promotion.BISHOP;
+		default:
+			return promotion.QUEEN;
+		}
 	}
 
 	public boolean isMoveEating(Move move) {

@@ -103,7 +103,7 @@ public class Translator {
 20 26
 e3 c4 
 
-rxc4
+r e8 x c4
 
 Enroque O-O !!
 Come x

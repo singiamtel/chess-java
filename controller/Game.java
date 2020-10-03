@@ -199,9 +199,9 @@ public class Game {
 		this.promotion = promotion;
 	}
 
-	public void makeMove(Move move, boolean fake) {
+	public void makeMove(Move move, boolean isFake) {
 		this.whitePlays = !this.whitePlays;
-		if(!fake && move.getPromotion() != null) {
+		if(!isFake && move.getPromotion() != null) {
 			Move.promotions chosenPromotion = choosePromotion();
 			promotion = chosenPromotion;
 		}
@@ -337,8 +337,6 @@ public class Game {
 		}
 	}
 	
-
-
 	public void update(){
 		this.updateEnPassant();
 		if(isMate()){

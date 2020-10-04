@@ -13,8 +13,23 @@ public class Pair {
 
 	public Pair() {
 	}
-	public Pair addPair(Pair pair){
+
+	public Pair addPair(Pair pair) {
 		return new Pair(this.getFirst() + pair.getFirst(), this.getSecond() + pair.getSecond());
+	}
+
+	public Pair clone(){
+		return new Pair(this.getFirst(), this.getSecond());
+	}
+
+	public boolean isOutOfBounds() {
+		if (this.getFirst() < 0 || this.getFirst() >= 8) {
+			return true;
+		}
+		if (this.getSecond() < 0 || this.getSecond() >= 8) {
+			return true;
+		}
+		return false;
 	}
 
 	public Pair(int first, int second) {

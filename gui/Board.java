@@ -19,7 +19,7 @@ public class Board extends JPanel {
 		this.setLayout(new GridLayout(8, 8));
 		for (int i = 7; i >= 0; --i) {
 			for (int j = 0; j < 8; ++j) {
-				// White squares are odd, black squares are even // TODO: sure?
+				// White squares are odd, black squares are even
 				squares[i][j] = new Square((i + j) % 2 == 0 ? false : true, game.getPieceAtSquare(8 * i + j), false,
 						false, false, new Pair(i, j));
 				this.add(squares[i][j]);

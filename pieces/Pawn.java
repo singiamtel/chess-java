@@ -21,12 +21,12 @@ public class Pawn extends Piece {
 		return ret;
 	}
 
-	public ArrayList<Move> generateMoves(Game game) {
+	public ArrayList<Move> generateMoves(Game game, boolean fake) {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		Piece piece;
-		if(GameController.getCurrent().getEnPassant() != null) {
-			
-		}
+		System.out.println("generating for pawn at " + this.getPosition());
+		if(game.getEnPassant()!=null) System.out.println("enpassant in game is " + game.getEnPassant().getPosition());
+
 		if (isWhite()) {
 			// Attempt to move one square
 			piece = game.getPieceAtSquare(new Pair(position.getFirst() + 1, position.getSecond()));
@@ -44,7 +44,7 @@ public class Pawn extends Piece {
 							new Pair(position.getFirst() + 2, position.getSecond()));
 					if (piece == null) {
 						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								new Pair(position.getFirst() + 2, position.getSecond())));
+								new Pair(position.getFirst() + 2, position.getSecond()), null, false, false, false, !fake));
 					}
 				}
 			}
@@ -54,12 +54,15 @@ public class Pawn extends Piece {
 						new Pair(position.getFirst() + 1, position.getSecond() + 1));
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-							new Pair(position.getFirst() + 1, position.getSecond() + 1)));
-				}else if(GameController.getCurrent().getEnPassant() != null) {
-					if(GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst() &&
-							GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
+							new Pair(position.getFirst() + 1, position.getSecond() + 1), true));
+
+				}else if(game.getEnPassant() != null){
+					System.out.println("AAA");
+					System.out.println("enpassantPos and pos" + game.getEnPassantPosition() + " " + position);
+					if(game.getEnPassantPosition().equals(position.addPair(new Pair(1,1)))){
+						System.out.println("BBB");
 						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								GameController.getCurrent().getEnPassant()));
+							new Pair(position.getFirst() + 1, position.getSecond() + 1), true));
 					}
 				}
 			}
@@ -70,12 +73,15 @@ public class Pawn extends Piece {
 						new Pair(position.getFirst() + 1, position.getSecond() - 1));
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-							new Pair(position.getFirst() + 1, position.getSecond() - 1)));
-				}else if(GameController.getCurrent().getEnPassant() != null) {
-					if(GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst() &&
-							GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
+							new Pair(position.getFirst() + 1, position.getSecond() - 1), true));
+							
+				}else if(game.getEnPassant() != null){
+					System.out.println("AAA");
+					System.out.println("enpassantPos and pos" + game.getEnPassantPosition() + " " + position);
+					if(game.getEnPassantPosition().equals(position.addPair(new Pair(1,1)))){
+						System.out.println("BBB");
 						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								GameController.getCurrent().getEnPassant()));
+							new Pair(position.getFirst() + 1, position.getSecond() - 1), true));
 					}
 				}
 				
@@ -97,7 +103,7 @@ public class Pawn extends Piece {
 							new Pair(position.getFirst() - 2, position.getSecond()));
 					if (piece == null) {
 						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								new Pair(position.getFirst() - 2, position.getSecond())));
+								new Pair(position.getFirst() - 2, position.getSecond()), null, false, false, false, !fake));
 					}
 				}
 			}
@@ -107,12 +113,12 @@ public class Pawn extends Piece {
 						new Pair(position.getFirst() - 1, position.getSecond() + 1));
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-							new Pair(position.getFirst() - 1, position.getSecond() + 1)));
-				}else if(GameController.getCurrent().getEnPassant() != null) {
-					if(GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst() &&
-							GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
+							new Pair(position.getFirst() - 1, position.getSecond() + 1), true));
+
+				} else if (game.getEnPassant() != null) {
+					if (game.getEnPassantPosition().equals(position.addPair(new Pair(1, 1)))) {
 						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								GameController.getCurrent().getEnPassant()));
+								new Pair(position.getFirst() - 1, position.getSecond() + 1), true));
 					}
 				}
 			}
@@ -123,12 +129,13 @@ public class Pawn extends Piece {
 						new Pair(position.getFirst() - 1, position.getSecond() - 1));
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-							new Pair(position.getFirst() - 1, position.getSecond() - 1)));
-				}else if(GameController.getCurrent().getEnPassant() != null) {
-					if(GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst() &&
-							GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
+							new Pair(position.getFirst() - 1, position.getSecond() - 1), true));
+
+
+				} else if (game.getEnPassant() != null) {
+					if (game.getEnPassantPosition().equals(position.addPair(new Pair(1, 1)))) {
 						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								GameController.getCurrent().getEnPassant()));
+								new Pair(position.getFirst() - 1, position.getSecond() - 1), true));
 					}
 				}
 			}

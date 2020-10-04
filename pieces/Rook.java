@@ -30,7 +30,7 @@ public class Rook extends Piece {
 		}
 	}
 
-	public ArrayList<Move> generateMoves(Game game){
+	public ArrayList<Move> generateMoves(Game game, boolean fake){
 		ArrayList<Move> moves = new ArrayList<Move>();
 		moves.addAll(Raycast.raycast(game, this, Direction.EAST));
 		moves.addAll(Raycast.raycast(game, this, Direction.WEST));

@@ -18,7 +18,7 @@ public class noPiece extends Piece{
 		return ret;
 	}
 	@Override
-	public ArrayList<Move> generateMoves(Game game) {
+	public ArrayList<Move> generateMoves(Game game, boolean fake) {
 		return null;
 	}
 	

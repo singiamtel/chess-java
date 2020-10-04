@@ -30,7 +30,7 @@ public class Bishop extends Piece {
 		}
 	}
 
-	public ArrayList<Move> generateMoves(Game game){
+	public ArrayList<Move> generateMoves(Game game, boolean fake){
 		ArrayList<Move> moves = new ArrayList<Move>();
 		moves.addAll(Raycast.raycast(game, this, Direction.NORTHEAST));
 		moves.addAll(Raycast.raycast(game, this, Direction.NORTHWEST));

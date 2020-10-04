@@ -40,7 +40,7 @@ public class Knight extends Piece {
 		}
 	}
 
-	public ArrayList<Move> generateMoves(Game game) {
+	public ArrayList<Move> generateMoves(Game game, boolean fake) {
 		ArrayList<Move> generatedMoves = new ArrayList<Move>();
 
 		for (Pair move : moves) {

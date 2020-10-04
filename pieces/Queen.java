@@ -29,7 +29,7 @@ public class Queen extends Piece {
 			return new ImageIcon("img/black_queen.png");
 		}
 	}
-	public ArrayList<Move> generateMoves(Game game){
+	public ArrayList<Move> generateMoves(Game game, boolean fake){
 		ArrayList<Move> moves = new ArrayList<Move>();
 		for (Direction direction : Direction.values()) {
 			moves.addAll(Raycast.raycast(game, this, direction));

@@ -35,7 +35,7 @@ public abstract class Piece {
 		this.image = image;
 	}
 
-	public abstract ArrayList<Move> generateMoves(Game game);
+	public abstract ArrayList<Move> generateMoves(Game game, boolean fake);
 
 	public ImageIcon getImage() {
 		return null;

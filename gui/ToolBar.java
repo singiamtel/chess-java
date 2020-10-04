@@ -15,7 +15,7 @@ public class ToolBar extends JPanel{
 		button = new JButton("click me");
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				System.out.println("thx");
+				System.out.println("THANKS");
 			}
 		});
 		add(button);

@@ -68,13 +68,17 @@ public class Board extends JPanel {
 
 		Square squareFrom = squares[move.getFrom().getFirst()][move.getFrom().getSecond()];
 		Square squareTo = squares[move.getTo().getFirst()][move.getTo().getSecond()];
-		squareFrom.setPiece(null);			
-		squareTo.setPiece(piece);
-		
+		squareFrom.setPiece(null);
+		if(move.getPromotion() != null) {
+			squareTo.setPiece(Game.makePromotion(move.getPromotion(),!GameController.getCurrent().getGame().whitePlays(),move.getTo()));
+		}else {
+			squareTo.setPiece(piece);
+		}
 		squareFrom.repaintSquare();
 		squareTo.repaintSquare();
 		
 		repaintBoard();
+		GameController.getCurrent().getGame().setPromotion(null);
 
 	}
 }

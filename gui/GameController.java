@@ -85,7 +85,7 @@ public class GameController {
 				// System.out.println(new Move(pieceSelected, on).getFrom().toString() + " "
 						// + new Move(pieceSelected, on).getTo().toString());
 				game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
-				mainWindow.getBoard().makeMove(new Move(pieceSelected, on));
+				mainWindow.getBoard().makeMove(new Move(pieceSelected, on, game.getPromotion()));
 				this.update();
 				return;
 			}

@@ -200,37 +200,43 @@ public class Game {
 	}
 
 	public void makeMove(Move move, boolean fake) {
-		this.whitePlays = !this.whitePlays;
-		if(!fake && move.getPromotion() != null) {
+		if(!fake && getPieceAtSquare(new Pair(move.getFrom().getFirst(),move.getFrom().getSecond())) instanceof Pawn &&
+				(this.whitePlays ? move.getTo().getFirst() == 7 : move.getTo().getFirst() == 0)) {
 			Move.promotions chosenPromotion = choosePromotion();
 			promotion = chosenPromotion;
+			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = makePromotion(chosenPromotion,this.whitePlays,move.getTo());
 		}
 		if(move.getPromotion() != null) {
-			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = makePromotion(move.getPromotion());
+			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = makePromotion(move.getPromotion(),this.whitePlays,move.getTo());
 			promotion = null;
-		}else {
+		}else{
+			if(promotion == null) {
 			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
                     .getFrom().getSecond()].clonePiece();
+			}
 		}
 	
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
 
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()]
 				.setPosition(new Pair(move.getTo().getFirst(), move.getTo().getSecond()));
+		
+		this.whitePlays = !this.whitePlays;
+
 		// TODO update material
 	}
-	private Piece makePromotion(promotions promotion) {
+	public static Piece makePromotion(promotions promotion, boolean isWhite, Pair pos) {
 		switch (promotion) {
 		case QUEEN:
-			return new Queen(true, new Pair(4,4));
+			return new Queen(isWhite, pos);
 		case KNIGHT:
-			return new Knight(true, new Pair(4,4));
+			return new Knight(isWhite, pos);
 		case ROOK:
-			return new Rook(true, new Pair(4,4));
+			return new Rook(isWhite, pos);
 		case BISHOP:
-			return new Bishop(true, new Pair(4,4));
+			return new Bishop(isWhite, pos);
 		default:
-			return new Queen(true, new Pair(4,4));
+			return new Queen(isWhite,pos);
 		}
 		//TODO dummy piece
 	}

@@ -138,7 +138,7 @@ public class Pawn extends Piece {
 	}
 	public void addPromotionMoves(Game game, ArrayList<Move> moves) {
 		for (Move.promotions promotion : Move.promotions.values()) {
-			moves.add(new Move(this.getPosition(), new Pair(this.getPosition().getFirst()+1,this.getPosition().getSecond()),promotion));
+			moves.add(new Move(this.getPosition(), new Pair(this.getPosition().getFirst() + (game.whitePlays() ? 1 : -1) ,this.getPosition().getSecond()),promotion));
 		}
 	}
 

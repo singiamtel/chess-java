@@ -13,8 +13,9 @@ import utilities.Raycast;
 public class Game {
 	private Piece [][] board = new Piece[8][8];
 	private boolean whitePlays;
-	// TODO: implement enPassant
+
 	private Pawn enPassant;
+	private Pair enPassantPosition;
 	private Pawn lastEnPassant;
 	private Move.promotions promotion;
 
@@ -46,6 +47,9 @@ public class Game {
 		this.whitePlays = game.whitePlays;
 		if(game.enPassant != null){
 			this.enPassant = (Pawn)game.enPassant.clonePiece();
+		}
+		if(game.enPassantPosition != null){
+			this.enPassantPosition = (Pair)game.enPassantPosition.clone();
 		}
 		if(game.lastEnPassant != null){
 			this.lastEnPassant = (Pawn)game.lastEnPassant.clonePiece();
@@ -110,6 +114,14 @@ public class Game {
 		return board[x][y];
 	}
 
+	public Pair getEnPassantPosition() {
+		return this.enPassantPosition;
+	}
+
+	public void setEnPassantPosition(Pair enPassantPosition) {
+		this.enPassantPosition = enPassantPosition;
+	}
+
 	public Piece getPieceAtSquare(Pair square){
 		return board[square.getFirst()][square.getSecond()];
 	}
@@ -143,27 +155,29 @@ public class Game {
 			}
 
 		}
-		if(isWhite){
-			
-		}
-		else{
-
-		}
 		// Pawns
-		// if (position.getSecond() - 1 >= 0) {
-		// 	piece = game.getPieceAtSquare(new Pair(position.getFirst() + 1, position.getSecond() - 1));
-		// 	if (piece != null && piece.isWhite() != this.isWhite()) {
-		// 		moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-		// 				new Pair(position.getFirst() + 1, position.getSecond() - 1)));
-		// 	} else if (GameController.getCurrent().getEnPassant() != null) {
-		// 		if (GameController.getCurrent().getEnPassant().getFirst() == piece.getPosition().getFirst()
-		// 				&& GameController.getCurrent().getEnPassant().getSecond() == piece.getPosition().getSecond()) {
-		// 			moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-		// 					GameController.getCurrent().getEnPassant()));
-		// 		}
-		// 	}
+		Pair firstPos = king.getPosition().addPair(new Pair(king.isWhite()? 1 : -1, 1));
+		if (!firstPos.isOutOfBounds()) {
+			Piece first = getPieceAtSquare(firstPos);
+			if (first != null && first.isWhite() != king.isWhite() && first instanceof Pawn) {
+				return true;
+			}
+		}
+		Pair secondPos = king.getPosition().addPair(new Pair(king.isWhite()? 1 : -1, -1));
+		if (!secondPos.isOutOfBounds()) {
+			Piece second = getPieceAtSquare(secondPos);
+			if (second != null && second.isWhite() != king.isWhite() && second instanceof Pawn) {
+				return true;
+			}
+		}
 
-		// }
+		// Other kings
+		for(Pair i : King.moves){
+			Pair sqr = king.getPosition().addPair(i);
+			if(sqr.isOutOfBounds()) continue;
+			if(getPieceAtSquare(sqr) instanceof King) return true;
+		}
+
 		return false;
 	}
 
@@ -188,7 +202,7 @@ public class Game {
 			for(int j = 0; j<8; ++j){
 				Piece attempt = this.getPieceAtSquare(new Pair(i,j));
 				if(attempt != null && attempt.isWhite() == isWhite){
-					ArrayList<Move> tmp = attempt.generateMoves(this);
+					ArrayList<Move> tmp = attempt.generateMoves(this, true);
 					if(tmp != null) list.addAll(tmp);
 				}
 			}
@@ -199,6 +213,14 @@ public class Game {
 		this.promotion = promotion;
 	}
 
+	public void makeMove(Move move, boolean fake, boolean enPassant){
+		if(enPassant){
+			setEnPassant((Pawn)getPieceAtSquare(move.getFrom()));
+			setEnPassantPosition(move.getTo().addPair(new Pair(getPieceAtSquare(move.getFrom()).isWhite() ? -1: 1,0)));
+		}
+	
+		makeMove(move, fake);
+	}
 	public void makeMove(Move move, boolean fake) {
 		if(!fake && getPieceAtSquare(new Pair(move.getFrom().getFirst(),move.getFrom().getSecond())) instanceof Pawn &&
 				(this.whitePlays ? move.getTo().getFirst() == 7 : move.getTo().getFirst() == 0)) {
@@ -209,13 +231,14 @@ public class Game {
 		if(move.getPromotion() != null) {
 			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = makePromotion(move.getPromotion(),this.whitePlays,move.getTo());
 			promotion = null;
+		}else if(move.isEnPassant()){
+			makeMoveEnPassant(move);
 		}else{
 			if(promotion == null) {
 			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
                     .getFrom().getSecond()].clonePiece();
 			}
 		}
-	
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
 
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()]
@@ -223,7 +246,6 @@ public class Game {
 		
 		this.whitePlays = !this.whitePlays;
 
-		// TODO update material
 	}
 	public static Piece makePromotion(promotions promotion, boolean isWhite, Pair pos) {
 		switch (promotion) {
@@ -238,13 +260,12 @@ public class Game {
 		default:
 			return new Queen(isWhite,pos);
 		}
-		//TODO dummy piece
 	}
 
 	public promotions getPromotion() {
 		return this.promotion;
 	}
-	public void makeMoveEnPassant(Move move) {
+	private void makeMoveEnPassant(Move move) {
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move.getFrom().getSecond()];
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()].setPosition(new Pair(move.getTo().getFirst(), move.getTo().getSecond()));

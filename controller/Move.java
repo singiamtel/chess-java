@@ -6,9 +6,6 @@ public class Move {
 	private Pair from;
 	private Pair to;
 	private promotions promotion;
-	private boolean enPassant;
-	private boolean makesEnPassant;
-
 
 	public static enum promotions{
 		BISHOP,
@@ -54,16 +51,6 @@ public class Move {
 		this.isEating = isEating;
 	}
 
-	public Move(Pair from, Pair to, promotions promotion, Boolean castle, boolean isEating, boolean enPassant, boolean makesEnPassant) {
-		this.from = from;
-		this.to = to;
-		this.promotion = promotion;
-		this.castle = castle;
-		this.isEating = isEating;
-		this.enPassant = enPassant;
-		this.makesEnPassant = makesEnPassant;
-	}
-
 	public boolean isOutOfBounds(){
 		if (this.to.getFirst() < 0 || this.to.getFirst() >= 8){
 		return true;
@@ -95,20 +82,6 @@ public class Move {
 
 	public boolean getCheck() {
 		return this.check;
-	}
-	public boolean isEnPassant() {
-		return this.enPassant;
-	}
-	public void setEnPassant(boolean enPassant) {
-		this.enPassant = enPassant;
-	}
-	
-	public boolean makesEnPassant() {
-		return this.makesEnPassant;
-	}
-
-	public void setMakesEnPassant(boolean makesEnPassant) {
-		this.makesEnPassant = makesEnPassant;
 	}
 
 	public void setCheck(boolean check) {

@@ -67,6 +67,8 @@ public class Pawn extends Piece {
 				}
 				
 			}
+			
+			addEnpassantMoves(moves, isWhite);
 
 		} else {
 			// Attempt to move one square
@@ -108,9 +110,28 @@ public class Pawn extends Piece {
 							new Pair(position.getFirst() - 1, position.getSecond() - 1), true));
 				}
 			}
+			
+			addEnpassantMoves(moves, isWhite);
+			
 		}
 		return moves;
 	}
+	
+	public void addEnpassantMoves(ArrayList<Move> moves, boolean isWhite) {
+		Pair enPassant = GameController.getCurrent().getGame().getEnPassant();
+		if(enPassant == null)return;
+		if(isWhite) {
+			if(enPassant.equals(new Pair(this.position.getFirst()+1,this.position.getSecond()+1))  ||
+					enPassant.equals(new Pair(this.position.getFirst()+1,this.position.getSecond()-1))) {
+				moves.add(new Move(this.position, enPassant ,new Pair(enPassant.getFirst(),enPassant.getSecond()-1),true)); 
+			}
+		}
+			if(enPassant.equals(new Pair(this.position.getFirst()-1,this.position.getSecond()-1)) ||
+					enPassant.equals(new Pair(this.position.getFirst()-1,this.position.getSecond()+1))) {
+				moves.add(new Move(this.position, enPassant ,new Pair(enPassant.getFirst(),enPassant.getSecond()+1),true)); 
+			}
+	}
+	
 	public void addPromotionMoves(Game game, ArrayList<Move> moves) {
 		for (Move.promotions promotion : Move.promotions.values()) {
 			moves.add(new Move(this.getPosition(), new Pair(this.getPosition().getFirst() + (game.whitePlays() ? 1 : -1) ,this.getPosition().getSecond()),promotion));

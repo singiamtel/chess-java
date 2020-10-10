@@ -6,6 +6,7 @@ public class Move {
 	private Pair from;
 	private Pair to;
 	private promotions promotion;
+	private Pair enPassant;
 
 	public static enum promotions{
 		BISHOP,
@@ -37,6 +38,13 @@ public class Move {
 		this.from = from;
 		this.to = to;
 		this.promotion = promotion;
+	}
+	
+	public Move(Pair from, Pair to, Pair enPassant, boolean isEating){
+		this.from = from;
+		this.to = to;
+		this.enPassant = enPassant;
+		this.isEating = isEating;
 	}
 	
 	public Pair getFrom() {
@@ -105,6 +113,10 @@ public class Move {
 
 	public void setPromotion(promotions promotion) {
 		this.promotion = promotion;
+	}
+
+	public Pair getEnPassant() {
+		return enPassant;
 	}
 
 	public Boolean isCastle() {

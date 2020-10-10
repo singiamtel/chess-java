@@ -61,10 +61,15 @@ public class Board extends JPanel {
 
 	public void makeMove(Move move) {
 		Piece piece = squares[move.getFrom().getFirst()][move.getFrom().getSecond()].getPiece();
-
+	
 		Square squareFrom = squares[move.getFrom().getFirst()][move.getFrom().getSecond()];
 		Square squareTo = squares[move.getTo().getFirst()][move.getTo().getSecond()];
 		squareFrom.setPiece(null);
+		if(move.getEnPassant() != null) {
+			Square enPassantSquare = squares[move.getEnPassant().getFirst()-1][move.getEnPassant().getSecond()];
+			enPassantSquare.setPiece(null);
+			enPassantSquare.repaintSquare();
+		}
 		if(move.getPromotion() != null) {
 			squareTo.setPiece(Game.makePromotion(move.getPromotion(),!GameController.getCurrent().getGame().whitePlays(),move.getTo()));
 		}else {

@@ -84,8 +84,16 @@ public class GameController {
 				if(game.getPieceAtSquare(pieceSelected) instanceof Pawn && Math.abs(pieceSelected.getFirst() - on.getFirst()) == 2){
 					game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
 				}
+				else if(game.getEnPassant().equals(on)) {
+					game.makeMove(new Move(pieceSelected,on,game.getEnPassant(),true),false);
+				}
 				else game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
-				mainWindow.getBoard().makeMove(new Move(pieceSelected, on, game.getPromotion()));
+				
+				if(game.getEnPassant().equals(on)) {
+					mainWindow.getBoard().makeMove(new Move(pieceSelected, on,game.getEnPassant(),true));
+				}else {
+					mainWindow.getBoard().makeMove(new Move(pieceSelected, on, game.getPromotion()));
+				}
 				this.update();
 				return;
 			}

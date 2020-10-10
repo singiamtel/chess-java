@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Move.promotions;
+import gui.GameController;
 import pieces.*;
 import utilities.Pair;
 import utilities.Raycast;
@@ -14,6 +15,7 @@ public class Game {
 	private Piece [][] board = new Piece[8][8];
 	private boolean whitePlays;
 	private Move.promotions promotion;
+	private Pair enPassant;
 
 
 	// Test game
@@ -184,6 +186,8 @@ public class Game {
 	}
 
 	public void makeMove(Move move, boolean fake) {
+
+
 		if(!fake && getPieceAtSquare(new Pair(move.getFrom().getFirst(),move.getFrom().getSecond())) instanceof Pawn &&
 				(this.whitePlays ? move.getTo().getFirst() == 7 : move.getTo().getFirst() == 0)) {
 			Move.promotions chosenPromotion = choosePromotion();
@@ -199,10 +203,23 @@ public class Game {
                     .getFrom().getSecond()].clonePiece();
 			}
 		}
+		if(board[move.getFrom().getFirst()][move.getFrom().getSecond()] instanceof Pawn && Math.abs(move.getFrom().getFirst() - move.getTo().getFirst()) == 2) {
+			if(whitePlays) {
+				enPassant = new Pair(move.getTo().getFirst() -1, move.getTo().getSecond());
+			}else {
+				enPassant = new Pair(move.getTo().getFirst() +1, move.getTo().getSecond());
+			}
+		}
+		
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
 
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()]
 				.setPosition(new Pair(move.getTo().getFirst(), move.getTo().getSecond()));
+		if(move.getEnPassant() != null) {
+			if(move.getEnPassant().getFirst() < 0) {
+				this.board[move.getEnPassant().getFirst()-1][move.getEnPassant().getSecond()] = null;
+			}
+		}
 		
 		this.whitePlays = !this.whitePlays;
 
@@ -265,6 +282,15 @@ public class Game {
 		if(legalMoves.isEmpty()) return true;
 		return false;
 	}
+	
+	public Pair getEnPassant() {
+		return enPassant;
+	}
+
+	public void setEnPassant(Pair enPassant) {
+		this.enPassant = enPassant;
+	}
+
 	
 	public Move.promotions choosePromotion() {
 		Object[] options = {"Queen","Rook","Knight","Bishop"};

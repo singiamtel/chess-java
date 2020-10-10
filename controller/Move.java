@@ -6,9 +6,7 @@ public class Move {
 	private Pair from;
 	private Pair to;
 	private promotions promotion;
-	private boolean enPassant;
-	private boolean makesEnPassant;
-
+	private Pair enPassant;
 
 	public static enum promotions{
 		BISHOP,
@@ -42,6 +40,13 @@ public class Move {
 		this.promotion = promotion;
 	}
 	
+	public Move(Pair from, Pair to, Pair enPassant, boolean isEating){
+		this.from = from;
+		this.to = to;
+		this.enPassant = enPassant;
+		this.isEating = isEating;
+	}
+	
 	public Pair getFrom() {
 		return this.from;
 	}
@@ -52,16 +57,6 @@ public class Move {
 		this.promotion = promotion;
 		this.castle = castle;
 		this.isEating = isEating;
-	}
-
-	public Move(Pair from, Pair to, promotions promotion, Boolean castle, boolean isEating, boolean enPassant, boolean makesEnPassant) {
-		this.from = from;
-		this.to = to;
-		this.promotion = promotion;
-		this.castle = castle;
-		this.isEating = isEating;
-		this.enPassant = enPassant;
-		this.makesEnPassant = makesEnPassant;
 	}
 
 	public boolean isOutOfBounds(){
@@ -96,20 +91,6 @@ public class Move {
 	public boolean getCheck() {
 		return this.check;
 	}
-	public boolean isEnPassant() {
-		return this.enPassant;
-	}
-	public void setEnPassant(boolean enPassant) {
-		this.enPassant = enPassant;
-	}
-	
-	public boolean makesEnPassant() {
-		return this.makesEnPassant;
-	}
-
-	public void setMakesEnPassant(boolean makesEnPassant) {
-		this.makesEnPassant = makesEnPassant;
-	}
 
 	public void setCheck(boolean check) {
 		this.check = check;
@@ -132,6 +113,10 @@ public class Move {
 
 	public void setPromotion(promotions promotion) {
 		this.promotion = promotion;
+	}
+
+	public Pair getEnPassant() {
+		return enPassant;
 	}
 
 	public Boolean isCastle() {

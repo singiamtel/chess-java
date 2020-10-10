@@ -24,8 +24,6 @@ public class Pawn extends Piece {
 	public ArrayList<Move> generateMoves(Game game, boolean fake) {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		Piece piece;
-		System.out.println("generating for pawn at " + this.getPosition());
-		if(game.getEnPassant()!=null) System.out.println("enpassant in game is " + game.getEnPassant().getPosition());
 
 		if (isWhite()) {
 			// Attempt to move one square
@@ -44,7 +42,7 @@ public class Pawn extends Piece {
 							new Pair(position.getFirst() + 2, position.getSecond()));
 					if (piece == null) {
 						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								new Pair(position.getFirst() + 2, position.getSecond()), null, false, false, false, !fake));
+								new Pair(position.getFirst() + 2, position.getSecond()), null, false, false));
 					}
 				}
 			}
@@ -56,15 +54,7 @@ public class Pawn extends Piece {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
 							new Pair(position.getFirst() + 1, position.getSecond() + 1), true));
 
-				}else if(game.getEnPassant() != null){
-					System.out.println("AAA");
-					System.out.println("enpassantPos and pos" + game.getEnPassantPosition() + " " + position);
-					if(game.getEnPassantPosition().equals(position.addPair(new Pair(1,1)))){
-						System.out.println("BBB");
-						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-							new Pair(position.getFirst() + 1, position.getSecond() + 1), true));
-					}
-				}
+				}	
 			}
 
 			// Left
@@ -74,18 +64,11 @@ public class Pawn extends Piece {
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
 							new Pair(position.getFirst() + 1, position.getSecond() - 1), true));
-							
-				}else if(game.getEnPassant() != null){
-					System.out.println("AAA");
-					System.out.println("enpassantPos and pos" + game.getEnPassantPosition() + " " + position);
-					if(game.getEnPassantPosition().equals(position.addPair(new Pair(1,1)))){
-						System.out.println("BBB");
-						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-							new Pair(position.getFirst() + 1, position.getSecond() - 1), true));
-					}
 				}
 				
 			}
+			
+			addEnpassantMoves(moves, isWhite);
 
 		} else {
 			// Attempt to move one square
@@ -103,7 +86,7 @@ public class Pawn extends Piece {
 							new Pair(position.getFirst() - 2, position.getSecond()));
 					if (piece == null) {
 						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								new Pair(position.getFirst() - 2, position.getSecond()), null, false, false, false, !fake));
+								new Pair(position.getFirst() - 2, position.getSecond()), null, false, false));
 					}
 				}
 			}
@@ -115,11 +98,6 @@ public class Pawn extends Piece {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
 							new Pair(position.getFirst() - 1, position.getSecond() + 1), true));
 
-				} else if (game.getEnPassant() != null) {
-					if (game.getEnPassantPosition().equals(position.addPair(new Pair(1, 1)))) {
-						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								new Pair(position.getFirst() - 1, position.getSecond() + 1), true));
-					}
 				}
 			}
 
@@ -130,18 +108,30 @@ public class Pawn extends Piece {
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
 							new Pair(position.getFirst() - 1, position.getSecond() - 1), true));
-
-
-				} else if (game.getEnPassant() != null) {
-					if (game.getEnPassantPosition().equals(position.addPair(new Pair(1, 1)))) {
-						moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
-								new Pair(position.getFirst() - 1, position.getSecond() - 1), true));
-					}
 				}
 			}
+			
+			addEnpassantMoves(moves, isWhite);
+			
 		}
 		return moves;
 	}
+	
+	public void addEnpassantMoves(ArrayList<Move> moves, boolean isWhite) {
+		Pair enPassant = GameController.getCurrent().getGame().getEnPassant();
+		if(enPassant == null)return;
+		if(isWhite) {
+			if(enPassant.equals(new Pair(this.position.getFirst()+1,this.position.getSecond()+1))  ||
+					enPassant.equals(new Pair(this.position.getFirst()+1,this.position.getSecond()-1))) {
+				moves.add(new Move(this.position, enPassant ,new Pair(enPassant.getFirst(),enPassant.getSecond()-1),true)); 
+			}
+		}
+			if(enPassant.equals(new Pair(this.position.getFirst()-1,this.position.getSecond()-1)) ||
+					enPassant.equals(new Pair(this.position.getFirst()-1,this.position.getSecond()+1))) {
+				moves.add(new Move(this.position, enPassant ,new Pair(enPassant.getFirst(),enPassant.getSecond()+1),true)); 
+			}
+	}
+	
 	public void addPromotionMoves(Game game, ArrayList<Move> moves) {
 		for (Move.promotions promotion : Move.promotions.values()) {
 			moves.add(new Move(this.getPosition(), new Pair(this.getPosition().getFirst() + (game.whitePlays() ? 1 : -1) ,this.getPosition().getSecond()),promotion));

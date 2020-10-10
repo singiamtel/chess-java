@@ -74,25 +74,26 @@ public class GameController {
 	}
 
 	public void handleClick(Pair on) {
-		if(game.getEnPassant() != null) System.out.println("ENPASSANT" + game.getEnPassant().getPosition());
-		System.out.println("ENPASSANTPOS " + game.getEnPassantPosition());
 		Square squareAt = mainWindow.getBoard().getSquareAt(on);
 		if (isPieceSelected) {
 			if (!squareAt.canMoveHere()) {
 				clearMoveMarks();
 			} else {
 				// MAKEMOVE
-				// System.out.println(new Move(pieceSelected, on).getFrom().toString() + " "
-						// + new Move(pieceSelected, on).getTo().toString());
-				if(on == game.getEnPassantPosition()){
-	//public Move(Pair from, Pair to, promotions promotion, Boolean castle, boolean isEating, boolean enPassant, boolean makesEnPassant) {
-					game.makeMove(new Move(pieceSelected, on,game.getPromotion(),false, false, true, false), false);
+
+				if(game.getPieceAtSquare(pieceSelected) instanceof Pawn && Math.abs(pieceSelected.getFirst() - on.getFirst()) == 2){
+					game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
 				}
-				else if(game.getPieceAtSquare(pieceSelected) instanceof Pawn && Math.abs(pieceSelected.getFirst() - on.getFirst()) == 2){
-					game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false, true);
+				else if(game.getEnPassant().equals(on)) {
+					game.makeMove(new Move(pieceSelected,on,game.getEnPassant(),true),false);
 				}
 				else game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
-				mainWindow.getBoard().makeMove(new Move(pieceSelected, on, game.getPromotion()));
+				
+				if(game.getEnPassant().equals(on)) {
+					mainWindow.getBoard().makeMove(new Move(pieceSelected, on,game.getEnPassant(),true));
+				}else {
+					mainWindow.getBoard().makeMove(new Move(pieceSelected, on, game.getPromotion()));
+				}
 				this.update();
 				return;
 			}

@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Move.promotions;
+import gui.GameController;
 import pieces.*;
 import utilities.Pair;
 import utilities.Raycast;
@@ -13,11 +14,8 @@ import utilities.Raycast;
 public class Game {
 	private Piece [][] board = new Piece[8][8];
 	private boolean whitePlays;
-
-	private Pawn enPassant;
-	private Pair enPassantPosition;
-	private Pawn lastEnPassant;
 	private Move.promotions promotion;
+	private Pair enPassant;
 
 
 	// Test game
@@ -45,15 +43,6 @@ public class Game {
 		this.board = game.cloneBoard();
 
 		this.whitePlays = game.whitePlays;
-		if(game.enPassant != null){
-			this.enPassant = (Pawn)game.enPassant.clonePiece();
-		}
-		if(game.enPassantPosition != null){
-			this.enPassantPosition = (Pair)game.enPassantPosition.clone();
-		}
-		if(game.lastEnPassant != null){
-			this.lastEnPassant = (Pawn)game.lastEnPassant.clonePiece();
-		}
 	}
 	public Game(){
 		// Empty constructor starts a new game 
@@ -100,28 +89,11 @@ public class Game {
 		this.whitePlays = whitePlays;
 	}
 
-	public Pawn getEnPassant() {
-		return this.enPassant;
-	}
-
-	public void setEnPassant(Pawn enPassant) {
-		this.enPassant = enPassant;
-	}
-
 	public Piece getPieceAtSquare(int square){
 		int x = square/8;
 		int y = square%8;
 		return board[x][y];
 	}
-
-	public Pair getEnPassantPosition() {
-		return this.enPassantPosition;
-	}
-
-	public void setEnPassantPosition(Pair enPassantPosition) {
-		this.enPassantPosition = enPassantPosition;
-	}
-
 	public Piece getPieceAtSquare(Pair square){
 		return board[square.getFirst()][square.getSecond()];
 	}
@@ -213,15 +185,9 @@ public class Game {
 		this.promotion = promotion;
 	}
 
-	public void makeMove(Move move, boolean fake, boolean enPassant){
-		if(enPassant){
-			setEnPassant((Pawn)getPieceAtSquare(move.getFrom()));
-			setEnPassantPosition(move.getTo().addPair(new Pair(getPieceAtSquare(move.getFrom()).isWhite() ? -1: 1,0)));
-		}
-	
-		makeMove(move, fake);
-	}
 	public void makeMove(Move move, boolean fake) {
+
+
 		if(!fake && getPieceAtSquare(new Pair(move.getFrom().getFirst(),move.getFrom().getSecond())) instanceof Pawn &&
 				(this.whitePlays ? move.getTo().getFirst() == 7 : move.getTo().getFirst() == 0)) {
 			Move.promotions chosenPromotion = choosePromotion();
@@ -231,18 +197,29 @@ public class Game {
 		if(move.getPromotion() != null) {
 			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = makePromotion(move.getPromotion(),this.whitePlays,move.getTo());
 			promotion = null;
-		}else if(move.isEnPassant()){
-			makeMoveEnPassant(move);
 		}else{
 			if(promotion == null) {
 			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move
                     .getFrom().getSecond()].clonePiece();
 			}
 		}
+		if(board[move.getFrom().getFirst()][move.getFrom().getSecond()] instanceof Pawn && Math.abs(move.getFrom().getFirst() - move.getTo().getFirst()) == 2) {
+			if(whitePlays) {
+				enPassant = new Pair(move.getTo().getFirst() -1, move.getTo().getSecond());
+			}else {
+				enPassant = new Pair(move.getTo().getFirst() +1, move.getTo().getSecond());
+			}
+		}
+		
 		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
 
 		this.board[move.getTo().getFirst()][move.getTo().getSecond()]
 				.setPosition(new Pair(move.getTo().getFirst(), move.getTo().getSecond()));
+		if(move.getEnPassant() != null) {
+			if(move.getEnPassant().getFirst() < 0) {
+				this.board[move.getEnPassant().getFirst()-1][move.getEnPassant().getSecond()] = null;
+			}
+		}
 		
 		this.whitePlays = !this.whitePlays;
 
@@ -264,12 +241,6 @@ public class Game {
 
 	public promotions getPromotion() {
 		return this.promotion;
-	}
-	private void makeMoveEnPassant(Move move) {
-		this.board[move.getTo().getFirst()][move.getTo().getSecond()] = this.board[move.getFrom().getFirst()][move.getFrom().getSecond()];
-		this.board[move.getFrom().getFirst()][move.getFrom().getSecond()] = null;
-		this.board[move.getTo().getFirst()][move.getTo().getSecond()].setPosition(new Pair(move.getTo().getFirst(), move.getTo().getSecond()));
-		
 	}
 		
 	public boolean validateMove(Move move) {
@@ -294,11 +265,8 @@ public class Game {
 	public boolean isStaleMate(){
 		if(isKingOnCheck(this.whitePlays)) return false;
 		ArrayList<Move> legalMoves = new ArrayList<Move>(this.generateAllColourMoves(this.whitePlays));
-		for (int i = 0; i < legalMoves.size(); i++) {
-			if(!validateMove(legalMoves.get(i))){
-				legalMoves.remove(i);
-			}
-		}
+		purgeMoves(legalMoves);
+
 		if(legalMoves.isEmpty()) return true;
 		return false;
 	}
@@ -314,6 +282,15 @@ public class Game {
 		if(legalMoves.isEmpty()) return true;
 		return false;
 	}
+	
+	public Pair getEnPassant() {
+		return enPassant;
+	}
+
+	public void setEnPassant(Pair enPassant) {
+		this.enPassant = enPassant;
+	}
+
 	
 	public Move.promotions choosePromotion() {
 		Object[] options = {"Queen","Rook","Knight","Bishop"};
@@ -351,23 +328,8 @@ public class Game {
 		}
 	}
 
-	private void updateEnPassant(){
-		if(enPassant != null && lastEnPassant == enPassant){
-			// If current en passant is the same as the last turn's one,
-			// we assume no new pawn is on en passant, and reset it.
-			enPassant = null;
-			lastEnPassant = null;
-		}
-		else{
-			// Otherwise, just update variable
-			lastEnPassant = enPassant;
-		}
-	}
-	
-
-
 	public void update(){
-		this.updateEnPassant();
+		// this.updateEnPassant();
 		if(isMate()){
 			System.out.println("GAME OVER");
 			// TODO: handle checkmate

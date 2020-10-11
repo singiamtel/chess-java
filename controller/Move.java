@@ -14,7 +14,13 @@ public class Move {
 		ROOK,
 		QUEEN
 	}
-
+	public static enum castle{
+		WHITEKING,
+		WHITEQUEEN,
+		BLACKKING,
+		BLACKQUEEN,
+	}
+	
 	private boolean castle;
 	private boolean isEating;
 	private boolean check;
@@ -28,16 +34,39 @@ public class Move {
 		this.to = to;
 	}
 
-	public Move(Pair from, Pair to, boolean isEating){
-		this.from = from;
-		this.to = to;
-		this.isEating = isEating;
+	public Move(castle castle){
+		switch (castle) {
+		case WHITEKING:
+			this.from = new Pair(0,4);
+			this.to = new Pair(0,6);
+			break;
+		case WHITEQUEEN:
+			this.from = new Pair(0,4);
+			this.to = new Pair(0,2);
+			break;
+		case BLACKKING:
+			this.from = new Pair(7,4);
+			this.to = new Pair(7,6);
+			break;
+		case BLACKQUEEN:
+			this.from = new Pair(7,4);
+			this.to = new Pair(7,2);
+			break;
+		default:
+			break;
+		}
 	}
 	
 	public Move(Pair from, Pair to, promotions promotion){
 		this.from = from;
 		this.to = to;
 		this.promotion = promotion;
+	}
+	
+	public Move(Pair from, Pair to, boolean castle){
+		this.from = from;
+		this.to = to;
+		this.castle = castle;
 	}
 	
 	public Move(Pair from, Pair to, Pair enPassant, boolean isEating){

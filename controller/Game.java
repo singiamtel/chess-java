@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Move.promotions;
-import gui.GameController;
 import pieces.*;
 import utilities.Pair;
 import utilities.Raycast;
@@ -16,6 +15,11 @@ public class Game {
 	private boolean whitePlays;
 	private Move.promotions promotion;
 	private Pair enPassant;
+	
+	private boolean whiteKingRook;
+	private boolean whiteQueenRook;
+	private boolean blackKingRook;
+	private boolean blackQueenrook;
 
 
 	// Test game
@@ -71,6 +75,11 @@ public class Game {
 		board[7][5] = new Bishop(false,new Pair(7,5));
 		board[7][6] = new Knight(false,new Pair(7,6));
 		board[7][7] = new Rook(false,new Pair(7,7));
+		
+		whiteKingRook = true;
+		whiteQueenRook = true;
+		blackKingRook = true;
+		blackQueenrook = true;
 
 		// Empty spaces
 		for(int i=2; i<6; ++i){
@@ -110,6 +119,55 @@ public class Game {
 	
 	}
 
+
+	public boolean isLocationOnCheck(boolean isWhite, Pair location){
+		Piece king = new King(isWhite, location);
+		// Rooks, bishops and queens
+		if(Raycast.kingRaycast(this, king)){
+			return true;
+		}
+		// Knights
+		for (Pair move : Knight.moves) {
+			Pair attempt = king.getPosition().addPair(move);
+			if(Move.isOutOfBounds(attempt)){
+				continue;
+			}
+			if(getPieceAtSquare(attempt) instanceof Knight && getPieceAtSquare(attempt).isWhite() != isWhite){
+				return true;
+			}
+
+		}
+		// Pawns
+		Pair firstPos = king.getPosition().addPair(new Pair(king.isWhite()? 1 : -1, 1));
+		if (!firstPos.isOutOfBounds()) {
+			Piece first = getPieceAtSquare(firstPos);
+			if (first != null && first.isWhite() != king.isWhite() && first instanceof Pawn) {
+				return true;
+			}
+		}
+		Pair secondPos = king.getPosition().addPair(new Pair(king.isWhite()? 1 : -1, -1));
+		if (!secondPos.isOutOfBounds()) {
+			Piece second = getPieceAtSquare(secondPos);
+			if (second != null && second.isWhite() != king.isWhite() && second instanceof Pawn) {
+				return true;
+			}
+		}
+
+		// Other kings
+		for(Pair i : King.moves){
+			Pair sqr = king.getPosition().addPair(i);
+			if(sqr.isOutOfBounds()) continue;
+			if(getPieceAtSquare(sqr) instanceof King) {
+				if(getPieceAtSquare(sqr).isWhite() != this.whitePlays) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	
 	public boolean isKingOnCheck(boolean isWhite){
 		Piece king = findKing(isWhite);
 		// Rooks, bishops and queens
@@ -283,6 +341,42 @@ public class Game {
 		return false;
 	}
 	
+	public Piece [][] getBoard(){
+		return board;
+	}
+	
+	public boolean isWhiteKingRook() {
+		return whiteKingRook;
+	}
+
+	public void setWhiteKingRook(boolean whiteKingRook) {
+		this.whiteKingRook = whiteKingRook;
+	}
+
+	public boolean isWhiteQueenRook() {
+		return whiteQueenRook;
+	}
+
+	public void setWhiteQueenRook(boolean whiteQueenRook) {
+		this.whiteQueenRook = whiteQueenRook;
+	}
+
+	public boolean isBlackKingRook() {
+		return blackKingRook;
+	}
+
+	public void setBlackKingRook(boolean blackKingRook) {
+		this.blackKingRook = blackKingRook;
+	}
+
+	public boolean isBlackQueenrook() {
+		return blackQueenrook;
+	}
+
+	public void setBlackQueenrook(boolean blackQueenrook) {
+		this.blackQueenrook = blackQueenrook;
+	}
+
 	public Pair getEnPassant() {
 		return enPassant;
 	}

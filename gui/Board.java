@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.GridLayout;
+import java.awt.Container;
+import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
@@ -27,11 +29,12 @@ public class Board extends JPanel {
 		}
 	}
 
-	public void clearMoveMarks(){
+	public void clearMoveMarks() {
 		boolean flag = false;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if(squares[i][j].clear()) flag=true;
+				if (squares[i][j].clear())
+					flag = true;
 			}
 		}
 		if (flag) {
@@ -59,9 +62,24 @@ public class Board extends JPanel {
 		repaintBoard();
 	}
 
+	@Override
+	public Dimension getPreferredSize() {
+		Dimension d = super.getPreferredSize();
+		Container c = getParent();
+		if (c != null) {
+			d = c.getSize();
+		} else {
+			return new Dimension(10, 10);
+		}
+		int w = (int) d.getWidth();
+		int h = (int) d.getHeight();
+		int s = (w < h ? w : h);
+		return new Dimension(s, s);
+	}
+
 	public void makeMove(Move move) {
 		Piece piece = squares[move.getFrom().getFirst()][move.getFrom().getSecond()].getPiece();
-	
+
 		Square squareFrom = squares[move.getFrom().getFirst()][move.getFrom().getSecond()];
 		Square squareTo = squares[move.getTo().getFirst()][move.getTo().getSecond()];
 		squareFrom.setPiece(null);

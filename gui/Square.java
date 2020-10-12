@@ -109,7 +109,6 @@ public class Square extends JPanel {
 
 		this.add(stack);
 
-		// this.setIcon(image);
 	}
 
 	public Boolean isWhite() {

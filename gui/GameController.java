@@ -77,7 +77,13 @@ public class GameController {
 		Square squareAt = mainWindow.getBoard().getSquareAt(on);
 		if (isPieceSelected) {
 			if (!squareAt.canMoveHere()) {
+				pieceSelected = null;
 				clearMoveMarks();
+				return;
+			}else if(on.equals(pieceSelected)){
+				clearMoveMarks();
+				pieceSelected = null;
+				return;
 			} else {
 				// MAKEMOVE
 

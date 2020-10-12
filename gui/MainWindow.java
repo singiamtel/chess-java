@@ -1,12 +1,14 @@
 package gui;
 
-import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import controller.Game;
+
 
 public class MainWindow extends JFrame{
     private JPanel mainpanel;
@@ -21,12 +23,22 @@ public class MainWindow extends JFrame{
         // TODO: Fullscreen 
         setSize(1000,1000);
 
-        mainpanel = new JPanel(new BorderLayout());
+        mainpanel = new JPanel(new GridBagLayout());
         toolBar = new ToolBar();
         board = new Board(game);
+        GridBagConstraints toolbarConstraints = new GridBagConstraints();
+        GridBagConstraints boardConstraints = new GridBagConstraints();
+        toolbarConstraints.gridx = 0;
+        toolbarConstraints.gridy = 0;
+        toolbarConstraints.gridwidth = 100;
+        toolbarConstraints.gridheight = 100;
 
-        mainpanel.add(toolBar, BorderLayout.NORTH);
-        mainpanel.add(board, BorderLayout.CENTER);
+        boardConstraints.gridx = 0;
+        boardConstraints.gridy = 220;
+        boardConstraints.gridwidth = mainpanel.getWidth();
+        boardConstraints.gridheight = mainpanel.getHeight();
+        // mainpanel.add(toolBar, toolbarConstraints);
+        mainpanel.add(board, boardConstraints);
 
         setContentPane(mainpanel);
         setVisible(true);

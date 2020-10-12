@@ -4,7 +4,7 @@
 - [ ] Handle checkmate
 - [ ] Divide Game into smaller classes
 - [X] Connect graphics to backend
-- [ ] Allow castling
+- [X] Allow castling
 - [X] Take account en passant moves
 - [X] Keep board squared on app resize
 - [ ] Drag and Drop

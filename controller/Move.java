@@ -21,7 +21,8 @@ public class Move {
 		BLACKQUEEN,
 	}
 	
-	private boolean castle;
+	private boolean castle = false;
+	private Castle which;
 	private boolean isEating;
 	private boolean check;
 
@@ -35,6 +36,8 @@ public class Move {
 	}
 
 	public Move(Castle castle){
+		this.castle = true;
+		which = castle;
 		switch (castle) {
 		case WHITEKING:
 			this.from = new Pair(0,4);
@@ -155,7 +158,9 @@ public class Move {
 	public Boolean getCastle() {
 		return this.castle;
 	}
-
+	public Castle getWhich() {
+		return this.which;
+	}
 	public void setCastle(Boolean castle) {
 		this.castle = castle;
 	}

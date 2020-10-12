@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import controller.Move.Promotions;
 import pieces.*;
 import utilities.Pair;
@@ -247,7 +249,7 @@ public class Game {
 	}
 
 	public void makeMove(Move move, boolean fake) {
-
+		setCastleFlags(move);
 
 		if(!fake && getPieceAtSquare(new Pair(move.getFrom().getFirst(),move.getFrom().getSecond())) instanceof Pawn &&
 				(this.whitePlays ? move.getTo().getFirst() == 7 : move.getTo().getFirst() == 0)) {
@@ -281,10 +283,60 @@ public class Game {
 				this.board[move.getEnPassant().getFirst()-1][move.getEnPassant().getSecond()] = null;
 			}
 		}
-		
+		if(move.getCastle()) {
+			makeCastle(move);
+		}
 		this.whitePlays = !this.whitePlays;
 
 	}
+	
+	private void setCastleFlags(Move move) {
+		Pair from = move.getFrom();
+		if(from.equals(new Pair(0, 0))) {
+			whiteQueenRook = false;
+		}else if(from.equals(new Pair(0, 7))) {
+			whiteKingRook = false;
+		}else if(from.equals(new Pair(0, 4))) {
+			whiteKingRook = false;
+			whiteQueenRook = false;
+		}else if(from.equals(new Pair(7, 0))) {
+			blackQueenrook = false;
+		}else if(from.equals(new Pair(7, 7))) {
+			blackKingRook = false;
+		}else if(from.equals(new Pair(7, 4))) {
+			blackKingRook = false;
+			blackQueenrook = false;
+		}
+	}
+	
+	private void makeCastle(Move move) {
+		switch (move.getWhich()) {
+		case WHITEKING:
+			this.board[0][5] = this.board[0][7].clonePiece();
+			this.board[0][5].setPosition(new Pair(0,5));
+			this.board[0][7] = null;
+			break;
+		case WHITEQUEEN:
+			this.board[0][3] = this.board[0][0].clonePiece();
+			this.board[0][3].setPosition(new Pair(0,3));
+			this.board[0][0] = null;
+			break;
+		case BLACKKING:
+			this.board[7][5] = this.board[7][7].clonePiece();
+			this.board[7][5].setPosition(new Pair(7,5));
+			this.board[7][7] = null;
+			break;
+		case BLACKQUEEN:
+			this.board[7][3] = this.board[7][0].clonePiece();
+			this.board[7][3].setPosition(new Pair(7,3));
+			this.board[7][0] = null;
+			break;
+		default:
+			break;
+		}
+		printBoard();
+	}
+	
 	public static Piece makePromotion(Promotions promotion, boolean isWhite, Pair pos) {
 		switch (promotion) {
 		case QUEEN:

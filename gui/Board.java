@@ -88,6 +88,34 @@ public class Board extends JPanel {
 			enPassantSquare.setPiece(null);
 			enPassantSquare.repaintSquare();
 		}
+		if(move.getCastle()) {
+			Game game = GameController.getCurrent().getGame();
+			switch (move.getWhich()) {
+			case WHITEKING:
+				squares[0][5].setPiece(game.getPieceAtSquare(new Pair(0,5)));
+				squares[0][7].setPiece(null);
+				squares[0][7].repaintSquare();
+				break;
+			case WHITEQUEEN:
+				squares[0][3].setPiece(game.getPieceAtSquare(new Pair(0,3)));
+				squares[0][0].setPiece(null);
+				squares[0][0].repaintSquare();
+				break;
+			case BLACKKING:
+				squares[7][5].setPiece(game.getPieceAtSquare(new Pair(7,5)));
+				squares[7][7].setPiece(null);
+				squares[7][7].repaintSquare();
+				break;
+			case BLACKQUEEN:
+				squares[7][3].setPiece(game.getPieceAtSquare(new Pair(7,3)));
+				squares[7][0].setPiece(null);
+				squares[7][0].repaintSquare();
+				break;
+			default:
+				break;
+			}
+			
+		}
 		if(move.getPromotion() != null) {
 			squareTo.setPiece(Game.makePromotion(move.getPromotion(),!GameController.getCurrent().getGame().whitePlays(),move.getTo()));
 		}else {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import controller.Game;
 import controller.Move;
+import controller.Move.Castle;
+import pieces.King;
 import pieces.Pawn;
 import utilities.Pair;
 
@@ -75,6 +77,7 @@ public class GameController {
 
 	public void handleClick(Pair on) {
 		Square squareAt = mainWindow.getBoard().getSquareAt(on);
+		Move castle = null;
 		if (isPieceSelected) {
 			if (!squareAt.canMoveHere()) {
 				pieceSelected = null;
@@ -86,8 +89,21 @@ public class GameController {
 				return;
 			} else {
 				// MAKEMOVE
-
-				if(game.getPieceAtSquare(pieceSelected) instanceof Pawn && Math.abs(pieceSelected.getFirst() - on.getFirst()) == 2){
+				if(game.getPieceAtSquare(pieceSelected) instanceof King && Math.abs(pieceSelected.getSecond() - on.getSecond()) == 2) {
+					if(on.equals(new Pair(0,6))){
+						castle = new Move(Castle.WHITEKING);
+					}else if(on.equals(new Pair(0,2))){
+						castle = new Move(Castle.WHITEQUEEN);
+					}else if(on.equals(new Pair(7,6))){
+						castle = new Move(Castle.BLACKKING);
+					}else if(on.equals(new Pair(7,2))){
+						castle = new Move(Castle.BLACKQUEEN);
+					}else{
+						castle = new Move(Castle.BLACKQUEEN);
+					};
+					game.makeMove(castle,false);
+					
+				}else if(game.getPieceAtSquare(pieceSelected) instanceof Pawn && Math.abs(pieceSelected.getFirst() - on.getFirst()) == 2){
 					game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
 				}
 				else if(game.getEnPassant() != null && game.getEnPassant().equals(on)) {
@@ -97,6 +113,8 @@ public class GameController {
 				
 				if(game.getEnPassant() != null && game.getEnPassant().equals(on)) {
 					mainWindow.getBoard().makeMove(new Move(pieceSelected, on,game.getEnPassant(),true));
+				}else if(castle != null){
+					mainWindow.getBoard().makeMove(castle);
 				}else {
 					mainWindow.getBoard().makeMove(new Move(pieceSelected, on, game.getPromotion()));
 				}

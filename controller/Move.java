@@ -5,16 +5,16 @@ import utilities.Pair;
 public class Move {
 	private Pair from;
 	private Pair to;
-	private promotions promotion;
+	private Promotions promotion;
 	private Pair enPassant;
 
-	public static enum promotions{
+	public static enum Promotions{
 		BISHOP,
 		KNIGHT,
 		ROOK,
 		QUEEN
 	}
-	public static enum castle{
+	public static enum Castle{
 		WHITEKING,
 		WHITEQUEEN,
 		BLACKKING,
@@ -34,7 +34,7 @@ public class Move {
 		this.to = to;
 	}
 
-	public Move(castle castle){
+	public Move(Castle castle){
 		switch (castle) {
 		case WHITEKING:
 			this.from = new Pair(0,4);
@@ -57,16 +57,16 @@ public class Move {
 		}
 	}
 	
-	public Move(Pair from, Pair to, promotions promotion){
+	public Move(Pair from, Pair to, Promotions promotion){
 		this.from = from;
 		this.to = to;
 		this.promotion = promotion;
 	}
 	
-	public Move(Pair from, Pair to, boolean castle){
+	public Move(Pair from, Pair to, boolean isEating){
 		this.from = from;
 		this.to = to;
-		this.castle = castle;
+		this.isEating = isEating;
 	}
 	
 	public Move(Pair from, Pair to, Pair enPassant, boolean isEating){
@@ -80,7 +80,7 @@ public class Move {
 		return this.from;
 	}
 
-	public Move(Pair from, Pair to, promotions promotion, Boolean castle, boolean isEating) {
+	public Move(Pair from, Pair to, Promotions promotion, Boolean castle, boolean isEating) {
 		this.from = from;
 		this.to = to;
 		this.promotion = promotion;
@@ -136,11 +136,11 @@ public class Move {
 		this.to = to;
 	}
 
-	public promotions getPromotion() {
+	public Promotions getPromotion() {
 		return this.promotion;
 	}
 
-	public void setPromotion(promotions promotion) {
+	public void setPromotion(Promotions promotion) {
 		this.promotion = promotion;
 	}
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import controller.Move.promotions;
+import controller.Move.Promotions;
 import pieces.*;
 import utilities.Pair;
 import utilities.Raycast;
@@ -13,8 +13,9 @@ import utilities.Raycast;
 public class Game {
 	private Piece [][] board = new Piece[8][8];
 	private boolean whitePlays;
-	private Move.promotions promotion;
+	private Move.Promotions promotion;
 	private Pair enPassant;
+	private Pair lastEnPassant;
 	
 	private boolean whiteKingRook;
 	private boolean whiteQueenRook;
@@ -101,9 +102,11 @@ public class Game {
 	public Piece getPieceAtSquare(int square){
 		int x = square/8;
 		int y = square%8;
+		if(x < 0 || x > 7 || y < 0 || y > 7) return null;
 		return board[x][y];
 	}
 	public Piece getPieceAtSquare(Pair square){
+		if(square.getFirst() < 0 || square.getFirst() > 7 || square.getSecond() < 0 || square.getSecond() > 7) return null;
 		return board[square.getFirst()][square.getSecond()];
 	}
 
@@ -239,7 +242,7 @@ public class Game {
 		}
 		return list;
 	}
-	public void setPromotion(Move.promotions promotion) {
+	public void setPromotion(Move.Promotions promotion) {
 		this.promotion = promotion;
 	}
 
@@ -248,7 +251,7 @@ public class Game {
 
 		if(!fake && getPieceAtSquare(new Pair(move.getFrom().getFirst(),move.getFrom().getSecond())) instanceof Pawn &&
 				(this.whitePlays ? move.getTo().getFirst() == 7 : move.getTo().getFirst() == 0)) {
-			Move.promotions chosenPromotion = choosePromotion();
+			Move.Promotions chosenPromotion = choosePromotion();
 			promotion = chosenPromotion;
 			this.board[move.getTo().getFirst()][move.getTo().getSecond()] = makePromotion(chosenPromotion,this.whitePlays,move.getTo());
 		}
@@ -282,7 +285,7 @@ public class Game {
 		this.whitePlays = !this.whitePlays;
 
 	}
-	public static Piece makePromotion(promotions promotion, boolean isWhite, Pair pos) {
+	public static Piece makePromotion(Promotions promotion, boolean isWhite, Pair pos) {
 		switch (promotion) {
 		case QUEEN:
 			return new Queen(isWhite, pos);
@@ -297,7 +300,7 @@ public class Game {
 		}
 	}
 
-	public promotions getPromotion() {
+	public Promotions getPromotion() {
 		return this.promotion;
 	}
 		
@@ -386,7 +389,7 @@ public class Game {
 	}
 
 	
-	public Move.promotions choosePromotion() {
+	public Move.Promotions choosePromotion() {
 		Object[] options = {"Queen","Rook","Knight","Bishop"};
 		int n = JOptionPane.showOptionDialog(new JPanel(),
 		    "Choose promotion recipient",
@@ -398,20 +401,23 @@ public class Game {
 		    options[2]);
 		switch (n) {
 		case 0:
-			return Move.promotions.QUEEN;
+			return Move.Promotions.QUEEN;
 		case 1:
-			return Move.promotions.ROOK;
+			return Move.Promotions.ROOK;
 		case 2:
-			return Move.promotions.KNIGHT;
+			return Move.Promotions.KNIGHT;
 		case 3:
-			return Move.promotions.BISHOP;
+			return Move.Promotions.BISHOP;
 		default:
-			return Move.promotions.QUEEN;
+			return Move.Promotions.QUEEN;
 		}
 	}
 
 	public boolean isMoveEating(Move move) {
 		if(getPieceAtSquare(move.getTo()) == null){
+			return false;
+		}
+		if(getPieceAtSquare(move.getFrom()) == null){
 			return false;
 		}
 		if (getPieceAtSquare(move.getFrom()).isWhite() != getPieceAtSquare(move.getTo()).isWhite()) {
@@ -422,8 +428,15 @@ public class Game {
 		}
 	}
 
+	private void updateEnPassant(){
+		if(enPassant != null && enPassant == lastEnPassant){
+			enPassant = null;
+			lastEnPassant = null;
+		}
+		else lastEnPassant = enPassant;
+	}
 	public void update(){
-		// this.updateEnPassant();
+		this.updateEnPassant();
 		if(isMate()){
 			System.out.println("GAME OVER");
 			// TODO: handle checkmate

@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 
 import controller.Game;
 import controller.Move;
-import controller.Move.castle;
+import controller.Move.Castle;
 import utilities.Pair;
 
 public class King extends Piece {
@@ -60,7 +60,7 @@ public class King extends Piece {
 				if(board[0][5] == null && board[0][6] == null) {
 					if(!game.isLocationOnCheck(this.isWhite, new Pair(0,5)) &&
 							!game.isLocationOnCheck(this.isWhite, new Pair(0,6))){
-						moves.add(new Move(castle.WHITEKING));
+						moves.add(new Move(Castle.WHITEKING));
 					}
 				}
 			} 
@@ -69,7 +69,7 @@ public class King extends Piece {
 					if(!game.isLocationOnCheck(this.isWhite, new Pair(0,1)) &&
 							!game.isLocationOnCheck(this.isWhite, new Pair(0,2)) &&
 								!game.isLocationOnCheck(this.isWhite, new Pair(0,3))){
-						moves.add(new Move(castle.WHITEQUEEN));
+						moves.add(new Move(Castle.WHITEQUEEN));
 					}
 				}
 			}
@@ -78,7 +78,7 @@ public class King extends Piece {
 				if(board[7][5] == null && board[7][6] == null) {
 					if(!game.isLocationOnCheck(this.isWhite, new Pair(7,5)) &&
 							!game.isLocationOnCheck(this.isWhite, new Pair(7,6))){
-						moves.add(new Move(castle.BLACKKING));
+						moves.add(new Move(Castle.BLACKKING));
 					}
 				}
 			}
@@ -87,7 +87,7 @@ public class King extends Piece {
 					if(!game.isLocationOnCheck(this.isWhite, new Pair(7,1)) &&
 							!game.isLocationOnCheck(this.isWhite, new Pair(7,2)) &&
 								!game.isLocationOnCheck(this.isWhite, new Pair(7,3))){
-						moves.add(new Move(castle.BLACKQUEEN));
+						moves.add(new Move(Castle.BLACKQUEEN));
 					}
 				}
 			}

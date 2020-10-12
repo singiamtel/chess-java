@@ -1,18 +1,18 @@
 # Pending
 
 - [X] Move generator to check if a move makes mate
+- [ ] Handle checkmate
 - [ ] Divide Game into smaller classes
-- [ ] Connect graphics to backend
+- [X] Connect graphics to backend
 - [ ] Allow castling
-- [ ] Take account en passant moves
-- [ ] Keep board squared on app resize
+- [X] Take account en passant moves
+- [X] Keep board squared on app resize
 - [ ] Drag and Drop
 - [ ] ToolBar
 - [ ] Translator LERF to algebraic
-- [ ] Main game loop controller
+- [X] Main game loop controller
 - [ ] Clean up code
-- [ ] Asynchronous calls
-- [ ] Check for discovery checks
+- [X] Check for discovery checks
 - [ ] Make test units
 - [ ] Material count
 - [ ] Clicking on a piece twice deletes canMove dots

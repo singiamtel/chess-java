@@ -243,7 +243,6 @@ public class Game {
 	}
 
 	public void makeMove(Move move, boolean fake) {
-		System.out.println(move);
 		setCastleFlags(move);
 
 		if(!fake && getPieceAtSquare(new Pair(move.getFrom().getFirst(),move.getFrom().getSecond())) instanceof Pawn &&
@@ -329,7 +328,6 @@ public class Game {
 		default:
 			break;
 		}
-		printBoard();
 	}
 	
 	public static Piece makePromotion(Promotions promotion, boolean isWhite, Pair pos) {

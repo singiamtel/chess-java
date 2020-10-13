@@ -2,11 +2,19 @@ package controller;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import controller.Move.Promotions;
-import pieces.*;
+import pieces.Bishop;
+import pieces.King;
+import pieces.Knight;
+import pieces.Pawn;
+import pieces.Piece;
+import pieces.Queen;
+import pieces.Rook;
 import utilities.Pair;
 import utilities.Raycast;
 
@@ -214,7 +222,6 @@ public class Game {
 				}
 			}
 		}
-		// TODO: no king exception
 		return null;
 	}
 
@@ -236,6 +243,7 @@ public class Game {
 	}
 
 	public void makeMove(Move move, boolean fake) {
+		System.out.println(move);
 		setCastleFlags(move);
 
 		if(!fake && getPieceAtSquare(new Pair(move.getFrom().getFirst(),move.getFrom().getSecond())) instanceof Pawn &&
@@ -427,7 +435,6 @@ public class Game {
 		this.enPassant = enPassant;
 	}
 
-	
 	public Move.Promotions choosePromotion() {
 		Object[] options = {"Queen","Rook","Knight","Bishop"};
 		int n = JOptionPane.showOptionDialog(new JPanel(),
@@ -475,16 +482,20 @@ public class Game {
 		else lastEnPassant = enPassant;
 	}
 	public void update(){
+		// Checks if game is over
+		// This function runs every ply
 		this.updateEnPassant();
 		if(isMate()){
-			System.out.println("GAME OVER");
-			// TODO: handle checkmate
+			JFrame parent = new JFrame();
+			parent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			JOptionPane.showMessageDialog(parent, (this.whitePlays ? "Black" : "White") + " won!");
+			System.exit(0);
 		}
 		else if(isStaleMate()){
-			System.out.println("STALEMATE");
+			JFrame parent = new JFrame();
+			parent.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			JOptionPane.showMessageDialog(parent, "Stalemate!");
+			System.exit(0);
 		}
-		// stalemate
-		// checks if game is over
-		// this function should run every ply
 	}
 }

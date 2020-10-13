@@ -126,6 +126,5 @@ public class Board extends JPanel {
 		
 		repaintBoard();
 		GameController.getCurrent().getGame().setPromotion(null);
-
 	}
 }

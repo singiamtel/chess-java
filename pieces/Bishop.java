@@ -22,7 +22,6 @@ public class Bishop extends Piece {
 	}
 
 	public ImageIcon getImage() {
-
 		if (isWhite) {
 			return new ImageIcon("img/white_bishop.png");
 		} else {

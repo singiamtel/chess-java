@@ -12,14 +12,14 @@ import utilities.Pair;
 public class Knight extends Piece {
 
 	public static final ArrayList<Pair> moves = new ArrayList<Pair>(List.of(
-			new Pair(1, 2),
-			new Pair(1, -2), 
-			new Pair(2, 1), 
-			new Pair(2, -1), 
+			new Pair( 1, 2),
+			new Pair( 1,-2), 
+			new Pair( 2, 1), 
+			new Pair( 2,-1), 
 			new Pair(-1, 2), 
-			new Pair(-1, -2),
+			new Pair(-1,-2),
 			new Pair(-2, 1), 
-			new Pair(-2, -1)));
+			new Pair(-2,-1)));
 
 	public Knight(Boolean isWhite, Pair position) {
 		this.isWhite = isWhite;
@@ -31,7 +31,6 @@ public class Knight extends Piece {
 		return ret;
 	}
 
-
 	public ImageIcon getImage() {
 		if (isWhite) {
 			return new ImageIcon("img/white_knight.png");
@@ -42,7 +41,6 @@ public class Knight extends Piece {
 
 	public ArrayList<Move> generateMoves(Game game, boolean fake) {
 		ArrayList<Move> generatedMoves = new ArrayList<Move>();
-
 		for (Pair move : moves) {
 			Pair attempt = this.position.addPair(move);
 			if(Move.isOutOfBounds(attempt)){
@@ -57,14 +55,7 @@ public class Knight extends Piece {
 					generatedMoves.add(new Move(this.position, attempt, null, false, false));
 				}
 			}
-
 		}
-
 		return generatedMoves;
 	}
 }
-/*
- * -17 -15 -10 -6 +6 +10 +15 +17
- * 
- * (2,1)(2,-1) (1,2)(-1,2) (-2,1)(-2,-1) (1,-2)(-1,-2)
- */

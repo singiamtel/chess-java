@@ -15,8 +15,6 @@ public class GameController {
 	private boolean isPieceSelected;
 	private Pair pieceSelected;
 
-
-
 	private static GameController gc;
 
 	public static GameController getCurrent(){
@@ -40,17 +38,6 @@ public class GameController {
 		this.pieceSelected = null;
 	}
 
-	public boolean makeMove(Pair from, Pair to){
-		Move move = new Move(from, to);
-		if(game.validateMove(move)){
-			game.makeMove(move,false);
-			mainWindow.getBoard().makeMove(move);
-			// change turn
-			return true;
-		}
-		return false;
-	}
-
 	private void update(){
 		clearMoveMarks();
 		game.update();
@@ -67,7 +54,6 @@ public class GameController {
 		ArrayList<Move> moves = game.getPieceAtSquare(on).generateMoves(game, true);
 		moves = game.purgeMoves(moves);
 		for (Move move : moves) {
-			// Square oldSquare = mainWindow.getBoard().getSquareAt(move.getFrom());
 			Square newSquare = new Square(mainWindow.getBoard().getSquareAt(move.getTo()).isWhite(),
 					mainWindow.getBoard().getSquareAt(move.getTo()).getPiece(), true, move.isCheck(),
 					move.isEating(), new Pair(move.getTo().getFirst(), move.getTo().getSecond()));
@@ -80,16 +66,19 @@ public class GameController {
 		Move castle = null;
 		if (isPieceSelected) {
 			if (!squareAt.canMoveHere()) {
+				// Clicking on an invalid square will clear the move marks
 				pieceSelected = null;
 				clearMoveMarks();
 				return;
 			}else if(on.equals(pieceSelected)){
+				// Clicking on the same piece will clear the move marks too
 				clearMoveMarks();
 				pieceSelected = null;
 				return;
 			} else {
-				// MAKEMOVE
+				// We make the move
 				if(game.getPieceAtSquare(pieceSelected) instanceof King && Math.abs(pieceSelected.getSecond() - on.getSecond()) == 2) {
+					// Move was castling
 					if(on.equals(new Pair(0,6))){
 						castle = new Move(Castle.WHITEKING);
 					}else if(on.equals(new Pair(0,2))){
@@ -104,20 +93,29 @@ public class GameController {
 					game.makeMove(castle,false);
 					
 				}else if(game.getPieceAtSquare(pieceSelected) instanceof Pawn && Math.abs(pieceSelected.getFirst() - on.getFirst()) == 2){
+					// Move was a double-step pawn
 					game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
 				}
 				else if(game.getEnPassant() != null && game.getEnPassant().equals(on)) {
+					// Move was eating other pawn en passant
 					game.makeMove(new Move(pieceSelected,on,game.getEnPassant(),true),false);
 				}
-				else game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
+				else {
+					// Regular move
+					game.makeMove(new Move(pieceSelected, on,game.getPromotion()),false);
+				}
 				
 				if(game.getEnPassant() != null && game.getEnPassant().equals(on)) {
+					// Makes en passant move on board, removing eaten pawn
 					mainWindow.getBoard().makeMove(new Move(pieceSelected, on,game.getEnPassant(),true));
 				}else if(castle != null){
+					// Makes castling move on board, moving rook too
 					mainWindow.getBoard().makeMove(castle);
 				}else {
+					// Makes regular move on board
 					mainWindow.getBoard().makeMove(new Move(pieceSelected, on, game.getPromotion()));
 				}
+
 				this.update();
 				return;
 			}
@@ -131,16 +129,3 @@ public class GameController {
 		return game;
 	}
 }
-
-/*
-	if(!context.isPieceSelected()) {
-		
-
-	}else {
-		if(context.getMainWindow().getBoard().getSquareAt(coor).canMoveHere()) {
-			context.getGame().makeMove(new Move(context.getLastPieceSelected(),coor));
-			context.getMainWindow().getBoard().makeMove(new Move(context.getLastPieceSelected(),coor));
-			context.setPieceSelected(false);
-			
-		}
-*/

@@ -12,7 +12,6 @@ public class noPiece extends Piece{
 		this.position= position;
 	}
 
-
 	public Piece clonePiece(){
 		Piece ret = new noPiece(this.isWhite, new Pair(this.position));
 		return ret;
@@ -21,5 +20,4 @@ public class noPiece extends Piece{
 	public ArrayList<Move> generateMoves(Game game, boolean fake) {
 		return null;
 	}
-	
 }

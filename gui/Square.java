@@ -17,10 +17,10 @@ public class Square extends JPanel {
 
 	private static final long serialVersionUID = 2642336035089268095L;
 
-	private Boolean isWhite;
-	private Boolean isCheck;
-	private Boolean isEatable;
-	private Boolean isMovable;
+	private boolean isWhite;
+	private boolean isCheck;
+	private boolean isEatable;
+	private boolean isMovable;
 
 	private Piece piece;
 	private Pair position;
@@ -31,9 +31,6 @@ public class Square extends JPanel {
 	private JLabel moveLabel;
 	private JLabel checkLabel;
 	private JLabel pieceLabel;
-
-	public Square() {
-	}
 
 	public Square(Boolean isWhite, Piece piece, Boolean canMove, Boolean isCheck, Boolean canEat,
 			Pair position) {
@@ -83,8 +80,6 @@ public class Square extends JPanel {
 			pieceLabel = new JLabel(pieceImage);
 			pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(), pieceImage.getIconHeight());
 			stack.add(pieceLabel);
-
-			// pieceLabel.setDragEnabled(true);
 		}
 
 		if (isCheck) {
@@ -163,8 +158,6 @@ public class Square extends JPanel {
 		if (isCheck) {
 			stack.add(checkLabel);
 		}
-		// pieceLabel.setBounds(0, 0, pieceImage.getIconWidth(),
-		// pieceImage.getIconHeight());
 		stack.add(squareLabel);
 		this.add(stack);
 	}
@@ -178,5 +171,4 @@ public class Square extends JPanel {
 		}
 		return false;
 	}
-
 }

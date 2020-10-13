@@ -12,14 +12,14 @@ import utilities.Pair;
 
 public class King extends Piece {
 	public static final ArrayList<Pair> moves = new ArrayList<Pair>(List.of(
-			new Pair(1, 0), 
-			new Pair(1, 1), 
-			new Pair(0, 1),
-			new Pair(-1, 1), 
-			new Pair(-1, 0), 
+			new Pair( 1,  0), 
+			new Pair( 1,  1), 
+			new Pair( 0,  1),
+			new Pair(-1,  1), 
+			new Pair(-1,  0), 
 			new Pair(-1, -1),
-			new Pair(0, -1), 
-			new Pair(1, -1)));
+			new Pair( 0, -1), 
+			new Pair( 1, -1)));
 
 	public King(Boolean isWhite, Pair position) {
 		this.isWhite = isWhite;
@@ -47,9 +47,7 @@ public class King extends Piece {
 					generatedMoves.add(new Move(this.position, attempt, null, false, false));
 				}
 			}
-
 		}
-
 		return generatedMoves;
 	}
 	

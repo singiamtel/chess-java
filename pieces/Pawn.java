@@ -6,7 +6,6 @@ import javax.swing.ImageIcon;
 
 import controller.Game;
 import controller.Move;
-import gui.GameController;
 import utilities.Pair;
 
 public class Pawn extends Piece {
@@ -53,10 +52,8 @@ public class Pawn extends Piece {
 				if (piece != null && piece.isWhite() != this.isWhite()) {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
 							new Pair(position.getFirst() + 1, position.getSecond() + 1), true));
-
 				}	
 			}
-
 			// Left
 			if (position.getSecond() - 1 >= 0) {
 				piece = game.getPieceAtSquare(
@@ -65,11 +62,8 @@ public class Pawn extends Piece {
 					moves.add(new Move(new Pair(position.getFirst(), position.getSecond()),
 							new Pair(position.getFirst() + 1, position.getSecond() - 1), true));
 				}
-				
 			}
-			
-			addEnpassantMoves(moves, isWhite);
-
+			addEnpassantMoves(game, moves, isWhite);
 		} else {
 			// Attempt to move one square
 			piece = game.getPieceAtSquare(new Pair(position.getFirst() - 1, position.getSecond()));
@@ -111,14 +105,14 @@ public class Pawn extends Piece {
 				}
 			}
 			
-			addEnpassantMoves(moves, isWhite);
+			addEnpassantMoves(game, moves, isWhite);
 			
 		}
 		return moves;
 	}
 	
-	public void addEnpassantMoves(ArrayList<Move> moves, boolean isWhite) {
-		Pair enPassant = GameController.getCurrent().getGame().getEnPassant();
+	public void addEnpassantMoves(Game game, ArrayList<Move> moves, boolean isWhite) {
+		Pair enPassant = game.getEnPassant();
 		if(enPassant == null)return;
 		if(isWhite) {
 			if(enPassant.equals(new Pair(this.position.getFirst()+1,this.position.getSecond()+1))  ||

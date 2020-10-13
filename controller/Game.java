@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import controller.Move.Promotions;
 import pieces.*;
 import utilities.Pair;
@@ -23,15 +21,6 @@ public class Game {
 	private boolean whiteQueenRook;
 	private boolean blackKingRook;
 	private boolean blackQueenrook;
-
-
-	// Test game
-	public Game(boolean empty){
-		board[3][3] = new Knight(true,new Pair(3,3));
-		board[0][0] = new King(true,new Pair(0,0));
-		board[1][2] = new King(false,new Pair(1,2));
-		board[4][2] = new Pawn(false,new Pair(4,2));
-	}
 
 	private Piece[][] cloneBoard(){
 		Piece [][] newBoard = new Piece[8][8];
@@ -112,7 +101,7 @@ public class Game {
 		return board[square.getFirst()][square.getSecond()];
 	}
 
-	// This function is only for debug purposes and should never execute
+	// This function is only for debug purposes and should never execute otherwise
 	public void printBoard(){
 			for(int j=7; j>=0; j--){
 				for(int k=0; k<8; ++k){
@@ -123,7 +112,6 @@ public class Game {
 			}
 	
 	}
-
 
 	public boolean isLocationOnCheck(boolean isWhite, Pair location){
 		Piece king = new King(isWhite, location);
@@ -171,7 +159,6 @@ public class Game {
 
 		return false;
 	}
-
 	
 	public boolean isKingOnCheck(boolean isWhite){
 		Piece king = findKing(isWhite);

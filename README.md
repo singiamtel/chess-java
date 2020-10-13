@@ -15,4 +15,5 @@ This is a java application powered by Swing that implements the game of chess.
 ## Authors
 
 [dixrow](https://github.com/dixrow)
+
 [singiamtel](https://github.com/singiamtel)

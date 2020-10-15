@@ -17,4 +17,4 @@
 - [ ] Add toolbars to program
 	- [ ] Material count
 - [ ] Be able to handle different games at once
-- [ ] Save and load games
+- [ ] Save and load games.

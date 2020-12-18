@@ -1,12 +1,14 @@
 # Chess-java
 
-This is a java application powered by Swing that implements the game of chess.
+Java application powered by Swing that implements an interface to the game of chess (not an engine).
 
 ## Features
 
 - Shows legal moves of a given piece
-- Allows capturing en passant
-- Handles checkmate 
+- Implements en passant captures
+- Handles checkmate
+- All promotions
+- Fancy sprites
 
 ## Demo
 
@@ -17,3 +19,9 @@ This is a java application powered by Swing that implements the game of chess.
 [dixrow](https://github.com/dixrow)
 
 [singiamtel](https://github.com/singiamtel)
+
+## Future features
+
+- UCI support ([Universal Chess Interface](https://en.wikipedia.org/wiki/Universal_Chess_Interface))
+- Saving/loading game states
+- Move history

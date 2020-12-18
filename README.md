@@ -12,8 +12,8 @@ Java application powered by Swing that implements an interface to the game of ch
 
 ## Demo
 
-![](resources/Scholars_mate.gif)
-
+<img src="resources/Scholars_mate.gif" width="450" height="450">
+ 
 ## Authors
 
 [dixrow](https://github.com/dixrow)
